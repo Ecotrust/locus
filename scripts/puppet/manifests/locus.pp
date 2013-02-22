@@ -1,9 +1,9 @@
 class install {
 
-    $dbname = "locus_db"
+    $dbname = "locus"
     $reponame = "locus"
-    $projectname = "django_app"
-    $appname = "locus_app"
+    $projectname = "locus"
+    $appname = "core"
     $secretkey = "secret"
     $mapkey = "map_key"
 

@@ -6,7 +6,7 @@ vars = {
 }
 
 env.forward_agent = True
-env.key_filename = '~/.vagrant.d/insecure_private_key'
+# env.key_filename = '~/.vagrant.d/insecure_private_key'
 
 
 def dev():
