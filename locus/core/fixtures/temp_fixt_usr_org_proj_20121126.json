@@ -1,0 +1,342 @@
+[
+  {
+    "pk": 4,
+    "model": "auth.user",
+    "fields": {
+      "username": "OceanConservancy",
+      "first_name": "Ocean",
+      "last_name": "Conservancy",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-10-25T19:15:48Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$5y73nSSPY2Mb$XhNo0gbMu2WJR1NJPNAAb3Z8uTXCJzFSYFKoJVqqDQk=",
+      "email": "",
+      "date_joined": "2012-10-25T19:15:48Z"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.user",
+    "fields": {
+      "username": "NorthwestStraits",
+      "first_name": "Northwest",
+      "last_name": "Straits",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-10-25T20:00:14Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$2wK6a4VcWgwS$S6j4nD2/qvYS3xMqd6cUcsTtn0c4pQPwtBGAyvTwnKQ=",
+      "email": "",
+      "date_joined": "2012-10-25T20:00:14Z"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "auth.user",
+    "fields": {
+      "username": "tmp",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2012-10-25T21:10:25.186Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$eyEdLOFquFMF$UaULsUvcz7bWvHks6jAxXheY4s/Xl166e8howNm+xf8=",
+      "email": "temp@tmp.com",
+      "date_joined": "2012-10-25T21:10:06.898Z"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "username": "demo",
+      "first_name": "Demo",
+      "last_name": "User",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-10-24T23:18:11Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$zI7Abyu9WEgp$f0jgiI+IyVgmQ66yK0mtL7AdmONsoOS0M17h9je2/wU=",
+      "email": "twelch@ecotrust.org",
+      "date_joined": "2012-08-14T21:03:21Z"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.user",
+    "fields": {
+      "username": "rhodges",
+      "first_name": "Ryan",
+      "last_name": "Hodges",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-11-06T23:37:46.628Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$THiBhSrRH1Fw$nud8qWNIgV78nPRSjkMvac1cgo7MDZTYhwi18dHnyyE=",
+      "email": "rhodges@ecotrust.org",
+      "date_joined": "2012-08-24T21:40:37Z"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2012-11-13T22:27:13.348Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$rqy2ueqf6R4U$19sA7pKwqrTG3whzyv3uOZuvFp0+fY+s83N4dRO/aWU=",
+      "email": "asdf@asd.com",
+      "date_joined": "2012-08-04T00:05:05Z"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "core.organization",
+    "fields": {
+      "city": "Seattle",
+      "users": [
+        1
+      ],
+      "zip": "98104",
+      "orgname": "Coast Savers",
+      "url": "http://www.coastsavers.org/washington.html",
+      "state": "WA",
+      "address": "164 S. Jackson St.",
+      "scope": "Washington Coast",
+      "slug": "coast-savers"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "core.organization",
+    "fields": {
+      "city": "Portland",
+      "users": [
+        2,
+        3,
+        1
+      ],
+      "zip": "97209",
+      "orgname": "Demo Organization",
+      "url": "www.ecotrust.org",
+      "state": "OR",
+      "address": "721 NW 9th Ave",
+      "scope": "West Coast",
+      "slug": "demo-organization"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "core.organization",
+    "fields": {
+      "city": "Santa Monica",
+      "users": [
+        1
+      ],
+      "zip": "90401",
+      "orgname": "Heal The Bay",
+      "url": "http://www.healthebay.org/about-bay/pollution-101/marine-debris-database",
+      "state": "CA",
+      "address": "1444 9th Street",
+      "scope": "Los Angeles County, CA",
+      "slug": "heal-the-bay"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "core.organization",
+    "fields": {
+      "city": "Bellingham",
+      "users": [
+        5,
+        1
+      ],
+      "zip": "98225",
+      "orgname": "Northwest Straits",
+      "url": "http://www.derelictgear.org/",
+      "state": "WA",
+      "address": "1155 N. State St. Suite 322",
+      "scope": "Puget Sound/NW Straits, WA",
+      "slug": "northwest-straits"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "core.organization",
+    "fields": {
+      "city": "Washington",
+      "users": [
+        4,
+        1
+      ],
+      "zip": "20036",
+      "orgname": "Ocean Conservancy",
+      "url": "http://www.oceanconservancy.org",
+      "state": "DC",
+      "address": "1300 19th Street NW, 8th floor",
+      "scope": "International",
+      "slug": "ocean-conservancy"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "core.organization",
+    "fields": {
+      "city": "Salem",
+      "users": [
+        1
+      ],
+      "zip": "97303",
+      "orgname": "ODFW",
+      "url": "http://www.dfw.state.or.us/",
+      "state": "OR",
+      "address": "3406 Cherry Avenue N.E.",
+      "scope": "Oregon",
+      "slug": "odfw"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "core.organization",
+    "fields": {
+      "city": "Portland",
+      "users": [
+        1
+      ],
+      "zip": "97201",
+      "orgname": "Oregon SOLV",
+      "url": "http://www.solv.org/",
+      "state": "OR",
+      "address": "2000 SW 1st Ave, Suite 400",
+      "scope": "Oregon",
+      "slug": "oregon-solv"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "core.organization",
+    "fields": {
+      "city": "Seattle",
+      "users": [
+        2,
+        3,
+        1
+      ],
+      "zip": "98107",
+      "orgname": "Puget Soundkeeper Alliance",
+      "url": "http://pugetsoundkeeper.org/",
+      "state": "WA",
+      "address": "5305 Shilshole Ave NW, Suite 150",
+      "scope": "Puget Sound, WA",
+      "slug": "puget-soundkeeper-alliance"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "core.organization",
+    "fields": {
+      "city": "Santa Barbara",
+      "users": [
+        1
+      ],
+      "zip": "93103",
+      "orgname": "Santa Barbara Channel Keepers",
+      "url": "http://sbck.org",
+      "state": "CA",
+      "address": "714 Bond Ave",
+      "scope": "Santa Barbara Channel, CA",
+      "slug": "santa-barbara-channel-keepers"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "core.organization",
+    "fields": {
+      "city": "Santa Cruz",
+      "users": [
+        1
+      ],
+      "zip": "95062",
+      "orgname": "Save Our Shores",
+      "url": "http://www.saveourshores.org",
+      "state": "CA",
+      "address": "345 Lake Avenue, Suite A",
+      "scope": "Central Coast, CA",
+      "slug": "save-our-shores"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "core.organization",
+    "fields": {
+      "city": "Eastsound",
+      "users": [
+        1
+      ],
+      "zip": "98245",
+      "orgname": "SeaDoc Society",
+      "url": "http://www.seadocsociety.org/",
+      "state": "WA",
+      "address": "942 Deer Harbor Rd.",
+      "scope": "Salish Sea, WA/BC",
+      "slug": "seadoc-society"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "core.project",
+    "fields": {
+      "projname": "International Coastal Cleanup",
+      "website": "http://www.coastalcleanupdata.org/datacollection/",
+      "slug": "international-coastal-cleanup",
+      "contact_email": "nmallos@oceanconservancy.org",
+      "contact_name": "Nicholas Mallos",
+      "contact_phone": "202-429-5609",
+      "contact_title": "Conservation Biologist, Marine Debris Specialist"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "core.project",
+    "fields": {
+      "projname": "NW Straits Derelict Gear",
+      "website": "www.derelictgear.org",
+      "slug": "nw-straits-derelict-gear",
+      "contact_email": "drinkwin@nwstraits.org",
+      "contact_name": "Joan Drinkwin",
+      "contact_phone": "360-733-1725",
+      "contact_title": "Interim Director"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "core.project",
+    "fields": {
+      "projname": "Puget Soundkeeper Alliance Cleanup",
+      "website": "http://www.imrivers.org/pugetsound/",
+      "slug": "puget-soundkeeper-alliance-cleanup",
+      "contact_email": "barbara@pugetsoundkeeper.org",
+      "contact_name": "Barbara Owens",
+      "contact_phone": "206-297-7002",
+      "contact_title": "Pollution Prevention Program Manager"
+    }
+  }
+]

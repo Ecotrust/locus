@@ -1,0 +1,20 @@
+[
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2012-08-02 17:01:14",
+      "groups": [],
+      "user_permissions": [],
+      "password": "sha1$ZsYtY8DCpncr$2c471e571d63b0d81954abcd87b7915fb5ebd127",
+      "email": "rhodges@ecotrust.org",
+      "date_joined": "2012-08-02 17:00:28"
+    }
+  }
+]
