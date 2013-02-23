@@ -3,7 +3,7 @@ class install {
     $dbname = "locus"
     $reponame = "locus"
     $projectname = "locus"
-    $appname = "core"
+    $appname = "fbapp"
     $secretkey = "secret"
     $mapkey = "map_key"
 
@@ -52,13 +52,13 @@ class install {
         ensure => "latest"
     }
 
-    #package { "subversion":
-    #    ensure => "latest"
-    #}
+    package { "subversion":
+        ensure => "latest"
+    }
 
-    #package { "mercurial":
-    #    ensure => "latest"
-    #}
+    package { "mercurial":
+        ensure => "latest"
+    }
 
     package { "csstidy":
         ensure => "latest"
@@ -141,24 +141,6 @@ class install {
       user => "vagrant",
       require => Postgresql::Database[$dbname]
     }
-
-    #exec { "load postgis template1":
-    #  command => "/usr/bin/psql -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql -d template1",
-    #  user => "postgres",
-    #  require => Postgresql::Database[$dbname]
-    #}
-
-    #exec { "load spatialrefs template1":
-    #  command => "/usr/bin/psql -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql -d template1",
-    #  user => "postgres",
-    #  require => Postgresql::Database[$dbname]
-    #}
-
-    #exec { "load cleangeometry template1":
-    #  command => "/usr/bin/psql -d template1 -f /tmp/vagrant-puppet/manifests/files/cleangeometry.sql",
-    #  user => "postgres",
-    #  require => Postgresql::Database[$dbname]
-    #}
         
     python::venv::isolate { "/usr/local/venv/${projectname}":
       subscribe => [Package['python-mapnik'], Package['build-essential']]

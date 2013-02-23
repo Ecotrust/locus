@@ -25,9 +25,9 @@ ADMINS = (
 
 import logging
 logging.getLogger('django.db.backends').setLevel(logging.ERROR)
-LOG_FILE = os.path.join(os.path.dirname(__file__),'..','trees.log')
+LOG_FILE = os.path.join(os.path.dirname(__file__),'..','<%= projectname%>.log')
 
-SECRET_KEY = 'secret'
+SECRET_KEY = '<%= secretkey%>'
 
 
 #TO Remove

@@ -1,0 +1,2 @@
+madrona
+#-e git+https://github.com/Ecotrust/madrona.git@master#egg=madrona
