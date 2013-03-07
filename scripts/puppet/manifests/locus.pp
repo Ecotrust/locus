@@ -1,5 +1,7 @@
 class install {
 
+    $appuser = "vagrant"
+    $sourcepath = "/vagrant"
     $dbname = "locus"
     $reponame = "locus"
     $projectname = "locus"
@@ -127,18 +129,18 @@ class install {
     }
 
     postgresql::database { $dbname:
-      owner => "vagrant",
+      owner => "${appuser}",
     }
 
     exec { "load postgis":
       command => "/usr/bin/psql -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql -d ${dbname}",
-      user => "vagrant",
+      user => "${appuser}",
       require => Postgresql::Database[$dbname]
     }
 
     exec { "load spatialrefs":
       command => "/usr/bin/psql -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql -d ${dbname}",
-      user => "vagrant",
+      user => "${appuser}",
       require => Postgresql::Database[$dbname]
     }
         
@@ -147,16 +149,16 @@ class install {
     }
 
     file { "settings_local.py":
-      path => "/vagrant/${projectname}/settings_local.py",
+      path => "${sourcepath}/${projectname}/settings_local.py",
       content => template("settings_vagrant.py")
     #  require => Exec['load spatialrefs template1']
     }
 
     file { "go":
-      path => "/home/vagrant/go",
+      path => "/home/${appuser}/go",
       content => template("go"),
-      owner => "vagrant",
-      group => "vagrant",
+      owner => "${appuser}",
+      group => "${appuser}",
       mode => 0775
     }
     
@@ -166,7 +168,7 @@ class install {
     }
     
     file { "fabfile.py":
-      path => "/vagrant/fabfile.py",
+      path => "${sourcepath}/fabfile.py",
       content => template("fabfile.py")
     }
 

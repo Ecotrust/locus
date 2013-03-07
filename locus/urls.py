@@ -16,5 +16,6 @@ urlpatterns = patterns('',
 admin.autodiscover()
 
 urlpatterns += patterns('',
-    (r'', include('madrona.common.urls')),
+    (r'', include('fbapp.urls')),
+    # (r'', include('madrona.common.urls')),
 )
