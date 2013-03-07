@@ -7,20 +7,20 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': '<%= dbname%>',
-        'USER': 'vagrant',
+        'USER': '<%= dbuser%>',
     }
 }
 
 # This should be a local folder created for use with the install_media command 
 MEDIA_ROOT = '/usr/local/apps/<%= reponame%>/mediaroot/'
 MEDIA_URL = 'http://localhost:8000/media/'
-STATIC_URL = 'http://localhost:8000/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = os.path.abspath(os.path.dirname(sys.argv[0])) + STATIC_URL
 
 POSTGIS_TEMPLATE='template1'
 
 ADMINS = (
-        ('Madrona', 'madrona@ecotrust.org')
+        ('<%= appadmin%>', '<%= adminemail%>')
         ) 
 
 import logging

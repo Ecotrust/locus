@@ -8,6 +8,8 @@ class install {
     $appname = "fbapp"
     $secretkey = "secret"
     $mapkey = "map_key"
+    $appadmin = "Madrona"
+    $adminemail = "madrona@ecotrust.org"
 
     # ensure that apt update is run before any packages are installed
     class apt {
