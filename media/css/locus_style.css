@@ -1,5 +1,5 @@
 body {
-	margin-top: 110px;
+	margin-top: 90px;
     overflow: auto !important;
 }
 
@@ -16,6 +16,11 @@ header .ProfileWidget .LoginWithFacebook{
 
 .navbar .header-logo{
     margin: 10px 0 5px 0;
+}
+
+.navbar-fixed-top .container{
+    max-width:940px;
+    width:95%;
 }
 
 /* -----------------------------------------------------------------------
