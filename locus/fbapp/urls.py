@@ -7,6 +7,11 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', home),
+    (r'^dashboard$', dashboard),
+    (r'^details$', details),
+    (r'^settings$', locus_settings),
+    (r'^friends$', friends),
+    (r'^world$', world),
     # (r'', include('madrona.common.urls')),
 )
 
