@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+{% load analytics %}
+{% load appname %}
+        
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>{% block title %}{% appname %}{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--<link rel="shortcut icon" href="/media/marco/ico/favicon.ico">-->
+    <script src="/media/third-party/jquery/jquery-1.9.1.min.js"></script>
+
+    <link rel="stylesheet" href="/media/third-party/fbootstrapp/bootstrap.css"/>
+    
+    <link rel="stylesheet" href="/media/third-party/bootstrap/css/bootstrap.css"/>
+    
+    <link rel="stylesheet" href="/media/css/locus_style.css"/>
+        
+</head>
+<body class="home page page-id-14 page-template page-template-page-homepage-php">
+    {% block header %}
+    <header role="banner">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+			    <div class="container">
+			    	<div class="row-fluid">
+			    		<div class="span5">
+					        <a href="/">
+					        	<img class="header-logo" src="/media/img/locus_logo.gif"/>
+					        </a>
+					    </div>
+					    <div class="span7">
+                            <div class="nav-collapse">
+                                <div>
+                                    <a id="ctl00_uxSignIn" title="Login with Facebook" class="btnFacebookLogin NoWrap" href="javascript:__doPostBack('ctl00$uxSignIn','')"><span>
+                                        Login with Facebook</span></a>
+                                </div><!--/.nav-collapse -->
+                            </div>
+					    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </header> <!-- end header -->
+    {% endblock %}
+    
+    {% block feedback %}
+    <div id="feedback-tab" class="rounded" data-toggle="modal" data-target="#feedback-modal">
+	    feedback
+	</div>
+    {% endblock %}
+    
+    {% block body %}{% endblock %}
+    {% block footer %}
+			<footer>
+			  <div class="row">
+			    <div class="span9 social">
+			      <h5>Contact Us</h5>
+			      	<a href="" data-toggle="modal" data-target="#feedback-modal">info@midatlanticocean.org</a><br/>
+			      	732-263-5392
+			      </p>
+			    </div>
+			    <div class="span3 social">
+			    	<div class="pull-right">
+				        <h5>connect with us</h5>              
+				        <p class="pull-right">
+					        <a href="http://portal.midatlanticocean.org/portal/feed/"><i class="icon-rss icon-large"></i></a>
+					        <a href="https://twitter.com/PortalMARCO"><i class="icon-twitter icon-large"></i></a>
+					    </p>
+				     <!--    <a href=""><i class="icon-linkedin icon-large"></i></a>
+				        <a href=""><i class="icon-google-plus icon-large"></i></a> -->
+
+				    </div>
+
+			    </div>
+			  </div>
+			</footer>
+    {% endblock %}      <!-- footer -->
+    {% analytics %}
+</body>
+</html>
+

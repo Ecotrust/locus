@@ -1,0 +1,112 @@
+body {
+	margin-top: 110px;
+    overflow: auto !important;
+}
+
+/* -----------------------------------------------------------------------
+Begin Header
+----------------------------------------------------------------------- */
+
+header .ProfileWidget .LoginWithFacebook{
+    height:22px;
+    width:153px;
+    float:right;
+    padding:9px 9px 0 0;
+}
+
+.navbar .header-logo{
+    margin: 10px 0 5px 0;
+}
+
+/* -----------------------------------------------------------------------
+End Header
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Facebook Login Button
+----------------------------------------------------------------------- */
+a.btnFacebookLogin,a.btnFacebookLogin:link,a.btnFacebookLogin:visited,a.btnFacebookLogin:hover,a.btnFacebookLogin:active{
+    color:#fff !important;
+    cursor:pointer;
+    text-decoration:none;
+    margin-top:20px;
+    float:right;
+}
+
+a.btnFacebookLogin{
+    background:#29447e url('../img/facebook/facebook_sm.png') no-repeat 0 0;
+    font:bold 11px/14px "lucida grande",Tahoma,Verdana,arial,sans-serif;
+    padding:0 0 0 1px;
+    margin-left:1em;
+    display:inline-block;
+}
+
+a.btnFacebookLogin span{
+    background-color:#5f78ab;
+    border-bottom:1px solid #1a356e;
+    border-top:1px solid #879ac0;
+    margin:1px 1px 0 21px;
+    padding:2px 6px 3px;
+    display:block;
+}
+.ProfileWidget a.btnFacebookLogin{
+    float:right;
+    margin-left:0;
+}
+
+/* -----------------------------------------------------------------------
+End Facebook Login Button
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Home Page
+----------------------------------------------------------------------- */
+
+.home-left img{
+    width: 85%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.home-left-left .home-left-img{
+    text-align: left;
+    padding-left: 2%;
+}
+
+.home-left-right .home-left-img{
+    text-align: right;
+    padding-right: 2%;
+}
+
+.home-left-img img{
+    border: solid #78A22F;
+}
+
+.home-left-right .home-left-img img{
+    margin-bottom: 0;
+}
+
+.home-left p{
+    font-size: 1em;
+}
+    
+.home-left-left p{
+    padding-top: 12%;
+    margin-top: 12%;
+    padding-bottom: 3%;
+    margin-bottom: 3%;
+    text-align: right;
+}
+
+.home-left-right p{
+    padding-top: 6%;
+    margin-top: 6%;
+    padding-bottom: 12%;
+    margin-bottom: 12%;
+    text-align: left;
+    width: 65%;
+}
+
+/* -----------------------------------------------------------------------
+End Home Page
+----------------------------------------------------------------------- */
