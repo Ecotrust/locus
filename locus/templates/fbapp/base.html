@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="/media/third-party/bootstrap/css/bootstrap.css"/>
     
     <link rel="stylesheet" href="/media/css/locus_style.css"/>
+    
+    {% block include %}
+    {% endblock %}
+    
         
 </head>
 <body class="home page page-id-14 page-template page-template-page-homepage-php">
@@ -75,6 +79,18 @@
 			  </div>
 			</footer>
     {% endblock %}      <!-- footer -->
+    
+    
+<SCRIPT src="/media/third-party/bootstrap/js/bootstrap.min.js" ></SCRIPT>    
+    
+    {% block scripts %}
+    {% endblock %}
+    
+<script>    
+    {% block js %}
+    {% endblock %}
+</script>
+    
     {% analytics %}
 </body>
 </html>
