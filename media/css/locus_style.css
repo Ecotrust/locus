@@ -171,6 +171,47 @@ End Settings Page
 ----------------------------------------------------------------------- */
 
 /* -----------------------------------------------------------------------
+Begin Friends Page
+----------------------------------------------------------------------- */
+
+.friend-card{
+    margin: 2% !important;
+}
+
+.middle-column{
+    margin-left: 1% !important;
+}
+
+.right-column{
+    margin-left: 1% !important;
+}
+
+.friend-search{
+    width: 90% !important;
+}
+
+.friend-select{
+    border: medium groove; 
+    margin-left: 1%; 
+    width: 96% !important;
+}
+
+.friend-select .scrollable{
+    overflow:auto; 
+    height:130px; 
+    padding:2%
+}
+
+.friend-textarea{
+    margin:1%; 
+    width:94%
+}
+
+/* -----------------------------------------------------------------------
+End Friends Page
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
 Begin World Page
 ----------------------------------------------------------------------- */
 
