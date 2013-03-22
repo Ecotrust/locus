@@ -3,6 +3,7 @@ locus/settings_local.py
 settings_local.py
 *.log
 *.orig
+media/third-party/*
 locus/wsgi.py
 data/*
 env/*
