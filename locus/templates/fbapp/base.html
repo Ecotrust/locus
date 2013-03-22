@@ -19,13 +19,14 @@
 -->
     <link rel="stylesheet" href="/media/third-party/bootstrap/css/bootstrap.css"/>
     
-    
+    <script src="/media/third-party/openlayers/2-12/OpenLayers.js"></script>
+
     {% block include %}
     {% endblock %}
     
         
 </head>
-<body class="home page page-id-14 page-template page-template-page-homepage-php">
+<body class="home page page-id-14 page-template page-template-page-homepage-php"  onload="init()">
     {% block header %}
     <header role="banner">
         <div class="navbar navbar-fixed-top">

@@ -1,4 +1,50 @@
 {% extends "fbapp/base.html" %}
+{% block include %}
+<SCRIPT>
+function init() {
+    var apiKey = "AvD-cuulbvBqwFDQGNB1gCXDEH4S6sEkS7Yw9r79gOyCvd2hBvQYPaRBem8cpkjv";
+    var map = new OpenLayers.Map(null, {
+      displayProjection: new OpenLayers.Projection("EPSG:4326"),
+      projection: "EPSG:4326"
+    });
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+
+    /*
+    var road = new OpenLayers.Layer.Bing({
+        name: "Road",
+        key: apiKey,
+        type: "Road"
+    });
+    */
+    var hybrid = new OpenLayers.Layer.Bing({
+        name: "Hybrid",
+        key: apiKey,
+        type: "AerialWithLabels"
+    });
+    var aerial = new OpenLayers.Layer.Bing({
+        name: "Aerial",
+        key: apiKey,
+        type: "Aerial"
+    });
+
+    map.addLayers([aerial, hybrid]);
+
+    $('a[data-toggle="tab"]').on('shown',function(e) {
+        if (e.target.id == "dashboard-tab") {
+            map.render("dash-map");
+            map.setCenter(new OpenLayers.LonLat(0, 0), 1);
+        } else if (e.target.id == "settings-tab" ) {
+            map.render("your-locus");
+            map.setCenter(new OpenLayers.LonLat(0, 0), 1);
+        } else if (e.target.id == "world-tab" ) {
+            map.render("loci-map");
+            map.setCenter(new OpenLayers.LonLat(0, 0), 1);
+        }
+    });
+}
+
+</SCRIPT>    
+{% endblock %}
 {% block feedback %}
 {% endblock %}
 {% block body %}
@@ -94,11 +140,11 @@
                         <div class="tab-pane" id="dashboard-tab-content">
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <h2>Dashboard</h2>
-                                    <div class="row-fluid">
-                                        <div class="span12 place-holder-short-map">
-                                            <p>Map</p>
-                                        </div>
+                                    <h2  data-bind="visible: showMap">Dashboard</h2>
+                                    <div class="row-fluid map-holder">
+                                        <div class="span1"></div>
+                                        <div id="dash-map" class="span10"></div>
+                                        
                                     </div>
                                     <div class="row-fluid">
                                         <div class="span10 place-holder-short">
@@ -318,10 +364,8 @@
                                                     <button class="btn pull-right">Cancel</button>
                                                 </div>
                                             </div>
-                                            <div class="row-fluid">
-                                                <div class="span7 place-holder-short-map">
-                                                    <p>map</p>
-                                                </div>
+                                            <div class="row-fluid map-holder">
+                                                <div id="your-locus" class="span7"></div>
                                                 <div class="span5 place-holder">
                                                     <p>Don't like this region?</p>
                                                     <button class="btn">Draw your own</button>
@@ -512,9 +556,8 @@
                                         </div>
                                     </div>
                                     <div class="row-fluid">
-                                        <div class="span12 place-holder-map">
-                                            <p>Map</p>
-                                        </div>
+                                        <div class="span1"></div>
+                                        <div id="loci-map" class="span10"></div>
                                     </div>
                                     <div class="row-fluid">
                                         <div class="span8">
@@ -549,4 +592,9 @@
 </div>
 
 {% endblock %}		
+
+{% block js %}
+        
+
+{% endblock %}
 
