@@ -17,7 +17,8 @@ img.olTileImage {
 }
 
 .map-holder{
-    margin: 0 0 2% 0;
+    /*margin: 0 0 2% 0;*/
+    border: solid #78A22F;
 }
 
 .olMap{
@@ -163,9 +164,12 @@ End Home Page
 Begin Dasboard Page
 ----------------------------------------------------------------------- */
 
-
 #dash-map{
   height:  350px !important;
+}
+
+.dash-textarea{
+    width:100%;
 }
 
 
