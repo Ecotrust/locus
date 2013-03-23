@@ -96,7 +96,7 @@
                         <div class="tab-pane" id="dashboard-tab-content">
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <h2  data-bind="visible: showMap">Dashboard</h2>
+                                    <h2>Dashboard</h2>
                                     <div class="row-fluid">
                                         <div id="dash-map" class="span12 map-holder"></div>        <!--dashboard map-->
                                     </div>
@@ -118,8 +118,10 @@
                                     </div>
                                     <div class="row-fluid">
                                         <div class="span4 place-holder">
+                                            <div data-bind="html: communityFeed"></div>
                                         </div>
                                         <div class="span8 place-holder">
+                                            <div data-bind="html: newsFeed"></div>
                                         </div>
                                     </div>
                                 </div>
