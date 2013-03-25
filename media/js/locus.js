@@ -794,6 +794,72 @@ function AppViewModel() {
             FRIENDS AppViewModel
     ---------------------------------------------------------------------*/
     
+    this.friendsJSON = [
+        {
+            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
+            'name': "Charlie",
+            'msg': "Tiger blood!"
+        },
+        {
+            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
+            'name': "Florida Man",
+            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
+        }
+    ];
+    
+    this.friendsList = ko.observable(JSON2FeedHTML(this.friendsJSON));
+    
+    this.usersJSON = [
+        {
+            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
+            'name': "Charlie",
+            'msg': "Tiger blood!"
+        },
+        {
+            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
+            'name': "Florida Man",
+            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
+        }
+    ];
+    
+    this.usersList = ko.observable(JSON2FeedHTML(this.usersJSON));
+    
+    this.inviteJSON = [
+        {
+            'name': 'Allan',
+            'id': '1'
+        },{
+            'name': 'Brenda',
+            'id': '2'
+        },{
+            'name': 'Charlie',
+            'id': '3'
+        },{
+            'name': 'Doris',
+            'id': '4'
+        },{
+            'name': 'Ernie',
+            'id': '5'
+        },{
+            'name': 'Francine',
+            'id': '6'
+        },{
+            'name': 'Guillermo',
+            'id': '7'
+        },{
+            'name': 'Helga',
+            'id': '8'
+        },{
+            'name': 'Irvin',
+            'id': '9'
+        },{
+            'name': 'Janice',
+            'id': '10'
+        }
+    ];
+    
+    this.inviteList = ko.observable(JSON2CheckboxesHTML(this.inviteJSON));
+    
     /*---------------------------------------------------------------------
             OTHER LOCI AppViewModel
     ---------------------------------------------------------------------*/
@@ -820,7 +886,7 @@ function JSON2FeedHTML(json){
                 </div>\
             </div>\
         </div>';
-    html = ""
+    html = "";
     for (var i=0; i<json.length; i++) {
         html += start_div;
         html += "                        <img src=\"" + json[i].img + "\"/>";
@@ -832,6 +898,17 @@ function JSON2FeedHTML(json){
     }
     return html;
 }
+
+function JSON2CheckboxesHTML(json){
+    html = "";
+    for (var i=0; i<json.length; i++) {
+        html += '<label class="checkbox">\
+            <input type="checkbox" value="' + json[i]['id'] + '">' + json[i]['name'] + '\
+        </label>';
+    }
+    return html;
+}
+    
 
 /*---------------------------------------------------------------------
         DETAILS
