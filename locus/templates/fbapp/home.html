@@ -139,7 +139,7 @@
                                         </div>
                                     </div>
                                     <h3>Summary</h3>
-                                    <div class="row-fluid">
+                                    <div class="row-fluid details">
                                         <div class="span12">
                                             <div class="accordion" id="summary-definition">
                                                 <div class="accordion-group">
@@ -150,7 +150,7 @@
                                                     </div>
                                                     <div id="collapseSummaryDefinition" class="accordion-body collapse in">
                                                         <div class="accordion-inner">
-                                                            [DEFINITION HERE]
+                                                            <div data-bind="html: detailsSummaryDefinition"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -162,7 +162,7 @@
                                                     </div>
                                                     <div id="collapseSummaryOverview" class="accordion-body collapse">
                                                         <div class="accordion-inner">
-                                                            [OVERVIEW HERE]
+                                                            <div data-bind="html: detailsSummaryOverview"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,7 +174,7 @@
                                                     </div>
                                                     <div id="collapseSummaryLanguage" class="accordion-body collapse">
                                                         <div class="accordion-inner">
-                                                            [LANGUAGE HERE]
+                                                            <div data-bind="html: detailsSummaryLanguage"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -186,7 +186,7 @@
                                                     </div>
                                                     <div id="collapseSummaryResources" class="accordion-body collapse">
                                                         <div class="accordion-inner">
-                                                            [NATURAL RESOURCES HERE]
+                                                            <div data-bind="html: detailsSummaryResources"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -206,7 +206,7 @@
                                                     </div>
                                                     <div id="collapseVulnerabilityDefinition" class="accordion-body collapse">
                                                         <div class="accordion-inner">
-                                                            [DEFINITION HERE]
+                                                            <div data-bind="html: detailsVulnerabilitiesDefinition"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -218,7 +218,7 @@
                                                     </div>
                                                     <div id="collapseVulnerabilityClimate" class="accordion-body collapse">
                                                         <div class="accordion-inner">
-                                                            [CLIMATE CHANGE HERE]
+                                                            <div data-bind="html: detailsVulnerabilitiesClimate"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -230,7 +230,7 @@
                                                     </div>
                                                     <div id="collapseVulnerabilityEconomic" class="accordion-body collapse">
                                                         <div class="accordion-inner">
-                                                            [SOCIO-ECONOMIC HERE]
+                                                            <div data-bind="html: detailsVulnerabilitiesSocEcon"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -242,7 +242,7 @@
                                                     </div>
                                                     <div id="collapseVulnerabilityHazards" class="accordion-body collapse">
                                                         <div class="accordion-inner">
-                                                            [NATURAL HAZARDS HERE]
+                                                            <div data-bind="html: detailsVulnerabilitiesHazards"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -311,53 +311,57 @@
                                             </div>
                                             <button class="btn">Update My Preferences</button>
                                         </div>
-                                        <div class="span7 place-holder">
+                                        <div class="span7 well">
                                             <div class="row-fluid">
                                                 <div class="span7">
                                                     <h3>Your Locus</h3>
                                                 </div>
                                                 <div class="span5">
-                                                    <button class="btn pull-right">Cancel</button>
-                                                </div>
-                                            </div>
-                                            <div class="row-fluid map-holder">
-                                                <div id="your-locus" class="span7"></div>
-                                                <div class="span5 place-holder">
-                                                    <p>Don't like this region?</p>
-                                                    <button class="btn">Draw your own</button>
-                                                    <div class="row-fluid">
-                                                        <div class="span8">
-                                                            Click to drop a corner on the map.
-                                                        </div>
-                                                        <div class="span4 place-holder">
-                                                            <p>img1</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row-fluid">
-                                                        <div class="span8">
-                                                            Click again to add more corners to your region.
-                                                        </div>
-                                                        <div class="span4 place-holder">
-                                                            <p>img2</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row-fluid">
-                                                        <div class="span8">
-                                                            Double-click to finish drawing your region.
-                                                        </div>
-                                                        <div class="span4 place-holder">
-                                                            <p>img3</p>
-                                                        </div>
-                                                    </div>
+                                                    <button class="btn pull-right locus-review-btn">Cancel</button>
                                                 </div>
                                             </div>
                                             <div class="row-fluid">
+                                                <div id="your-locus" class="span7 map-holder"></div>
+                                                <div class="span5">
+                                                    <p>Don't like this region?</p>
+                                                    <button class="btn">Draw your own</button>
+                                                    <div id="draw-instruct"class="row-fluid">
+                                                        <div class="span12">
+                                                            <div class="row-fluid">
+                                                                <div class="span7">
+                                                                    Click to drop a corner on the map.
+                                                                </div>
+                                                                <div class="span4">
+                                                                    <img class="demo" src="/media/img/draw_1.png"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row-fluid">
+                                                                <div class="span7">
+                                                                    Click again to add more corners to your region.
+                                                                </div>
+                                                                <div class="span4">
+                                                                    <img class="demo" src="/media/img/draw_2.png"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row-fluid">
+                                                                <div class="span7">
+                                                                    Double-click to finish drawing your region.
+                                                                </div>
+                                                                <div class="span4">
+                                                                    <img class="demo" src="/media/img/draw_3.png"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid locus-review-bottom">
                                                 <div class="span7">
                                                     <label>Name:</label>
                                                     <input type="text" placeholder="MyLocus"/>
                                                 </div>
                                                 <div class="span5">
-                                                    <button class="btn pull-right">OK</button>
+                                                    <button class="btn pull-right locus-review-btn">OK</button>
                                                 </div>
                                             </div>
                                         </div>

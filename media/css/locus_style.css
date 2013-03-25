@@ -185,6 +185,46 @@ Begin Details Page
     margin-top: 2%;
 }
 
+.details h3{
+    color: #47556C; 
+    font-size: 14px; 
+    margin-bottom: 0px;
+}
+
+.details table.analysis_report_container {
+    background: none repead scroll 0 0 #FFFFFF;
+    border-color: lightgray;
+    border-spacing: 0;
+    border-width: 0;
+    font-size: small;
+    padding: 0;
+    text-align: center;
+    margin-left: 5%;
+/*    
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+*/
+}
+
+.details table.analysis_report_container tr.grey {
+    background: none repeat scroll 0 0 #ECECEC;
+}
+
+.details table.analysis_report_container td, th{
+   border-color: gray;
+   border-style: solid;
+   border-width: 0;
+   padding: 2px;
+   text-align: center;
+}
+
+.details sub, .details sup {
+    font-size: 100% !important;
+    line-height: 14px !important;
+    position: static !important;
+}
+
 /* -----------------------------------------------------------------------
 End Details Page
 ----------------------------------------------------------------------- */
@@ -207,6 +247,25 @@ Begin Settings Page
 
 #your-locus{
     height: 300px;
+}
+
+#draw-instruct{
+    margin: 5% 2% 0 0;
+}
+
+img.demo {
+    width: 70%;
+    margin: 2% auto;
+    text-align: center;
+}
+
+.locus-review-btn {
+    margin: 5% 15% auto auto !important;
+    width: 45%;
+}
+
+.locus-review-bottom{
+    margin-top: 3%;
 }
 
 /* -----------------------------------------------------------------------
