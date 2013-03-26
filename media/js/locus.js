@@ -84,6 +84,8 @@ function AppViewModel() {
             Example JSON AppViewModel
     ---------------------------------------------------------------------*/
     
+    this.userID = '1';
+    
     this.users = {
         '1':{
             'id': '1',
@@ -272,6 +274,44 @@ function AppViewModel() {
             'isPerm': false
         },
     ];
+    
+    this.locations = {
+        '1':{
+            'country':"USA",
+            'district':"Oregon",
+            'city':"Portland",
+            'lat':45.523668,
+            'lon':-122.673454
+        },
+        '2':{
+            'country':"Canada",
+            'district':"Saskatchewan",
+            'city':"Saskatoon",
+            'lat':52.134331,
+            'lon':-106.652584
+        },
+        '3':{
+            'country':"Australia",
+            'district':"New South Wales",
+            'city':"Wollongong",
+            'lat':-34.425107,
+            'lon':150.89334
+        },
+        '4':{
+            'country':"Mali",
+            'district':"Tombouctou",
+            'city':"Timbuktu",
+            'lat':16.774877,
+            'lon':-3.008294
+        },
+        '5':{
+            'country':"Bolivia",
+            'district':"Pedro Domingo Murillo",
+            'city':"La Paz",
+            'lat':-16.49897,
+            'lon':-68.145161
+        },
+    };
     
     /*---------------------------------------------------------------------
             DASHBOARD AppViewModel
@@ -974,47 +1014,39 @@ function AppViewModel() {
             FRIENDS AppViewModel
     ---------------------------------------------------------------------*/
     
-    this.friendsJSON = [        //TODO Need location data before these can be removed!
-        {
-            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
-            'name': "Charlie",
-            'msg': "Tiger blood!"
-        },
-        {
-            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
-            'name': "Florida Man",
-            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
+    this.friendsJSON = [];
+    // this.friendLocationsJSON = [];
+    
+    this.otherUsersJSON = [];
+    // this.otherLocationsJSON = [];
+    
+    this.otherFriendsJSON = [];
+    
+    this.user = this.users[this.userID];
+    for (var key in this.users){
+        if (key != this.userID) {
+            if (this.user['friends'].indexOf(key) > -1) {   //If user is a friend
+                if (this.users[key].isLocusUser == true) {      //if friend is locus user
+                    this.friendsJSON.push(this.users[key]);
+                    // this.friendLocationsJSON.push(this.locations[this.users[key].location])
+                } else {        //if friend is not locus user
+                    this.otherFriendsJSON.push(this.users[key]);
+                    // this.otherLocationsJSON.push(this.locations[this.users[key].location])
+                }
+            } else {        //if user is not a friend
+                if (this.users[key].isLocusUser == true) {      //if other is locus user
+                    this.otherUsersJSON.push(this.users[key])
+                }
+            }
+                
         }
-    ];
-    
-    this.friendsList = ko.observable(JSON2FeedHTML(this.friendsJSON));
-    
-    this.usersJSON = [        //TODO Need location data before these can be removed!
-        {
-            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
-            'name': "Charlie",
-            'msg': "Tiger blood!"
-        },
-        {
-            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
-            'name': "Florida Man",
-            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
-        }
-    ];
-    
-    this.usersList = ko.observable(JSON2FeedHTML(this.usersJSON));
-    
-    this.inviteJSON = [
-        this.users['o1'],
-        this.users['o2'],
-        this.users['o3'],
-        this.users['o4'],
-        this.users['o5'],
-        this.users['o6']
-    ];
-    
-    
-    this.inviteList = ko.observable(JSON2CheckboxesHTML(this.inviteJSON));
+    }
+
+    this.friendsList = ko.observable(JSON2UserFeedHTML(this.friendsJSON, this.locations));
+  
+    this.usersList = ko.observable(JSON2UserFeedHTML(this.otherUsersJSON, this.locations));
+
+    this.inviteList = ko.observable(JSON2CheckboxesHTML(this.otherFriendsJSON));
     
     /*---------------------------------------------------------------------
             OTHER LOCI AppViewModel
@@ -1043,7 +1075,7 @@ function AppViewModel() {
         DASHBOARD
 ---------------------------------------------------------------------*/
 
-function JSON2FeedHTML(json){
+function JSON2UserFeedHTML(json, locations){
     var start_div = '<div class="row-fluid">\
             <div class="span11 well friend-card">\
                 <div class="row-fluid">\
@@ -1065,7 +1097,9 @@ function JSON2FeedHTML(json){
         html += mid_div;
         html += "                        <h4>" + json[i].name + "</h4>";
         html += mid_div_2;
-        html += "                        <p>" + json[i].msg + "</p>";
+        html += "                        <p>" + locations[json[i].location].city +
+                                        ", " + locations[json[i].location].district +
+                                        ", " + locations[json[i].location].country + "</p>";
         html += end_div;
     }
     return html;
