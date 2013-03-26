@@ -974,7 +974,7 @@ function AppViewModel() {
             FRIENDS AppViewModel
     ---------------------------------------------------------------------*/
     
-    this.friendsJSON = [
+    this.friendsJSON = [        //TODO Need location data before these can be removed!
         {
             'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
             'name': "Charlie",
@@ -989,7 +989,7 @@ function AppViewModel() {
     
     this.friendsList = ko.observable(JSON2FeedHTML(this.friendsJSON));
     
-    this.usersJSON = [
+    this.usersJSON = [        //TODO Need location data before these can be removed!
         {
             'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
             'name': "Charlie",
@@ -1020,35 +1020,21 @@ function AppViewModel() {
             OTHER LOCI AppViewModel
     ---------------------------------------------------------------------*/
     
-    this.otherCommunityJSON = [
-        {
-            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
-            'name': "Charlie",
-            'msg': "Tiger blood!"
-        },
-        {
-            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
-            'name': "Florida Man",
-            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
+    this.otherCommunityJSON = [];
+    this.otherCommunityUsersJSON = {};
+    this.otherNewsJSON = [];
+    
+    for (i=0; i<this.storyPoints.length; i++) {
+        if (this.storyPoints[i].type == 'news') {
+            this.otherNewsJSON.push(this.storyPoints[i]);
+        } else if (this.storyPoints[i].type == 'post') {
+            this.otherCommunityJSON.push(this.storyPoints[i]);
+            this.otherCommunityUsersJSON[this.storyPoints[i].source] = this.users[this.storyPoints[i].source];
         }
-    ];
+    }
     
-    this.otherCommunityFeed = ko.observable(JSON2FeedHTML(this.otherCommunityJSON));      //static object to be replaced with AJAX call
-    
-    this.otherNewsJSON = [
-        {
-            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
-            'name': "Charlie",
-            'msg': "Tiger blood!"
-        },
-        {
-            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
-            'name': "Florida Man",
-            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
-        }
-    ];
-    
-    this.otherNewsFeed = ko.observable(JSON2FeedHTML(this.otherNewsJSON));      //static object to be replaced with AJAX call
+    this.otherCommunityFeed = ko.observable(JSON2ComFeedHTML(this.otherCommunityJSON, this.otherCommunityUsersJSON));      //static object to be replaced with AJAX call
+    this.otherNewsFeed = ko.observable(JSON2NewsFeedHTML(this.otherNewsJSON));      //static object to be replaced with AJAX call
     
 }
 
