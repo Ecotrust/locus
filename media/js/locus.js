@@ -81,38 +81,218 @@ function init() {
 function AppViewModel() {
     
     /*---------------------------------------------------------------------
+            Example JSON AppViewModel
+    ---------------------------------------------------------------------*/
+    
+    this.users = {
+        '1':{
+            'id': '1',
+            'name': 'Allan',
+            'location': '1',
+            'friends':['2','3','4','o1','o2','o3','o4','o5','o6'],
+            'img':"/media/DEMO/img/FACE.png",
+            'isLocusUser': true
+        },
+        '2':{
+            'name': 'Brenda',
+            'id': '2',
+            'location': '1',
+            'friends':['1','3','4','5','6','o1','o2','o3','o4','o5','o6'],
+            'img':"/media/DEMO/img/FACE.png",
+            'isLocusUser': true
+        },
+        '3':{
+            'name': 'Charlie',
+            'id': '3',
+            'location': '2',
+            'friends':['1','2','7','o1','o2','o3','o4','o5','o6'],
+            'img':"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
+            'isLocusUser': true
+        },
+        '4':{
+            'name': 'Doris',
+            'id': '4',
+            'location': '1',
+            'friends':['1','2','o1','o2','o3','o4','o5','o6'],
+            'img':"/media/DEMO/img/FACE.png",
+            'isLocusUser': true
+        },
+        '5':{
+            'name': 'Ernie',
+            'id': '5',
+            'location': '2',
+            'friends':['2','6','7','o1','o2','o3','o4','o5','o6'],
+            'img':"/media/DEMO/img/FACE.png",
+            'isLocusUser': true
+        },
+        '6':{
+            'name': 'Florida Man',
+            'id': '6',
+            'location': '3',
+            'friends':['2','5','7','8','10','o1','o2','o3','o4','o5','o6'],
+            'img':"https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
+            'isLocusUser': true
+        },
+        '7':{
+            'name': 'Guillermo',
+            'id': '7',
+            'location': '3',
+            'friends':['3','5','6','9','10','o1','o2','o3','o4','o5','o6'],
+            'img':"/media/DEMO/img/FACE.png",
+            'isLocusUser': true
+        },
+        '8':{
+            'name': 'Helga',
+            'id': '8',
+            'location': '4',
+            'friends':['6','9','10','o1','o2','o3','o4','o5','o6'],
+            'img':"/media/DEMO/img/FACE.png",
+            'isLocusUser': true
+        },
+        '9':{
+            'name': 'Irvin',
+            'id': '9',
+            'location': '5',
+            'friends':['7','8','10','o1','o2','o3','o4','o5','o6'],
+            'img':"/media/DEMO/img/FACE.png",
+            'isLocusUser': true
+        },
+        '10':{
+            'name': 'Janice',
+            'id': '10',
+            'location': '5',
+            'friends':['6','7','8','9','o1','o2','o3','o4','o5','o6'],
+            'img':"/media/DEMO/img/FACE.png",
+            'isLocusUser': true
+        },
+        'o1':{
+            'name': 'Abby',
+            'id': 'o1',
+            'location': null,
+            'friends': [],
+            'img': null,
+            'isLocusUser': false
+        },
+        'o2':{
+            'name': 'Ben',
+            'id': 'o1',
+            'location': null,
+            'friends': [],
+            'img': null,
+            'isLocusUser': false
+        },
+        'o3':{
+            'name': 'Cathy',
+            'id': 'o1',
+            'location': null,
+            'friends': [],
+            'img': null,
+            'isLocusUser': false
+        },
+        'o4':{
+            'name': 'David',
+            'id': 'o1',
+            'location': null,
+            'friends': [],
+            'img': null,
+            'isLocusUser': false
+        },
+        'o5':{
+            'name': 'Elise',
+            'id': 'o1',
+            'location': null,
+            'friends': [],
+            'img': null,
+            'isLocusUser': false
+        },
+        'o6':{
+            'name': 'Fernando',
+            'id': 'o1',
+            'location': null,
+            'friends': [],
+            'img': null,
+            'isLocusUser': false
+        }
+    };
+    
+    this.storyPoints = [
+        {
+            'id': '1',
+            'geometry': null,
+            'type': 'post',
+            'source': '3',
+            'title': null,
+            'text': 'Tiger blood!',
+            'img': null,
+            'date': '03/22/2013',
+            'isPerm': false
+        },
+        {
+            'id': '2',
+            'geometry': null,
+            'type': 'post',
+            'source': '6',
+            'title': null,
+            'text': 'I was Arrested For Threatening Neighbor With Machete... again.',
+            'img': null,
+            'date': '03/21/2013',
+            'isPerm': false
+        },
+        {
+            'id': '3',
+            'geometry': null,
+            'type': 'news',
+            'source': 'http://switchboard.nrdc.org/blogs/bfinamore/will_chinas_new_leaders_clean.html',
+            'title': 'Will China\'s New Leaders Clean Up the Environment?',
+            'text': 'I was trying to clean the coal dust from the windows of my dingy Beijing apartment one day in March 1992 when the phone rang with astonishing news. Nearly one-third of the delegates to the National People’s Congress had just abstained or voted against the construction of the massive Three Gorges Dam, the world’s largest hydropower project.',
+            'img': 'http://switchboard.nrdc.org/blogs/bfinamore/Three%20Gorges%20Dam.jpg',
+            'date': '03/25/2013',
+            'isPerm': false
+        },
+        {
+            'id': '4',
+            'geometry': null,
+            'type': 'news',
+            'source': 'http://wwf.panda.org/who_we_are/wwf_offices/china/environmental_problems_china/',
+            'title': 'Local problems leading to global disasters?',
+            'text': 'For centuries, China has been the most populous nation on Earth. Today, its population\'s impact on the environment is evident even in the most remote areas.',
+            'img': 'http://awsassets.panda.org/img/yang_coal_factory_china_352334.jpg',
+            'date': '03/25/2013',
+            'isPerm': false
+        },
+        {
+            'id': '5',
+            'geometry': null,
+            'type': 'news',
+            'source': 'http://www.guardian.co.uk/environment/blog/2011/apr/12/china-green-plans-america',
+            'title': 'China\'s green progress leaves US red-faced',
+            'text': 'China pushes ahead with an emissions trading scheme, while American initiatives remain sunk in Congressional quicksand',
+            'img': 'http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2011/2/28/1298909592540/China-GDP-slowdown-008.jpg',
+            'date': '04/12/2011',
+            'isPerm': false
+        },
+    ];
+    
+    /*---------------------------------------------------------------------
             DASHBOARD AppViewModel
     ---------------------------------------------------------------------*/
     
-    this.communityJSON = [
-        {
-            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
-            'name': "Charlie",
-            'msg': "Tiger blood!"
-        },
-        {
-            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
-            'name': "Florida Man",
-            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
+    this.communityJSON = [];
+    this.communityUsersJSON = {};
+    this.newsJSON = [];
+    
+    for (i=0; i<this.storyPoints.length; i++) {
+        if (this.storyPoints[i].type == 'news') {
+            this.newsJSON.push(this.storyPoints[i]);
+        } else if (this.storyPoints[i].type == 'post') {
+            this.communityJSON.push(this.storyPoints[i]);
+            this.communityUsersJSON[this.storyPoints[i].source] = this.users[this.storyPoints[i].source];
         }
-    ];
+    }
     
-    this.communityFeed = ko.observable(JSON2FeedHTML(this.communityJSON));      //static object to be replaced with AJAX call
+    this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, this.communityUsersJSON));      //static object to be replaced with AJAX call
     
-    this.newsJSON = [
-        {
-            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
-            'name': "Charlie",
-            'msg': "Tiger blood!"
-        },
-        {
-            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
-            'name': "Florida Man",
-            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
-        }
-    ];
-    
-    this.newsFeed = ko.observable(JSON2FeedHTML(this.newsJSON));      //static object to be replaced with AJAX call
+    this.newsFeed = ko.observable(JSON2NewsFeedHTML(this.newsJSON));      //static object to be replaced with AJAX call
     
     /*---------------------------------------------------------------------
             DETAILS AppViewModel
@@ -825,44 +1005,50 @@ function AppViewModel() {
     this.usersList = ko.observable(JSON2FeedHTML(this.usersJSON));
     
     this.inviteJSON = [
-        {
-            'name': 'Allan',
-            'id': '1'
-        },{
-            'name': 'Brenda',
-            'id': '2'
-        },{
-            'name': 'Charlie',
-            'id': '3'
-        },{
-            'name': 'Doris',
-            'id': '4'
-        },{
-            'name': 'Ernie',
-            'id': '5'
-        },{
-            'name': 'Francine',
-            'id': '6'
-        },{
-            'name': 'Guillermo',
-            'id': '7'
-        },{
-            'name': 'Helga',
-            'id': '8'
-        },{
-            'name': 'Irvin',
-            'id': '9'
-        },{
-            'name': 'Janice',
-            'id': '10'
-        }
+        this.users['o1'],
+        this.users['o2'],
+        this.users['o3'],
+        this.users['o4'],
+        this.users['o5'],
+        this.users['o6']
     ];
+    
     
     this.inviteList = ko.observable(JSON2CheckboxesHTML(this.inviteJSON));
     
     /*---------------------------------------------------------------------
             OTHER LOCI AppViewModel
     ---------------------------------------------------------------------*/
+    
+    this.otherCommunityJSON = [
+        {
+            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
+            'name': "Charlie",
+            'msg': "Tiger blood!"
+        },
+        {
+            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
+            'name': "Florida Man",
+            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
+        }
+    ];
+    
+    this.otherCommunityFeed = ko.observable(JSON2FeedHTML(this.otherCommunityJSON));      //static object to be replaced with AJAX call
+    
+    this.otherNewsJSON = [
+        {
+            'img': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
+            'name': "Charlie",
+            'msg': "Tiger blood!"
+        },
+        {
+            'img': "https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
+            'name': "Florida Man",
+            'msg': "Florida Man Arrested For Threatening Neighbor With Machete, Says He Was Just Pruning Palm Tree."
+        }
+    ];
+    
+    this.otherNewsFeed = ko.observable(JSON2FeedHTML(this.otherNewsJSON));      //static object to be replaced with AJAX call
     
 }
 
@@ -894,6 +1080,62 @@ function JSON2FeedHTML(json){
         html += "                        <h4>" + json[i].name + "</h4>";
         html += mid_div_2;
         html += "                        <p>" + json[i].msg + "</p>";
+        html += end_div;
+    }
+    return html;
+}
+
+function JSON2ComFeedHTML(json, users){
+    var start_div = '<div class="row-fluid">\
+            <div class="span11 well friend-card">\
+                <div class="row-fluid">\
+                    <div class="span2">';
+    var mid_div = '                    </div>\
+                    <div class="span10">';
+    var mid_div_2 = '                    </div>\
+                </div>\
+                <div class="row-fluid">\
+                    <div class="span12">';
+    var end_div = '                </div>\
+                </div>\
+            </div>\
+        </div>';
+    html = "";
+    for (var i=0; i<json.length; i++) {
+        html += start_div;
+        html += "                        <img src=\"" + users[json[i].source].img + "\"/>";
+        html += mid_div;
+        html += "                        <h4>" + users[json[i].source].name + "</h4>";
+        html += mid_div_2;
+        html += "                        <p>" + json[i].text + "</p>";
+        html += end_div;
+    }
+    return html;
+}
+
+function JSON2NewsFeedHTML(json){
+    var start_div = '<div class="row-fluid">\
+            <div class="span11 well friend-card">\
+                <div class="row-fluid">\
+                    <div class="span2">';
+    var mid_div = '                    </div>\
+                    <div class="span10">';
+    var mid_div_2 = '                    </div>\
+                </div>\
+                <div class="row-fluid">\
+                    <div class="span12">';
+    var end_div = '                </div>\
+                </div>\
+            </div>\
+        </div>';
+    html = "";
+    for (var i=0; i<json.length; i++) {
+        html += start_div;
+        html += "                        <img src=\"" + json[i].img + "\"/>";
+        html += mid_div;
+        html += "                        <h4>" + json[i].title + "</h4>";
+        html += mid_div_2;
+        html += "                        <p>" + json[i].text + "</p>";
         html += end_div;
     }
     return html;
