@@ -25,6 +25,20 @@ img.olTileImage {
     max-width: 1024px;
 }
 
+.olControlLayerSwitcher {
+    width: 15% !important;
+    min-width: 95px;
+}
+
+label.olButton {
+    display: inline-table;
+}
+
+input.olButton{
+    vertical-align: top;
+    margin-right: 1%;
+}
+
 /* -----------------------------------------------------------------------
 End Map
 ----------------------------------------------------------------------- */
