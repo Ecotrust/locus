@@ -161,7 +161,7 @@ var storyPoints = [
         'type': 'news',
         'source': 'http://switchboard.nrdc.org/blogs/bfinamore/will_chinas_new_leaders_clean.html',
         'title': 'Will China\'s New Leaders Clean Up the Environment?',
-        'text': 'I was trying to clean the coal dust from the windows of my dingy Beijing apartment one day in March 1992 when the phone rang with astonishing news. Nearly one-third of the delegates to the National People’s Congress had just abstained or voted against the construction of the massive Three Gorges Dam, the world’s largest hydropower project.',
+        'text': 'I was trying to clean the coal dust from the windows of my dingy Beijing apartment one day in March 1992 when the phone rang with astonishing news. Nearly one-third of the delegates to the National People’s Congress had just abstained or voted against the construction of the massive Three Gorges Dam, the world’s largest hydropower project. I simply could not believe my ears. China’s rubber-stamp legislature had never displayed such a level of opposition in its entire history, let alone on environmental grounds.  The vote was even more remarkable in light of the government’s strenuous attempts to stifle public debate about the project’s environmental, safety and social impacts.',
         'img': 'http://switchboard.nrdc.org/blogs/bfinamore/Three%20Gorges%20Dam.jpg',
         'date': '03/25/2013',
         'isPerm': false
@@ -172,7 +172,7 @@ var storyPoints = [
         'type': 'news',
         'source': 'http://wwf.panda.org/who_we_are/wwf_offices/china/environmental_problems_china/',
         'title': 'Local problems leading to global disasters?',
-        'text': 'For centuries, China has been the most populous nation on Earth. Today, its population\'s impact on the environment is evident even in the most remote areas.',
+        'text': 'For centuries, China has been the most populous nation on Earth. Today, its population\'s impact on the environment is evident even in the most remote areas. But with an unprecedented economic boom, these effects are taking very serious proportions. While individual use of resources remains low, the cumulative impact of steady growth in the consumption of over a billion people is tremendous.',
         'img': 'http://awsassets.panda.org/img/yang_coal_factory_china_352334.jpg',
         'date': '03/25/2013',
         'isPerm': false
@@ -183,7 +183,7 @@ var storyPoints = [
         'type': 'news',
         'source': 'http://www.guardian.co.uk/environment/blog/2011/apr/12/china-green-plans-america',
         'title': 'China\'s green progress leaves US red-faced',
-        'text': 'China pushes ahead with an emissions trading scheme, while American initiatives remain sunk in Congressional quicksand',
+        'text': 'China pushes ahead with an emissions trading scheme, while American initiatives remain sunk in Congressional quicksand. When it comes to responding to climate change, the contrast between China and the United States is stark. It has been clear for some time that the Asian powerhouse is moving more rapidly on renewable technologies. A recent report by Pew Charitable Trusts shows China led the world last year with a $54.4bn investment in clean technology, about 40% higher than third-placed America.',
         'img': 'http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2011/2/28/1298909592540/China-GDP-slowdown-008.jpg',
         'date': '04/12/2011',
         'isPerm': false

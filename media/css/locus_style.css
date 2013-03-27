@@ -172,6 +172,20 @@ Begin Dasboard Page
     width:100%;
 }
 
+.news-title{
+    color:#333333;
+}
+
+.friend-card:hover {
+    background-color:#E5E5E5;
+}
+
+.news-img{
+    float: left;
+    max-width: 25%;
+    margin-right: 4%;
+}
+
 
 /* -----------------------------------------------------------------------
 End Dashboard Page

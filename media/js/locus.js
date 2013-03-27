@@ -185,28 +185,24 @@ function JSON2ComFeedHTML(json, users){
 }
 
 function JSON2NewsFeedHTML(json){
-    var start_div = '<div class="row-fluid">\
-            <div class="span11 well friend-card">\
-                <div class="row-fluid">\
-                    <div class="span2">';
-    var mid_div = '                    </div>\
-                    <div class="span10">';
-    var mid_div_2 = '                    </div>\
-                </div>\
+    var start_div = '<div class="row-fluid">'
+    var well_div = '    <div class="span11 well friend-card">\
                 <div class="row-fluid">\
                     <div class="span12">';
-    var end_div = '                </div>\
+    var end_well_div = '                </div>\
                 </div>\
-            </div>\
-        </div>';
+            </div>'
+    var end_div = '</div>';
     html = "";
     for (var i=0; i<json.length; i++) {
         html += start_div;
-        html += "                        <div class=\"news-img\"><img src=\"" + json[i].img + "\"/></div>";
-        html += mid_div;
-        html += "                        <h4>" + json[i].title + "</h4>";
-        html += mid_div_2;
-        html += "                        <p>" + json[i].text + "</p>";
+        html += "                        <a href=\"" + json[i].source + "\" target=\"_blank\" class=\"news-title\">";
+        html += well_div;
+        html += "                        <div class=\"news-img\"><img src=\"" + json[i].img + "\"/></div>\
+                                        <h4>" + json[i].title + "</h4>\
+                                        <p>" + json[i].text + "</p>";
+        html += end_well_div;
+        html += "                        </a>";
         html += end_div;
     }
     return html;
