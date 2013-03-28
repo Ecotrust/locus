@@ -179,7 +179,8 @@ Begin Dasboard Page
 ----------------------------------------------------------------------- */
 
 #dash-map{
-  height:  350px !important;
+  height:  400px;
+  position: relative;
 }
 
 .dash-textarea{
@@ -200,6 +201,18 @@ Begin Dasboard Page
     margin-right: 4%;
 }
 
+div.legend{
+    float: left;
+    z-index: 755;
+    bottom: 0px;
+    position: absolute;
+    border: medium solid;
+    height: 25%;
+}
+
+.legend img{
+    width: 100%;
+}
 
 /* -----------------------------------------------------------------------
 End Dashboard Page
