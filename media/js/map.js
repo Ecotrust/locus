@@ -1,30 +1,51 @@
-var map;
+var map, storyPointLayer, selectStoryPointControl, selectedFeature;
+
+function cleanOldSelected(){
+    while (map.popups.length > 0) {
+        map.removePopup(map.popups[0]);
+    }
+    //TODO: if selectedFeature is a new feature, and no data was saved for it, remove it from existence.
+}
 
 
 function onPopupClose(evt) {
-    selectStoryPointControl.unselect(selectedFeature);
-    selectLocusControl.unselect(selectedFeature);
+    map.removePopup(selectedFeature.popup);
 }
 
-function onFeatureSelect(feature) {
-    selectedFeature = feature;
-    popup = new OpenLayers.Popup.FramedCloud("chicken", 
-                             feature.geometry.getBounds().getCenterLonLat(),
-                             null,
-                             "<div style='font-size:.8em'>Feature: " + feature.id +"<br>Area: " + feature.geometry.getArea()+"</div>",
-                             null, true, onPopupClose);
-    feature.popup = popup;
+function onNewPopupClose(evt) {
+    map.removePopup(selectedFeature.popup);
+}
+
+function onFeatureAdd(event) {          //TODO: This is specifically written for points - update accordingly for loci
+    cleanOldSelected();
+    selectedFeature = event.feature;
+    popup = new OpenLayers.Popup.FramedCloud("point-popup", 
+                             selectedFeature.geometry.getBounds().getCenterLonLat(),
+                             new OpenLayers.Size(100,100),
+                             "<div style='font-size:.8em'>Feature: " + selectedFeature.id +"<br>Area: " + selectedFeature.geometry.getArea()+"</div>",
+                             null, true, onNewPopupClose);
+    selectedFeature.popup = popup;
     map.addPopup(popup);
 }
 
-function onFeatureUnselect(feature) {
-    map.removePopup(feature.popup);
-    feature.popup.destroy();
-    feature.popup = null;
+function onFeatureSelect(event) {       //TODO: This is specifically written for points - update accordingly for loci
+    cleanOldSelected();
+    selectedFeature = event.feature;
+    if (!selectedFeature.popup) {
+        popup = new OpenLayers.Popup.FramedCloud("point-popup", 
+                                 selectedFeature.geometry.getBounds().getCenterLonLat(),
+                                 new OpenLayers.Size(100,100),
+                                 "<div style='font-size:.8em'>Feature: " + selectedFeature.id +"<br>Area: " + selectedFeature.geometry.getArea()+"</div>",
+                                 null, true, onPopupClose);
+    }
+    map.addPopup(selectedFeature.popup);
+}
+
+function onFeatureUnselect(event) {
+    map.removePopup(event.feature.popup);
 }    
 
 function mapInit() {
-    
     
     /*--- Click Control, from example: http://openlayers.org/dev/examples/click.html ---*/
     OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
@@ -51,24 +72,12 @@ function mapInit() {
         }, 
 
         trigger: function(e) {
-            var lonlat = map.getLonLatFromPixel(e.xy);
-            // lonlat.transform(new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
-            // alert("You clicked near " + lonlat.lat + ", " +
-                                      // + lonlat.lon);
-                                      
-                                      
-            //TODO: Create vector layer (on init)
-            //TODO: Create new feature at e.xy
-            //TODO: Create popup for feature
-            //TODO: add feature to vector layer
-            //TODO: show feature
-            //TODO: show popup
-            //TODO: save feature with attributes from popup
-            //TODO: 
-            //TODO: 
-                                      
-                                      
+            selectStoryPointControl.unselect(selectedFeature);
             /*
+            var lonlat = map.getLonLatFromPixel(e.xy);
+
+            //TODO: save feature with attributes from popup         
+                                      
             var bubble = new OpenLayers.Popup.Anchored({
                 'id': 'new-story-point-bubble',
                 'lonlat': lonlat,
@@ -80,20 +89,9 @@ function mapInit() {
             });
             //bubble.show();
             map.addPopup(bubble);
+
             */
             
-            /*
-            var popup = new OpenLayers.Popup.FramedCloud("popup",
-                lonlat,
-                null,
-                "<div style='font-size:.8em'>Feature: [id]<br>Foo: [attributes]</div>",
-                null,
-                true
-            );
-            
-            map.addPopup(popup);
-            // popup.show();
-            */
         }
 
     });
@@ -148,7 +146,29 @@ function mapInit() {
     });
     
     
-    var storyPointLayer = new OpenLayers.Layer.Vector("Story Point Layer");
+    storyPointLayer = new OpenLayers.Layer.Vector("Story Point Layer", {
+        eventListerners:{
+            'featureadded':function(evt) {
+                var feature = evt.feature;
+                var popup = new OpenLayers.Popup.FramedCloud("popup",
+                    OpenLayers.LonLat.fromString(feature.geometry.toShortString()),
+                    null,
+                    "<div style='font-size:.8em'>Feature: " + feature.id +"<br>Foo: " + feature.attributes.foo+"</div>",
+                    null,
+                    true
+                );
+                feature.popup = popup;
+                map.addPopup(popup);
+            }
+        }
+    });
+    
+    storyPointLayer.events.on({
+        "featureadded": this.onFeatureAdd,
+        "featureselected": this.onFeatureSelect,
+        "featureunselected": this.onFeatureUnselect
+    });
+    
     var locusLayer = new OpenLayers.Layer.Vector("Locus Layer");
     
     map.addLayers([aerial, hybrid, esriOcean, storyPointLayer, locusLayer]);
@@ -156,12 +176,14 @@ function mapInit() {
     map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.addControl(new OpenLayers.Control.MousePosition());
     
-    var drawPointControls, drawLocusControls, selectStoryPointControl, selectLocusControl, selectedFeature;
+    var drawPointControls, drawLocusControls, selectLocusControl, selectedFeature;
     
-    selectLocusControl = new OpenLayers.Control.SelectFeature(locusLayer,
-        {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
-    selectStoryPointControl = new OpenLayers.Control.SelectFeature(storyPointLayer,
-        {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
+    selectLocusControl = new OpenLayers.Control.SelectFeature(locusLayer
+        // {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect}
+    );
+    selectStoryPointControl = new OpenLayers.Control.SelectFeature(storyPointLayer
+        // {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect}
+    );
     drawPointControls = {
         point: new OpenLayers.Control.DrawFeature(storyPointLayer,
                     OpenLayers.Handler.Point),
@@ -228,11 +250,9 @@ function mapInit() {
         
     });
     
-    var click = new OpenLayers.Control.Click();
-    map.addControl(click);
-    click.activate();
-    
-    
+    // var click = new OpenLayers.Control.Click();
+    // map.addControl(click);
+    // click.activate();
     
     return map;
 };
