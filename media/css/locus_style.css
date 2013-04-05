@@ -234,6 +234,9 @@ Begin Dasboard Page
 
 .news-bubble{
     max-width: 400px;
+    max-height: 300px;
+    min-width: 250px;
+    min-height: 70px;
 }
 
 .news-bubble-img{
@@ -249,12 +252,16 @@ Begin Dasboard Page
 .post-bubble{
     max-width: 400px;
     max-height: 300px;
+    min-width: 250px;
+    min-height: 70px;
 }
 
-.post-bubble-img{
-    max-width: 70px;
+.post-bubble img{
+    max-width: 60px;
+    max-height: 70px;
     float: left;
     margin-right: 8px;
+    vertical-align: center;
 }
 
 div.new-storypoint{

@@ -19,7 +19,7 @@ function AppViewModel() {
             Example JSON AppViewModel
     ---------------------------------------------------------------------*/
     
-    this.userID = userID;
+    this.userID = ko.observable(userID);
     
     this.users = users;
     
@@ -89,9 +89,9 @@ function AppViewModel() {
     
     this.otherFriendsJSON = [];
     
-    this.user = this.users[this.userID];
+    this.user = this.users[this.userID()];
     for (var key in this.users){
-        if (key != this.userID) {
+        if (key != this.userID()) {
             if (this.user['friends'].indexOf(key) > -1) {   //If user is a friend
                 if (this.users[key].isLocusUser == true) {      //if friend is locus user
                     this.friendsJSON.push(this.users[key]);
@@ -327,7 +327,7 @@ function postNew(event){
             'id': newUid(storyPoints),
             'img': null,
             'isPerm': $('#post-permanent')[0].checked,
-            'source': userID,
+            'source': app.userID(),
             'text': $('#post-text')[0].value,
             'title': null,
             'type': 'post'
@@ -379,9 +379,9 @@ function newsBubble(storyPoint) {
 
 function postBubble(storyPoint) {
     var html = "<div class=\"post-bubble\">\
-                <div class=\"post-bubble-img\"><img src=\"" + users[storyPoint.source].img + "\"/></div>\
-                <p>" + storyPoint.text + "</p>\
-            </div>";
+                        <div class=\"post-bubble-img\"><img src=\"" + users[storyPoint.source].img + "\"/></div>\
+                        <p>" + storyPoint.text + "</p>\
+                </div>";
     return html;
 }
 
