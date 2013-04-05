@@ -273,7 +273,13 @@ textarea.new-storypoint{
     min-width: 250px;
 }
 
+button.new-storypoint{
+    margin-left: 30px;
+}
 
+.new-storypoint-controls{
+    min-width: 250px;
+}
 
 div.legend{
     float: left;

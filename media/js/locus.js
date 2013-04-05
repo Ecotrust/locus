@@ -1,4 +1,6 @@
 var app;
+    
+var mapShown = false;
 
 function init() {
     
@@ -137,7 +139,6 @@ function AppViewModel() {
     
 }
 
-
 /*---------------------------------------------------------------------
         DASHBOARD
 ---------------------------------------------------------------------*/
@@ -233,7 +234,172 @@ function JSON2CheckboxesHTML(json){
     }
     return html;
 }
-    
+
+function cleanOldSelected(){
+    while (map.popups.length > 0) {
+        var removePoint = false;
+        map.removePopup(map.popups[0]);
+        if (selectedFeature.popup){
+            if (selectedFeature.popup.id == "new-popup" && !selectedFeature.attributes.storyPoint){
+                removePoint = true;
+            }
+            selectedFeature.popup.destroy();
+            selectedFeature.popup = null;
+        }
+        if (removePoint) {
+            storyPointLayer.removeFeatures(selectedFeature);
+        }
+    }
+}
+
+function onPopupClose(evt) {
+    map.removePopup(selectedFeature.popup);
+}
+
+function onNewPopupClose(evt) {
+    map.removePopup(selectedFeature.popup);
+    if (!selectedFeature.attributes.storyPoint) {
+        storyPointLayer.removeFeatures(selectedFeature);
+    }
+}
+
+function onFeatureAdd(event) {          //TODO: This is specifically written for points - update accordingly for loci
+    cleanOldSelected();
+    if (mapShown) {
+        selectedFeature = event.feature;
+        popup = newPopup();
+        selectedFeature.popup = popup;
+        map.addPopup(popup);
+    }
+}
+
+function onFeatureSelect(event) {       //TODO: This is specifically written for points - update accordingly for loci
+    cleanOldSelected();
+    if (mapShown) {
+        selectedFeature = event.feature;
+        if (!selectedFeature.popup) {
+            selectedFeature.popup = makePopup(selectedFeature);
+        }
+        map.addPopup(selectedFeature.popup);
+    }
+}
+
+function onFeatureUnselect(event) {
+    map.removePopup(event.feature.popup);
+}
+
+function newPopup() {
+    html = "<div class=\"row-fluid, new-storypoint\">\
+                <div class=\"span8\">\
+                    <form id=\"new-post-form\" class=\"new-storypoint\" onSubmit=\"JavaScript:postNew(event)\">\
+                        <textarea id=\"post-text\" rows=\"2\" class=\"new-storypoint\">What's happening?</textarea>\
+                        <div class=\"row-fluid new-storypoint-controls\">\
+                            <div class=\"span4\">\
+                                <button class=\"btn, new-storypoint\">Post</button>\
+                            </div>\
+                            <div class=\"span8\">\
+                                <label class=\"checkbox\">\
+                                    <input id=\"post-permanent\" type=\"checkbox\" value=\"\">Make permanent</input>\
+                                </label>\
+                            </div>\
+                        </div>\
+                    </form>\
+                </div>\
+            </div>";
+            
+    var popup = new OpenLayers.Popup.FramedCloud("new-popup", 
+                                     selectedFeature.geometry.getBounds().getCenterLonLat(),
+                                     new OpenLayers.Size(100,100),
+                                     html,
+                                     null, 
+                                     true, 
+                                     onNewPopupClose);
+    return popup;
+}
+
+function postNew(event){
+    event.preventDefault();
+    var date = new Date().getTime()
+    selectedFeature.attributes = {
+        'storyPoint': {
+            'date':date,
+            'geometry': selectedFeature.geometry,
+            'id': newUid(storyPoints),
+            'img': null,
+            'isPerm': $('#post-permanent')[0].checked,
+            'source': userID,
+            'text': $('#post-text')[0].value,
+            'title': null,
+            'type': 'post'
+        }            
+    }
+    cleanOldSelected();
+}
+
+function newUid(set){
+    //from http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+    var uid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+    });
+    if (!set.hasOwnProperty(uid)){
+        return uid;
+    } else {
+        return newUid(type)
+    }
+}
+
+function makePopup(feature) {
+    if (feature.attributes.storyPoint.type == 'news') {
+        var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
+                                     feature.geometry.getBounds().getCenterLonLat(),
+                                     new OpenLayers.Size(100,100),
+                                     newsBubble(feature.attributes.storyPoint),
+                                     null, 
+                                     true, 
+                                     onPopupClose);
+    } else {
+        var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
+                                     selectedFeature.geometry.getBounds().getCenterLonLat(),
+                                     new OpenLayers.Size(100,100),
+                                     postBubble(feature.attributes.storyPoint),
+                                     null, true, onPopupClose);
+    }
+    popup.updateSize();
+    return popup;
+}
+
+function newsBubble(storyPoint) {
+    var html = "<div class=\"news-bubble\">\
+                <div class=\"news-bubble-img\"><img src=\"" + storyPoint.img + "\"/></div>\
+                <a href=\"" + storyPoint.source + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
+            </div>";
+    return html;
+}
+
+function postBubble(storyPoint) {
+    var html = "<div class=\"post-bubble\">\
+                <div class=\"post-bubble-img\"><img src=\"" + users[storyPoint.source].img + "\"/></div>\
+                <p>" + storyPoint.text + "</p>\
+            </div>";
+    return html;
+}
+
+function getBubbleContentHTML(lonlat) {
+    lonlat.transform(new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
+    html = '<div class="row-fluid">\
+        <div class="span12">\
+            <textarea rows="3" class="dash-textarea">What\'s going on?</textarea>\
+        </div>\
+    </div>\
+    <div class="row-fluid">\
+        <div class="span12 well">\
+            <p>Coordinates: ' + lonlat.lat.toFixed(4) + ', ' + lonlat.lon.toFixed(4) + '</p>\
+        </div>\
+    </div>'
+      
+    return html;
+};
 
 /*---------------------------------------------------------------------
         DETAILS
