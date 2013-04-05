@@ -135,6 +135,7 @@ function mapInit() {
             map.render("dash-map");
             map.setCenter(dash_map_status.center, dash_map_status.zoom);
             storyPointLayer.setVisibility(true);
+            locusLayer.setVisibility(true);
             mapShown = true;
         } else if (e.target.id == "settings-tab" ) {
             selectLocusControl.activate();
@@ -142,6 +143,7 @@ function mapInit() {
             map.render("your-locus");
             map.setCenter(set_map_status.center, set_map_status.zoom);
             storyPointLayer.setVisibility(false);
+            locusLayer.setVisibility(true);
             mapShown = true;
         } else if (e.target.id == "world-tab" ) {
             selectLocusControl.deactivate();
@@ -150,6 +152,7 @@ function mapInit() {
             map.render("loci-map");
             map.setCenter(other_map_status.center, other_map_status.zoom);
             storyPointLayer.setVisibility(true);
+            locusLayer.setVisibility(false);
             mapShown = true;
         }
         
