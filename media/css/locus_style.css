@@ -410,6 +410,7 @@ Begin Friends Page
 
 .friend-card{
     margin: 2% !important;
+    min-height: 85px !important;
 }
 
 .middle-column{

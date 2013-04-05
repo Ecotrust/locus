@@ -77,6 +77,17 @@ function AppViewModel() {
             SETTINGS AppViewModel
     ---------------------------------------------------------------------*/
     
+    $('#draw-button').on('click', function(evt){
+            locusLayer.removeAllFeatures();
+            drawLocusControls['polygon'].activate();
+        }
+    );
+    
+    $('#cancel-locus-button').on('click', function(evt){
+            locusLayer.removeAllFeatures();
+        }
+    );
+    
     /*---------------------------------------------------------------------
             FRIENDS AppViewModel
     ---------------------------------------------------------------------*/
@@ -145,7 +156,7 @@ function AppViewModel() {
 
 function JSON2UserFeedHTML(json, locations){
     var start_div = '<div class="row-fluid">\
-            <div class="span11 well friend-card">\
+            <div class="friend-card span11 well">\
                 <div class="row-fluid">\
                     <div class="span2">';
     var mid_div = '                    </div>\
@@ -263,7 +274,7 @@ function onNewPopupClose(evt) {
     }
 }
 
-function onFeatureAdd(event) {          //TODO: This is specifically written for points - update accordingly for loci
+function onPostAdd(event) {
     cleanOldSelected();
     if (mapShown) {
         selectedFeature = event.feature;
@@ -273,7 +284,7 @@ function onFeatureAdd(event) {          //TODO: This is specifically written for
     }
 }
 
-function onFeatureSelect(event) {       //TODO: This is specifically written for points - update accordingly for loci
+function onPointSelect(event) {
     cleanOldSelected();
     if (mapShown) {
         selectedFeature = event.feature;
@@ -284,7 +295,7 @@ function onFeatureSelect(event) {       //TODO: This is specifically written for
     }
 }
 
-function onFeatureUnselect(event) {
+function onPointUnselect(event) {
     map.removePopup(event.feature.popup);
 }
 
@@ -408,6 +419,17 @@ function getBubbleContentHTML(lonlat) {
 /*---------------------------------------------------------------------
         SETTINGS
 ---------------------------------------------------------------------*/
+
+function onLocusAdd(event) {
+    drawLocusControls['polygon'].deactivate();
+}
+
+function onLocusSelect(event) {
+}
+
+function onLocusUnselect(event) {
+}
+
 
 /*---------------------------------------------------------------------
         FRIENDS
