@@ -1,4 +1,4 @@
-var map, storyPointLayer, selectStoryPointControl, selectedFeature;
+var map, storyPointLayer, selectStoryPointControl, selectedFeature, selectLocusControl;
 
 function mapInit() {
         
@@ -77,10 +77,10 @@ function mapInit() {
     
     map.addLayers([aerial, hybrid, esriOcean, storyPointLayer, locusLayer]);
     
-    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    // map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.addControl(new OpenLayers.Control.MousePosition());
     
-    var drawPointControls, drawLocusControls, selectLocusControl, selectedFeature;
+    var drawPointControls, drawLocusControls, selectedFeature;
     
     selectLocusControl = new OpenLayers.Control.SelectFeature(locusLayer
         // {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect}
@@ -118,6 +118,7 @@ function mapInit() {
             };
             mapShown = false;
             drawPointControls['point'].deactivate();
+            selectStoryPointControl.unselectAll();
             selectStoryPointControl.deactivate();
         } else if (e.relatedTarget.id == "settings-tab") {
             set_map_status = {
@@ -144,12 +145,14 @@ function mapInit() {
             $('#dash-map').show();
             map.render("dash-map");
             map.setCenter(dash_map_status.center, dash_map_status.zoom);
+            storyPointLayer.setVisibility(true);
             mapShown = true;
         } else if (e.target.id == "settings-tab" ) {
             selectLocusControl.activate();
             $('#your-locus').show();
             map.render("your-locus");
             map.setCenter(set_map_status.center, set_map_status.zoom);
+            storyPointLayer.setVisibility(false);
             mapShown = true;
         } else if (e.target.id == "world-tab" ) {
             selectLocusControl.deactivate();
@@ -157,6 +160,7 @@ function mapInit() {
             $('#loci-map').show();
             map.render("loci-map");
             map.setCenter(other_map_status.center, other_map_status.zoom);
+            storyPointLayer.setVisibility(true);
             mapShown = true;
         }
         
