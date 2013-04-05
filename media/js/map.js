@@ -1,8 +1,14 @@
 var map, storyPointLayer, selectStoryPointControl, selectedFeature;
 
+var mapShown = false;
+
 function cleanOldSelected(){
     while (map.popups.length > 0) {
         map.removePopup(map.popups[0]);
+        if (selectedFeature.popup){
+            selectedFeature.popup.destroy();
+            selectedFeature.popup = null;
+        }
     }
     //TODO: if selectedFeature is a new feature, and no data was saved for it, remove it from existence.
 }
@@ -18,32 +24,68 @@ function onNewPopupClose(evt) {
 
 function onFeatureAdd(event) {          //TODO: This is specifically written for points - update accordingly for loci
     cleanOldSelected();
-    selectedFeature = event.feature;
-    popup = new OpenLayers.Popup.FramedCloud("point-popup", 
-                             selectedFeature.geometry.getBounds().getCenterLonLat(),
-                             new OpenLayers.Size(100,100),
-                             "<div style='font-size:.8em'>Feature: " + selectedFeature.id +"<br>Area: " + selectedFeature.geometry.getArea()+"</div>",
-                             null, true, onNewPopupClose);
-    selectedFeature.popup = popup;
-    map.addPopup(popup);
-}
-
-function onFeatureSelect(event) {       //TODO: This is specifically written for points - update accordingly for loci
-    cleanOldSelected();
-    selectedFeature = event.feature;
-    if (!selectedFeature.popup) {
+    if (mapShown) {
+        selectedFeature = event.feature;
         popup = new OpenLayers.Popup.FramedCloud("point-popup", 
                                  selectedFeature.geometry.getBounds().getCenterLonLat(),
                                  new OpenLayers.Size(100,100),
                                  "<div style='font-size:.8em'>Feature: " + selectedFeature.id +"<br>Area: " + selectedFeature.geometry.getArea()+"</div>",
-                                 null, true, onPopupClose);
+                                 null, true, onNewPopupClose);
+        selectedFeature.popup = popup;
+        map.addPopup(popup);
     }
-    map.addPopup(selectedFeature.popup);
+}
+
+function onFeatureSelect(event) {       //TODO: This is specifically written for points - update accordingly for loci
+    cleanOldSelected();
+    if (mapShown) {
+        selectedFeature = event.feature;
+        if (!selectedFeature.popup) {
+            selectedFeature.popup = makePopup(selectedFeature);
+        }
+        map.addPopup(selectedFeature.popup);
+    }
 }
 
 function onFeatureUnselect(event) {
     map.removePopup(event.feature.popup);
-}    
+}
+
+function makePopup (feature) {
+    if (feature.attributes.storyPoint.type == 'news') {
+        var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
+                                     feature.geometry.getBounds().getCenterLonLat(),
+                                     new OpenLayers.Size(100,100),
+                                     newsBubble(feature.attributes.storyPoint),
+                                     null, 
+                                     true, 
+                                     onPopupClose);
+    } else {
+        var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
+                                     selectedFeature.geometry.getBounds().getCenterLonLat(),
+                                     new OpenLayers.Size(100,100),
+                                     postBubble(feature.attributes.storyPoint),
+                                     null, true, onPopupClose);
+    }
+    popup.updateSize();
+    return popup;
+}
+
+function newsBubble(storyPoint) {
+    var html = "<div class=\"news-bubble\">\
+                <div class=\"news-bubble-img\"><img src=\"" + storyPoint.img + "\"/></div>\
+                <a href=\"" + storyPoint.source + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
+            </div>";
+    return html;
+}
+
+function postBubble(storyPoint) {
+    var html = "<div class=\"post-bubble\">\
+                <div class=\"post-bubble-img\"><img src=\"" + users[storyPoint.source].img + "\"/></div>\
+                <p>" + storyPoint.text + "</p>\
+            </div>";
+    return html;
+}
 
 function mapInit() {
     
@@ -204,12 +246,15 @@ function mapInit() {
     }
     
     $('a[data-toggle="tab"]').on('shown',function(e) {
+    
+        cleanOldSelected();
         
         if (e.relatedTarget.id == "dashboard-tab") {
             dash_map_status = {
                 center: map.center,
                 zoom: map.zoom
             };
+            mapShown = false;
             drawPointControls['point'].deactivate();
             selectStoryPointControl.deactivate();
         } else if (e.relatedTarget.id == "settings-tab") {
@@ -217,6 +262,7 @@ function mapInit() {
                 center: map.center,
                 zoom: map.zoom
             };
+            mapShown = false;
             selectLocusControl.deactivate();
             drawLocusControls['polygon'].deactivate();
             drawLocusControls['select'].deactivate();
@@ -225,6 +271,7 @@ function mapInit() {
                 center: map.center,
                 zoom: map.zoom
             };
+            mapShown = false;
             selectLocusControl.deactivate();
             selectStoryPointControl.deactivate();
         }
@@ -235,17 +282,20 @@ function mapInit() {
             $('#dash-map').show();
             map.render("dash-map");
             map.setCenter(dash_map_status.center, dash_map_status.zoom);
+            mapShown = true;
         } else if (e.target.id == "settings-tab" ) {
             selectLocusControl.activate();
             $('#your-locus').show();
             map.render("your-locus");
             map.setCenter(set_map_status.center, set_map_status.zoom);
+            mapShown = true;
         } else if (e.target.id == "world-tab" ) {
             selectLocusControl.deactivate();
             selectStoryPointControl.deactivate();
             $('#loci-map').show();
             map.render("loci-map");
             map.setCenter(other_map_status.center, other_map_status.zoom);
+            mapShown = true;
         }
         
     });

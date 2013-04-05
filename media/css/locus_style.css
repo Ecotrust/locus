@@ -188,7 +188,12 @@ Begin Dasboard Page
     width:100%;
 }
 /*--- Override Bootstrap styles to display bubble images correctly -----*/
-#point-popup img{
+#point-popup_FrameDecorationImg_0, 
+#point-popup_FrameDecorationImg_1, 
+#point-popup_FrameDecorationImg_2, 
+#point-popup_FrameDecorationImg_3, 
+#point-popup_FrameDecorationImg_4{
+/*#point-popup img{*/
     max-width: none !important;
 }
 
@@ -204,6 +209,36 @@ Begin Dasboard Page
     float: left;
     max-width: 25%;
     margin-right: 4%;
+}
+
+#point-popup{
+    max-width: none !important;
+    
+}
+
+.news-bubble{
+    max-width: 400px;
+}
+
+.news-bubble-img{
+    max-width:100px;
+    float: left;
+    margin-right: 8px;
+}
+
+.news-bubble p{
+    text-size: 70%;
+}
+
+.post-bubble{
+    max-width: 400px;
+    max-height: 300px;
+}
+
+.post-bubble-img{
+    max-width: 70px;
+    float: left;
+    margin-right: 8px;
 }
 
 div.legend{

@@ -1,6 +1,8 @@
+var app;
+
 function init() {
     
-    var map = mapInit();
+    mapInit();
 
     // Activates knockout.js
     ko.applyBindings(new AppViewModel());
@@ -8,6 +10,8 @@ function init() {
 }
 
 function AppViewModel() {
+    
+    app = this;
     
     /*---------------------------------------------------------------------
             Example JSON AppViewModel
@@ -28,6 +32,7 @@ function AppViewModel() {
     this.communityJSON = [];
     this.communityUsersJSON = {};
     this.newsJSON = [];
+    this.features = [];
     
     for (i=0; i<this.storyPoints.length; i++) {
         if (this.storyPoints[i].type == 'news') {
@@ -36,7 +41,14 @@ function AppViewModel() {
             this.communityJSON.push(this.storyPoints[i]);
             this.communityUsersJSON[this.storyPoints[i].source] = this.users[this.storyPoints[i].source];
         }
+        var coords = this.storyPoints[i].geometry.coordinates;
+        var point = new OpenLayers.Geometry.Point(coords[0],coords[1]);
+        var feature = new OpenLayers.Feature.Vector(point,{
+            'storyPoint':storyPoints[i]
+        });
+        this.features.push(feature);
     }
+    storyPointLayer.addFeatures(this.features);
     
     this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, this.communityUsersJSON));      //static object to be replaced with AJAX call
     

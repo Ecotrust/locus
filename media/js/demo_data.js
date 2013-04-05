@@ -135,7 +135,10 @@ var users = {
 var storyPoints = [
     {
         'id': '1',
-        'geometry': null,
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [-142844.93957374,1095801.0673437]
+        },
         'type': 'post',
         'source': '3',
         'title': null,
@@ -146,7 +149,10 @@ var storyPoints = [
     },
     {
         'id': '2',
-        'geometry': null,
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [-9221668.3421389,3481589.9423626]
+        },
         'type': 'post',
         'source': '6',
         'title': null,
@@ -157,7 +163,10 @@ var storyPoints = [
     },
     {
         'id': '3',
-        'geometry': null,
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [12955407.625552,4853259.8378846]
+        },
         'type': 'news',
         'source': 'http://switchboard.nrdc.org/blogs/bfinamore/will_chinas_new_leaders_clean.html',
         'title': 'Will China\'s New Leaders Clean Up the Environment?',
@@ -168,7 +177,10 @@ var storyPoints = [
     },
     {
         'id': '4',
-        'geometry': null,
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [13205510.262066,4195901.0547237]
+        },
         'type': 'news',
         'source': 'http://wwf.panda.org/who_we_are/wwf_offices/china/environmental_problems_china/',
         'title': 'Local problems leading to global disasters?',
@@ -179,7 +191,10 @@ var storyPoints = [
     },
     {
         'id': '5',
-        'geometry': null,
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [13401189.054449,4526109.0168696]
+        },
         'type': 'news',
         'source': 'http://www.guardian.co.uk/environment/blog/2011/apr/12/china-green-plans-america',
         'title': 'China\'s green progress leaves US red-faced',
