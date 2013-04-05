@@ -192,7 +192,12 @@ Begin Dasboard Page
 #point-popup_FrameDecorationImg_1, 
 #point-popup_FrameDecorationImg_2, 
 #point-popup_FrameDecorationImg_3, 
-#point-popup_FrameDecorationImg_4{
+#point-popup_FrameDecorationImg_4, 
+#new-popup_FrameDecorationImg_0, 
+#new-popup_FrameDecorationImg_1, 
+#new-popup_FrameDecorationImg_2, 
+#new-popup_FrameDecorationImg_3, 
+#new-popup_FrameDecorationImg_4{
 /*#point-popup img{*/
     max-width: none !important;
 }
@@ -213,7 +218,18 @@ Begin Dasboard Page
 
 #point-popup{
     max-width: none !important;
-    
+}
+
+#new-popup{
+    max-width: none !important;
+    min-width: 300px;
+    max-height: none !important;
+}
+
+#new-popup_contentDiv{
+    width: 100%;
+    margin-right: 20px;
+    height: 145 !important;
 }
 
 .news-bubble{
@@ -240,6 +256,24 @@ Begin Dasboard Page
     float: left;
     margin-right: 8px;
 }
+
+div.new-storypoint{
+    min-width: 200px;
+    width: 100%;
+    min-height: 100px;
+}
+
+form.new-storypoint{
+    margin-bottom: 8px;
+}
+
+textarea.new-storypoint{
+    margin-left: 30px;
+    width: 100%;
+    min-width: 250px;
+}
+
+
 
 div.legend{
     float: left;

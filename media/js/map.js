@@ -4,13 +4,19 @@ var mapShown = false;
 
 function cleanOldSelected(){
     while (map.popups.length > 0) {
+        var removePoint = false;
         map.removePopup(map.popups[0]);
         if (selectedFeature.popup){
+            if (selectedFeature.popup.id == "new-popup" && !selectedFeature.attributes.storyPoint){
+                removePoint = true;
+            }
             selectedFeature.popup.destroy();
             selectedFeature.popup = null;
         }
+        if (removePoint) {
+            storyPointLayer.removeFeatures(selectedFeature);
+        }
     }
-    //TODO: if selectedFeature is a new feature, and no data was saved for it, remove it from existence.
 }
 
 
@@ -20,17 +26,16 @@ function onPopupClose(evt) {
 
 function onNewPopupClose(evt) {
     map.removePopup(selectedFeature.popup);
+    if (!selectedFeature.attributes.storyPoint) {
+        storyPointLayer.removeFeatures(selectedFeature);
+    }
 }
 
 function onFeatureAdd(event) {          //TODO: This is specifically written for points - update accordingly for loci
     cleanOldSelected();
     if (mapShown) {
         selectedFeature = event.feature;
-        popup = new OpenLayers.Popup.FramedCloud("point-popup", 
-                                 selectedFeature.geometry.getBounds().getCenterLonLat(),
-                                 new OpenLayers.Size(100,100),
-                                 "<div style='font-size:.8em'>Feature: " + selectedFeature.id +"<br>Area: " + selectedFeature.geometry.getArea()+"</div>",
-                                 null, true, onNewPopupClose);
+        popup = newPopup();
         selectedFeature.popup = popup;
         map.addPopup(popup);
     }
@@ -51,7 +56,60 @@ function onFeatureUnselect(event) {
     map.removePopup(event.feature.popup);
 }
 
-function makePopup (feature) {
+function newPopup() {
+    html = "<div class=\"row-fluid, new-storypoint\">\
+                <div class=\"span8\">\
+                    <form id=\"new-post-form\" class=\"new-storypoint\" onSubmit=\"JavaScript:postNew(event)\">\
+                        <textarea id=\"post-text\" rows=\"2\" class=\"new-storypoint\">What's happening?</textarea>\
+                        <button class=\"btn\">Post</button>\
+                    </form>\
+                </div>\
+            </div>";
+            
+    var popup = new OpenLayers.Popup.FramedCloud("new-popup", 
+                                     selectedFeature.geometry.getBounds().getCenterLonLat(),
+                                     new OpenLayers.Size(100,100),
+                                     html,
+                                     null, 
+                                     true, 
+                                     onNewPopupClose);
+    return popup;
+}
+
+function postNew(event){
+    event.preventDefault();
+    // alert($('#post-text')[0].value);
+    var date = new Date().getTime()
+    selectedFeature.attributes = {
+        'storyPoint': {
+            'date':date,
+            'geometry': selectedFeature,
+            'id': newUid(storyPoints),
+            'img': null,
+            'isPerm': false,
+            'source': userID,
+            'text': $('#post-text')[0].value,
+            'title': null,
+            'type': 'post'
+        }            
+    }
+    cleanOldSelected();
+}
+
+function newUid(set){
+    //from http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+    var uid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+    });
+    if (!set.hasOwnProperty(uid)){
+        return uid;
+    } else {
+        return newUid(type)
+    }
+}
+
+function makePopup(feature) {
     if (feature.attributes.storyPoint.type == 'news') {
         var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
                                      feature.geometry.getBounds().getCenterLonLat(),
@@ -88,58 +146,7 @@ function postBubble(storyPoint) {
 }
 
 function mapInit() {
-    
-    /*--- Click Control, from example: http://openlayers.org/dev/examples/click.html ---*/
-    OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
-        defaultHandlerOptions: {
-            'single': true,
-            'double': false,
-            'pixelTolerance': 0,
-            'stopSingle': false,
-            'stopDouble': false
-        },
-
-        initialize: function(options) {
-            this.handlerOptions = OpenLayers.Util.extend(
-                {}, this.defaultHandlerOptions
-            );
-            OpenLayers.Control.prototype.initialize.apply(
-                this, arguments
-            ); 
-            this.handler = new OpenLayers.Handler.Click(
-                this, {
-                    'click': this.trigger
-                }, this.handlerOptions
-            );
-        }, 
-
-        trigger: function(e) {
-            selectStoryPointControl.unselect(selectedFeature);
-            /*
-            var lonlat = map.getLonLatFromPixel(e.xy);
-
-            //TODO: save feature with attributes from popup         
-                                      
-            var bubble = new OpenLayers.Popup.Anchored({
-                'id': 'new-story-point-bubble',
-                'lonlat': lonlat,
-                'contentSize': new OpenLayers.Size({'w': 300, 'h': 200}),
-                'contentHTML': getBubbleContentHTML(lonlat),
-                // 'anchor': ?,
-                'closeBox': true
-                // 'closeBoxCallback': aFunction()
-            });
-            //bubble.show();
-            map.addPopup(bubble);
-
-            */
-            
-        }
-
-    });
-    /*--- end click control */
-    
-    
+        
     var dash_map_status = {
         center: new OpenLayers.LonLat(0, 0),
         zoom: 1
@@ -299,11 +306,7 @@ function mapInit() {
         }
         
     });
-    
-    // var click = new OpenLayers.Control.Click();
-    // map.addControl(click);
-    // click.activate();
-    
+
     return map;
 };
 

@@ -132,8 +132,8 @@ var users = {
     }
 };
 
-var storyPoints = [
-    {
+var storyPoints = {
+    "1": {
         'id': '1',
         'geometry': {
             'type': 'Point',
@@ -147,7 +147,7 @@ var storyPoints = [
         'date': '03/22/2013',
         'isPerm': false
     },
-    {
+    "2": {
         'id': '2',
         'geometry': {
             'type': 'Point',
@@ -161,7 +161,7 @@ var storyPoints = [
         'date': '03/21/2013',
         'isPerm': false
     },
-    {
+    "3": {
         'id': '3',
         'geometry': {
             'type': 'Point',
@@ -175,7 +175,7 @@ var storyPoints = [
         'date': '03/25/2013',
         'isPerm': false
     },
-    {
+    "4": {
         'id': '4',
         'geometry': {
             'type': 'Point',
@@ -189,7 +189,7 @@ var storyPoints = [
         'date': '03/25/2013',
         'isPerm': false
     },
-    {
+    "5": {
         'id': '5',
         'geometry': {
             'type': 'Point',
@@ -203,7 +203,7 @@ var storyPoints = [
         'date': '04/12/2011',
         'isPerm': false
     },
-];
+};
 
 var locations = {
     '1':{
