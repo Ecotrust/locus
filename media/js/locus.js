@@ -293,7 +293,16 @@ function newPopup() {
                 <div class=\"span8\">\
                     <form id=\"new-post-form\" class=\"new-storypoint\" onSubmit=\"JavaScript:postNew(event)\">\
                         <textarea id=\"post-text\" rows=\"2\" class=\"new-storypoint\">What's happening?</textarea>\
-                        <button class=\"btn\">Post</button>\
+                        <div class=\"row-fluid new-storypoint-controls\">\
+                            <div class=\"span4\">\
+                                <button class=\"btn, new-storypoint\">Post</button>\
+                            </div>\
+                            <div class=\"span8\">\
+                                <label class=\"checkbox\">\
+                                    <input id=\"post-permanent\" type=\"checkbox\" value=\"\">Make permanent</input>\
+                                </label>\
+                            </div>\
+                        </div>\
                     </form>\
                 </div>\
             </div>";
@@ -310,15 +319,14 @@ function newPopup() {
 
 function postNew(event){
     event.preventDefault();
-    // alert($('#post-text')[0].value);
     var date = new Date().getTime()
     selectedFeature.attributes = {
         'storyPoint': {
             'date':date,
-            'geometry': selectedFeature,
+            'geometry': selectedFeature.geometry,
             'id': newUid(storyPoints),
             'img': null,
-            'isPerm': false,
+            'isPerm': $('#post-permanent')[0].checked,
             'source': userID,
             'text': $('#post-text')[0].value,
             'title': null,
