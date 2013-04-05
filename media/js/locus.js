@@ -34,19 +34,21 @@ function AppViewModel() {
     this.newsJSON = [];
     this.features = [];
     
-    for (i=0; i<this.storyPoints.length; i++) {
-        if (this.storyPoints[i].type == 'news') {
-            this.newsJSON.push(this.storyPoints[i]);
-        } else if (this.storyPoints[i].type == 'post') {
-            this.communityJSON.push(this.storyPoints[i]);
-            this.communityUsersJSON[this.storyPoints[i].source] = this.users[this.storyPoints[i].source];
+    for (var key in this.storyPoints) {
+        if (this.storyPoints.hasOwnProperty(key)) {
+            if (this.storyPoints[key].type == 'news') {
+                this.newsJSON.push(this.storyPoints[key]);
+            } else if (this.storyPoints[key].type == 'post') {
+                this.communityJSON.push(this.storyPoints[key]);
+                this.communityUsersJSON[this.storyPoints[key].source] = this.users[this.storyPoints[key].source];
+            }
+            var coords = this.storyPoints[key].geometry.coordinates;
+            var point = new OpenLayers.Geometry.Point(coords[0],coords[1]);
+            var feature = new OpenLayers.Feature.Vector(point,{
+                'storyPoint':storyPoints[key]
+            });
+            this.features.push(feature);
         }
-        var coords = this.storyPoints[i].geometry.coordinates;
-        var point = new OpenLayers.Geometry.Point(coords[0],coords[1]);
-        var feature = new OpenLayers.Feature.Vector(point,{
-            'storyPoint':storyPoints[i]
-        });
-        this.features.push(feature);
     }
     storyPointLayer.addFeatures(this.features);
     
@@ -119,12 +121,14 @@ function AppViewModel() {
     this.otherCommunityUsersJSON = {};
     this.otherNewsJSON = [];
     
-    for (i=0; i<this.storyPoints.length; i++) {
-        if (this.storyPoints[i].type == 'news') {
-            this.otherNewsJSON.push(this.storyPoints[i]);
-        } else if (this.storyPoints[i].type == 'post') {
-            this.otherCommunityJSON.push(this.storyPoints[i]);
-            this.otherCommunityUsersJSON[this.storyPoints[i].source] = this.users[this.storyPoints[i].source];
+    for (var key in this.storyPoints) {
+        if (this.storyPoints.hasOwnProperty(key)){
+            if (this.storyPoints[key].type == 'news') {
+                this.otherNewsJSON.push(this.storyPoints[key]);
+            } else if (this.storyPoints[key].type == 'post') {
+                this.otherCommunityJSON.push(this.storyPoints[key]);
+                this.otherCommunityUsersJSON[this.storyPoints[key].source] = this.users[this.storyPoints[key].source];
+            }
         }
     }
     
