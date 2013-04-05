@@ -234,6 +234,9 @@ Begin Dasboard Page
 
 .news-bubble{
     max-width: 400px;
+    max-height: 300px;
+    min-width: 250px;
+    min-height: 70px;
 }
 
 .news-bubble-img{
@@ -249,12 +252,16 @@ Begin Dasboard Page
 .post-bubble{
     max-width: 400px;
     max-height: 300px;
+    min-width: 250px;
+    min-height: 70px;
 }
 
-.post-bubble-img{
-    max-width: 70px;
+.post-bubble img{
+    max-width: 60px;
+    max-height: 70px;
     float: left;
     margin-right: 8px;
+    vertical-align: center;
 }
 
 div.new-storypoint{
@@ -403,6 +410,7 @@ Begin Friends Page
 
 .friend-card{
     margin: 2% !important;
+    min-height: 85px !important;
 }
 
 .middle-column{
@@ -508,6 +516,10 @@ footer {
     border-top: 1px solid #EEEEEE;
     margin-top: 13px;
     padding-top: 13px;
+}
+
+div.footer{
+    margin-left: 3%;
 }
 
 /* -----------------------------------------------------------------------

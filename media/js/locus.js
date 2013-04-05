@@ -19,7 +19,7 @@ function AppViewModel() {
             Example JSON AppViewModel
     ---------------------------------------------------------------------*/
     
-    this.userID = userID;
+    this.userID = ko.observable(userID);
     
     this.users = users;
     
@@ -77,6 +77,17 @@ function AppViewModel() {
             SETTINGS AppViewModel
     ---------------------------------------------------------------------*/
     
+    $('#draw-button').on('click', function(evt){
+            locusLayer.removeAllFeatures();
+            drawLocusControls['polygon'].activate();
+        }
+    );
+    
+    $('#cancel-locus-button').on('click', function(evt){
+            locusLayer.removeAllFeatures();
+        }
+    );
+    
     /*---------------------------------------------------------------------
             FRIENDS AppViewModel
     ---------------------------------------------------------------------*/
@@ -89,9 +100,9 @@ function AppViewModel() {
     
     this.otherFriendsJSON = [];
     
-    this.user = this.users[this.userID];
+    this.user = this.users[this.userID()];
     for (var key in this.users){
-        if (key != this.userID) {
+        if (key != this.userID()) {
             if (this.user['friends'].indexOf(key) > -1) {   //If user is a friend
                 if (this.users[key].isLocusUser == true) {      //if friend is locus user
                     this.friendsJSON.push(this.users[key]);
@@ -145,7 +156,7 @@ function AppViewModel() {
 
 function JSON2UserFeedHTML(json, locations){
     var start_div = '<div class="row-fluid">\
-            <div class="span11 well friend-card">\
+            <div class="friend-card span11 well">\
                 <div class="row-fluid">\
                     <div class="span2">';
     var mid_div = '                    </div>\
@@ -263,7 +274,7 @@ function onNewPopupClose(evt) {
     }
 }
 
-function onFeatureAdd(event) {          //TODO: This is specifically written for points - update accordingly for loci
+function onPostAdd(event) {
     cleanOldSelected();
     if (mapShown) {
         selectedFeature = event.feature;
@@ -273,7 +284,7 @@ function onFeatureAdd(event) {          //TODO: This is specifically written for
     }
 }
 
-function onFeatureSelect(event) {       //TODO: This is specifically written for points - update accordingly for loci
+function onPointSelect(event) {
     cleanOldSelected();
     if (mapShown) {
         selectedFeature = event.feature;
@@ -284,7 +295,7 @@ function onFeatureSelect(event) {       //TODO: This is specifically written for
     }
 }
 
-function onFeatureUnselect(event) {
+function onPointUnselect(event) {
     map.removePopup(event.feature.popup);
 }
 
@@ -327,7 +338,7 @@ function postNew(event){
             'id': newUid(storyPoints),
             'img': null,
             'isPerm': $('#post-permanent')[0].checked,
-            'source': userID,
+            'source': app.userID(),
             'text': $('#post-text')[0].value,
             'title': null,
             'type': 'post'
@@ -379,9 +390,9 @@ function newsBubble(storyPoint) {
 
 function postBubble(storyPoint) {
     var html = "<div class=\"post-bubble\">\
-                <div class=\"post-bubble-img\"><img src=\"" + users[storyPoint.source].img + "\"/></div>\
-                <p>" + storyPoint.text + "</p>\
-            </div>";
+                        <div class=\"post-bubble-img\"><img src=\"" + users[storyPoint.source].img + "\"/></div>\
+                        <p>" + storyPoint.text + "</p>\
+                </div>";
     return html;
 }
 
@@ -408,6 +419,17 @@ function getBubbleContentHTML(lonlat) {
 /*---------------------------------------------------------------------
         SETTINGS
 ---------------------------------------------------------------------*/
+
+function onLocusAdd(event) {
+    drawLocusControls['polygon'].deactivate();
+}
+
+function onLocusSelect(event) {
+}
+
+function onLocusUnselect(event) {
+}
+
 
 /*---------------------------------------------------------------------
         FRIENDS
