@@ -7,7 +7,7 @@ var users = {
         'name': 'Allan',
         'location': '1',
         'friends':['2','3','4','o1','o2','o3','o4','o5','o6'],
-        'img':"/media/DEMO/img/FACE.png",
+        'img':"http://divshot.github.io/geo-bootstrap/img/test/mchammer.gif",
         'isLocusUser': true
     },
     '2':{
