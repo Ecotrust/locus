@@ -4,82 +4,82 @@ var userID = '1';
 var users = {
     '1':{
         'id': '1',
-        'name': 'Allan',
+        'name': 'You',
         'location': '1',
         'friends':['2','3','4','o1','o2','o3','o4','o5','o6'],
-        'img':"http://divshot.github.io/geo-bootstrap/img/test/mchammer.gif",
+        'img':"/media/DEMO/img/FACE.png",
         'isLocusUser': true
     },
     '2':{
-        'name': 'Brenda',
+        'name': 'Chris',
         'id': '2',
         'location': '1',
         'friends':['1','3','4','5','6','o1','o2','o3'],
-        'img':"/media/DEMO/img/FACE.png",
+        'img':"/media/DEMO/img/faces/Chris.jpg",
         'isLocusUser': true
     },
     '3':{
-        'name': 'Charlie',
+        'name': 'Bettina',
         'id': '3',
         'location': '2',
         'friends':['1','2','7','o4','o5','o6'],
-        'img':"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpYyzOW1JKSJABKWCPjoGclLfngFotuZOzW3TBlwveMMnSbSaj",
+        'img':"/media/DEMO/img/faces/Bettina.jpg",
         'isLocusUser': true
     },
     '4':{
-        'name': 'Doris',
+        'name': 'Edwin',
         'id': '4',
         'location': '1',
         'friends':['1','2','o1','o2','o3','o4','o5','o6'],
-        'img':"/media/DEMO/img/FACE.png",
+        'img':"/media/DEMO/img/faces/Edwin.jpg",
         'isLocusUser': true
     },
     '5':{
-        'name': 'Ernie',
+        'name': 'Jocelyn',
         'id': '5',
         'location': '2',
         'friends':['2','6','7','o1','o2','o3','o4','o5','o6'],
-        'img':"/media/DEMO/img/FACE.png",
+        'img':"/media/DEMO/img/faces/Jocelyn.jpg",
         'isLocusUser': true
     },
     '6':{
-        'name': 'Florida Man',
+        'name': 'Ryan',
         'id': '6',
         'location': '3',
         'friends':['2','5','7','8','10','o1','o2','o3','o4','o5','o6'],
-        'img':"https://si0.twimg.com/profile_images/3383369551/b25b46ee871bb862bac7bb0fe2afe9f0.jpeg",
+        'img':"/media/DEMO/img/faces/Ryan.jpg",
         'isLocusUser': true
     },
     '7':{
-        'name': 'Guillermo',
+        'name': 'Jon',
         'id': '7',
         'location': '3',
         'friends':['3','5','6','9','10','o1','o2','o3','o4','o5','o6'],
-        'img':"/media/DEMO/img/FACE.png",
+        'img':"/media/DEMO/img/faces/Chris.jpg",
         'isLocusUser': true
     },
     '8':{
-        'name': 'Helga',
+        'name': 'Matt',
         'id': '8',
         'location': '4',
         'friends':['6','9','10','o1','o2','o3','o4','o5','o6'],
-        'img':"/media/DEMO/img/FACE.png",
+        'img':"/media/DEMO/img/faces/Matt.jpg",
         'isLocusUser': true
     },
     '9':{
-        'name': 'Irvin',
+        'name': 'Mike',
         'id': '9',
         'location': '5',
         'friends':['7','8','10','o1','o2','o3','o4','o5','o6'],
-        'img':"/media/DEMO/img/FACE.png",
+        'img':"/media/DEMO/img/faces/Mike.jpg",
         'isLocusUser': true
     },
     '10':{
-        'name': 'Janice',
+        'name': 'Robert',
         'id': '10',
         'location': '5',
         'friends':['6','7','8','9','o1','o2','o3','o4','o5','o6'],
-        'img':"/media/DEMO/img/FACE.png",
+        'img':"/media/DEMO/img/faces/Robert.jpg",
         'isLocusUser': true
     },
     'o1':{
@@ -140,9 +140,9 @@ var storyPoints = {
             'coordinates': [-142844.93957374,1095801.0673437]
         },
         'type': 'post',
-        'source': '3',
+        'source': '2',
         'title': null,
-        'text': 'Tiger blood!',
+        'text': 'This place is a place.',
         'img': null,
         'date': '03/22/2013',
         'isPerm': false
@@ -156,7 +156,7 @@ var storyPoints = {
         'type': 'post',
         'source': '6',
         'title': null,
-        'text': 'I was Arrested For Threatening Neighbor With Machete... again.',
+        'text': 'I think cement is a lot more interesting than most people think.',
         'img': null,
         'date': '03/21/2013',
         'isPerm': false
