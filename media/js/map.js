@@ -2,18 +2,7 @@ var map, storyPointLayer, locusLayer, selectStoryPointControl, selectedFeature, 
 
 function mapInit() {
         
-    var dash_map_status = {
-        center: new OpenLayers.LonLat(0, 0),
-        zoom: 1
-    };
-    var set_map_status = {
-        center: new OpenLayers.LonLat(0, 0),
-        zoom: 1
-    };
-    var other_map_status = {
-        center: new OpenLayers.LonLat(0, 0),
-        zoom: 1
-    };
+        
     var bing_apiKey = "AvD-cuulbvBqwFDQGNB1gCXDEH4S6sEkS7Yw9r79gOyCvd2hBvQYPaRBem8cpkjv";
     var map_extent = new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34);
     
@@ -96,6 +85,13 @@ function mapInit() {
         map.addControl(drawLocusControls[key]);
     }
     
+    
+    var dash_map_status, set_map_status = null;
+    var other_map_status = {
+        center: new OpenLayers.LonLat(0, 0),
+        zoom: 1
+    };
+    
     $('a[data-toggle="tab"]').on('shown',function(e) {
     
         cleanOldSelected();
@@ -133,7 +129,7 @@ function mapInit() {
             selectStoryPointControl.activate();
             $('#dash-map').show();
             map.render("dash-map");
-            map.setCenter(dash_map_status.center, dash_map_status.zoom);
+            updateCenter(dash_map_status);
             storyPointLayer.setVisibility(true);
             locusLayer.setVisibility(true);
             mapShown = true;
@@ -141,7 +137,7 @@ function mapInit() {
             selectLocusControl.activate();
             $('#your-locus').show();
             map.render("your-locus");
-            map.setCenter(set_map_status.center, set_map_status.zoom);
+            updateCenter(set_map_status);
             storyPointLayer.setVisibility(false);
             locusLayer.setVisibility(true);
             mapShown = true;
@@ -150,13 +146,31 @@ function mapInit() {
             selectStoryPointControl.deactivate();
             $('#loci-map').show();
             map.render("loci-map");
-            map.setCenter(other_map_status.center, other_map_status.zoom);
+            updateCenter(other_map_status);
             storyPointLayer.setVisibility(true);
             locusLayer.setVisibility(false);
             mapShown = true;
         }
         
     });
+
+    function updateCenter(view) {
+        if (view == null) {
+            if (userLocus && userLocus.getBounds()){
+                map.zoomToExtent(userLocus.getBounds());
+                view = {
+                    center: map.center,
+                    zoom: map.zoom
+                };
+            } else {
+                view = {
+                    center: new OpenLayers.LonLat(0, 0),
+                    zoom: 1
+                };
+            }
+        }
+        map.setCenter(view.center, view.zoom);
+    };
 
     return map;
 };

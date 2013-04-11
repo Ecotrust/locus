@@ -36,6 +36,9 @@ function AppViewModel() {
     this.newsJSON = [];
     this.features = [];
     
+    var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
+    locusLayer.addFeatures([userLocusVector]);
+    
     for (var key in this.storyPoints) {
         if (this.storyPoints.hasOwnProperty(key)) {
             if (this.storyPoints[key].type == 'news') {
