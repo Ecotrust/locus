@@ -441,3 +441,9 @@ function onLocusUnselect(event) {
 /*---------------------------------------------------------------------
         OTHER LOCI
 ---------------------------------------------------------------------*/
+
+function onOtherLocusSelect(event) {
+}
+
+function onOtherLocusUnselect(event) {
+}

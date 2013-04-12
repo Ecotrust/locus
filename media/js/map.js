@@ -1,4 +1,4 @@
-var map, storyPointLayer, locusLayer, selectStoryPointControl, selectedFeature, selectLocusControl, drawPointControls, drawLocusControls;
+var map, storyPointLayer, locusLayer, lociLayer, selectStoryPointControl, selectedFeature, selectLocusControl, selectOtherLocusControl, drawPointControls, drawLocusControls;
 
 function mapInit() {
         
@@ -9,8 +9,8 @@ function mapInit() {
     map = new OpenLayers.Map(null, {
       restrictedExtent: map_extent,
       displayProjection: new OpenLayers.Projection("EPSG:4326"),
-      projection: new OpenLayers.Projection("EPSG:3857")
-      // projection: new OpenLayers.Projection("EPSG:4326")
+      // projection: new OpenLayers.Projection("EPSG:3857")
+      projection: new OpenLayers.Projection("EPSG:4326")
     });
     
     /*
@@ -49,18 +49,31 @@ function mapInit() {
     
     locusLayer = new OpenLayers.Layer.Vector("Locus Layer");
     
+    lociLayer = new OpenLayers.Layer.Vector("Loci Layer");
+    
     locusLayer.events.on({
         "featureadded": this.onLocusAdd,
         "featureselected": this.onLocusSelect,
         "featureunselected": this.onLocusUnselect
     });
     
-    map.addLayers([aerial, hybrid, esriOcean, storyPointLayer, locusLayer]);
+    lociLayer.events.on({
+        // "featureadded": this.onLocusAdd,
+        "featureselected": this.onOtherLocusSelect,
+        "featureunselected": this.onOtherLocusUnselect
+    });
+    
+    map.addLayers([aerial, hybrid, esriOcean, storyPointLayer, locusLayer, lociLayer]);
+    
+    getLoci();
     
     // map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.addControl(new OpenLayers.Control.MousePosition());
 
     selectLocusControl = new OpenLayers.Control.SelectFeature(locusLayer
+        // {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect}
+    );
+    selectOtherLocusControl = new OpenLayers.Control.SelectFeature(lociLayer
         // {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect}
     );
     selectStoryPointControl = new OpenLayers.Control.SelectFeature(storyPointLayer
@@ -132,6 +145,7 @@ function mapInit() {
             updateCenter(dash_map_status);
             storyPointLayer.setVisibility(true);
             locusLayer.setVisibility(true);
+            lociLayer.setVisibility(false);
             mapShown = true;
         } else if (e.target.id == "settings-tab" ) {
             selectLocusControl.activate();
@@ -140,6 +154,7 @@ function mapInit() {
             updateCenter(set_map_status);
             storyPointLayer.setVisibility(false);
             locusLayer.setVisibility(true);
+            lociLayer.setVisibility(false);
             mapShown = true;
         } else if (e.target.id == "world-tab" ) {
             selectLocusControl.deactivate();
@@ -149,6 +164,7 @@ function mapInit() {
             updateCenter(other_map_status);
             storyPointLayer.setVisibility(true);
             locusLayer.setVisibility(false);
+            lociLayer.setVisibility(true);
             mapShown = true;
         }
         
@@ -173,4 +189,19 @@ function mapInit() {
     };
 
     return map;
+};
+
+function getLoci() {
+    $.ajax({
+        url: "/get_bioregions/json",
+        type: 'GET',
+        data: {},
+        dataType: 'json'
+    }).done(function(result) { 
+        var geojson_format = new OpenLayers.Format.GeoJSON({
+          'internalProjection': new OpenLayers.Projection("EPSG:900913"),
+          'externalProjection': new OpenLayers.Projection("EPSG:4326")
+        });
+        lociLayer.addFeatures(geojson_format.read(result));
+    });
 };

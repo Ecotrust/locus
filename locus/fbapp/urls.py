@@ -7,6 +7,7 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', home),
+    (r'^get_bioregions/json/$', get_bioregions),
     # (r'', include('madrona.common.urls')),
 )
 
