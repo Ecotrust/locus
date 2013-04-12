@@ -19,3 +19,10 @@ class Bioregions(FeatureCollection):
             ('fbapp.models.Bioregion'),('fbapp.models.Bioregions')
         )
 
+class Locus(models.Model):
+    poly = models.PolygonField(srid=4326) # we want our model in a different SRID
+    AREA = models.FloatField()
+    PERIMETER = models.FloatField()
+    BIOREG = models.IntegerField()
+    GRID_CODE = models.IntegerField()
+    objects = models.GeoManager()
