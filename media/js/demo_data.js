@@ -2,32 +2,44 @@
 var userID = '1';
 
 var userLocus = new OpenLayers.Geometry.LinearRing([
-            new OpenLayers.Geometry.Point(-13789481.843754, 4852833.2010937),
-            new OpenLayers.Geometry.Point(-13466611.836322, 5038728.0538574),
-            new OpenLayers.Geometry.Point(-13564451.232513, 5273542.6047168),
-            new OpenLayers.Geometry.Point(-13368772.440131, 6281288.3854882),
-            new OpenLayers.Geometry.Point(-13642722.749466, 6741133.5475878),
-            new OpenLayers.Geometry.Point(-13975376.696517, 6966164.1588281),
-            new OpenLayers.Geometry.Point(-14288462.76433, 6780269.3060644),
-            new OpenLayers.Geometry.Point(-14063432.15309, 6545454.755205),
-            new OpenLayers.Geometry.Point(-14268894.885091, 6604158.3929199),
-            new OpenLayers.Geometry.Point(-14308030.643568, 6555238.6948242),
-            new OpenLayers.Geometry.Point(-13828617.60223, 6173665.0496777),
-            new OpenLayers.Geometry.Point(-13730778.206039, 6203016.8685351),
-            new OpenLayers.Geometry.Point(-13828617.60223, 6330208.0835839),
-            new OpenLayers.Geometry.Point(-13887321.239945, 6359559.9024414),
-            new OpenLayers.Geometry.Point(-13936240.938041, 6486751.1174902),
-            new OpenLayers.Geometry.Point(-13681858.507943, 6300856.2647265),
-            new OpenLayers.Geometry.Point(-13642722.749466, 6134529.2912011),
-            new OpenLayers.Geometry.Point(-13701426.387181, 6105177.4723437),
-            new OpenLayers.Geometry.Point(-13789481.843754, 6105177.4723437),
-            new OpenLayers.Geometry.Point(-13857969.421088, 6154097.1704394),
-            new OpenLayers.Geometry.Point(-13877537.300326, 6046473.8346289),
-            new OpenLayers.Geometry.Point(-13799265.783373, 5899714.7403418),
-            new OpenLayers.Geometry.Point(-13799265.783373, 5518141.0951953),
-            new OpenLayers.Geometry.Point(-13887321.239945, 5332246.2424316),
-            new OpenLayers.Geometry.Point(-13818833.662611, 5058295.9330957),
-            new OpenLayers.Geometry.Point(-13848185.481468, 4901752.8991894)
+            // Cascadia
+            // new OpenLayers.Geometry.Point(-13789481.843754, 4852833.2010937),
+            // new OpenLayers.Geometry.Point(-13466611.836322, 5038728.0538574),
+            // new OpenLayers.Geometry.Point(-13564451.232513, 5273542.6047168),
+            // new OpenLayers.Geometry.Point(-13368772.440131, 6281288.3854882),
+            // new OpenLayers.Geometry.Point(-13642722.749466, 6741133.5475878),
+            // new OpenLayers.Geometry.Point(-13975376.696517, 6966164.1588281),
+            // new OpenLayers.Geometry.Point(-14288462.76433, 6780269.3060644),
+            // new OpenLayers.Geometry.Point(-14063432.15309, 6545454.755205),
+            // new OpenLayers.Geometry.Point(-14268894.885091, 6604158.3929199),
+            // new OpenLayers.Geometry.Point(-14308030.643568, 6555238.6948242),
+            // new OpenLayers.Geometry.Point(-13828617.60223, 6173665.0496777),
+            // new OpenLayers.Geometry.Point(-13730778.206039, 6203016.8685351),
+            // new OpenLayers.Geometry.Point(-13828617.60223, 6330208.0835839),
+            // new OpenLayers.Geometry.Point(-13887321.239945, 6359559.9024414),
+            // new OpenLayers.Geometry.Point(-13936240.938041, 6486751.1174902),
+            // new OpenLayers.Geometry.Point(-13681858.507943, 6300856.2647265),
+            // new OpenLayers.Geometry.Point(-13642722.749466, 6134529.2912011),
+            // new OpenLayers.Geometry.Point(-13701426.387181, 6105177.4723437),
+            // new OpenLayers.Geometry.Point(-13789481.843754, 6105177.4723437),
+            // new OpenLayers.Geometry.Point(-13857969.421088, 6154097.1704394),
+            // new OpenLayers.Geometry.Point(-13877537.300326, 6046473.8346289),
+            // new OpenLayers.Geometry.Point(-13799265.783373, 5899714.7403418),
+            // new OpenLayers.Geometry.Point(-13799265.783373, 5518141.0951953),
+            // new OpenLayers.Geometry.Point(-13887321.239945, 5332246.2424316),
+            // new OpenLayers.Geometry.Point(-13818833.662611, 5058295.9330957),
+            // new OpenLayers.Geometry.Point(-13848185.481468, 4901752.8991894)
+            
+            // Bangladesh to Sichuan
+            new OpenLayers.Geometry.Point(10441913.472857, 2172033.2354491),
+            new OpenLayers.Geometry.Point(10177747.10314, 2582958.699453),
+            new OpenLayers.Geometry.Point(10030988.008853, 2553606.8805956),
+            new OpenLayers.Geometry.Point(9962500.4315188, 2768853.5522166),
+            new OpenLayers.Geometry.Point(9747253.7598977, 2876476.8880272),
+            new OpenLayers.Geometry.Point(9786389.5183743, 3355889.9293651),
+            new OpenLayers.Geometry.Point(10872406.816099, 3923358.4272752),
+            new OpenLayers.Geometry.Point(11498578.951724, 3463513.2651756),
+            new OpenLayers.Geometry.Point(10441913.472857, 2172033.2354491)
 ]);
 
 var users = {
@@ -166,12 +178,13 @@ var storyPoints = {
         'id': '1',
         'geometry': {
             'type': 'Point',
-            'coordinates': [-142844.93957374,1095801.0673437]
+            // 'coordinates': [-142844.93957374,1095801.0673437]
+            'coordinates': [11000000,3000000]
         },
         'type': 'post',
         'source': '2',
         'title': null,
-        'text': 'This place is a place.',
+        'text': 'At the China/Myanmar border right now!',
         'img': null,
         'date': '03/22/2013',
         'isPerm': false
@@ -180,12 +193,14 @@ var storyPoints = {
         'id': '2',
         'geometry': {
             'type': 'Point',
-            'coordinates': [-9221668.3421389,3481589.9423626]
+            // 'coordinates': [-9221668.3421389,3481589.9423626]
+            'coordinates': [10500000,2800000]
         },
         'type': 'post',
         'source': '6',
         'title': null,
-        'text': 'I think cement is a lot more interesting than most people think.',
+        // 'text': 'I think cement is a lot more interesting than most people think.',
+        'text': 'I\'m at the India/Myanmar border right now!',
         'img': null,
         'date': '03/21/2013',
         'isPerm': false
@@ -194,7 +209,8 @@ var storyPoints = {
         'id': '3',
         'geometry': {
             'type': 'Point',
-            'coordinates': [12955407.625552,4853259.8378846]
+            // 'coordinates': [12955407.625552,4853259.8378846]
+            'coordinates': [9955407.625552,2853259.8378846]
         },
         'type': 'news',
         'source': 'http://switchboard.nrdc.org/blogs/bfinamore/will_chinas_new_leaders_clean.html',
@@ -208,7 +224,8 @@ var storyPoints = {
         'id': '4',
         'geometry': {
             'type': 'Point',
-            'coordinates': [13205510.262066,4195901.0547237]
+            // 'coordinates': [13205510.262066,4195901.0547237]
+            'coordinates': [10705510.262066,3595901.0547237]
         },
         'type': 'news',
         'source': 'http://wwf.panda.org/who_we_are/wwf_offices/china/environmental_problems_china/',
@@ -222,7 +239,8 @@ var storyPoints = {
         'id': '5',
         'geometry': {
             'type': 'Point',
-            'coordinates': [13401189.054449,4526109.0168696]
+            // 'coordinates': [13401189.054449,4526109.0168696]
+            'coordinates': [10401189.054449,2526109.0168696]
         },
         'type': 'news',
         'source': 'http://www.guardian.co.uk/environment/blog/2011/apr/12/china-green-plans-america',

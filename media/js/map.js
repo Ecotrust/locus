@@ -67,7 +67,7 @@ function mapInit() {
     
     getLoci();
     
-    // map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.addControl(new OpenLayers.Control.MousePosition());
 
     selectLocusControl = new OpenLayers.Control.SelectFeature(locusLayer

@@ -39,6 +39,13 @@ input.olButton{
     margin-right: 1%;
 }
 
+.olControlMousePosition{
+    background: white;
+    padding: 0 1%;
+    right: 0 !important;
+    opacity: 0.75;
+}
+
 /* -----------------------------------------------------------------------
 End Map
 ----------------------------------------------------------------------- */

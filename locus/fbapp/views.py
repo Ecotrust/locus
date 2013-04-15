@@ -17,7 +17,7 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     return render_to_response(template_name, context)
     
 def get_bioregions(request):
-    qs = Locus.objects.filter(AREA__gt=10)
+    qs = Locus.objects.filter(AREA__gt=80)
     return render_to_geojson(
         qs,
         geom_attribute='poly',
