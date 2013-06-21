@@ -330,6 +330,11 @@ Begin Details Page
     margin-bottom: 0px;
 }
 
+.details h3.analysis_report_container {
+    width: 430px;
+    margin-left: 5%;
+}
+
 .details table.analysis_report_container {
     background: none repead scroll 0 0 #FFFFFF;
     border-color: lightgray;

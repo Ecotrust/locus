@@ -215,7 +215,7 @@ var storyPoints = {
         'type': 'news',
         'source': 'http://switchboard.nrdc.org/blogs/bfinamore/will_chinas_new_leaders_clean.html',
         'title': 'Will China\'s New Leaders Clean Up the Environment?',
-        'text': 'I was trying to clean the coal dust from the windows of my dingy Beijing apartment one day in March 1992 when the phone rang with astonishing news. Nearly one-third of the delegates to the National People’s Congress had just abstained or voted against the construction of the massive Three Gorges Dam, the world’s largest hydropower project. I simply could not believe my ears. China’s rubber-stamp legislature had never displayed such a level of opposition in its entire history, let alone on environmental grounds.  The vote was even more remarkable in light of the government’s strenuous attempts to stifle public debate about the project’s environmental, safety and social impacts.',
+        'text': 'I was trying to clean the coal dust from the windows of my dingy Beijing apartment one day in March 1992 when the phone rang with astonishing news. Nearly one-third of the delegates to the National Peopleâ€™s Congress had just abstained or voted against the construction of the massive Three Gorges Dam, the worldâ€™s largest hydropower project. I simply could not believe my ears. Chinaâ€™s rubber-stamp legislature had never displayed such a level of opposition in its entire history, let alone on environmental grounds.  The vote was even more remarkable in light of the governmentâ€™s strenuous attempts to stifle public debate about the projectâ€™s environmental, safety and social impacts.',
         'img': 'http://switchboard.nrdc.org/blogs/bfinamore/Three%20Gorges%20Dam.jpg',
         'date': '03/25/2013',
         'isPerm': false
@@ -343,7 +343,6 @@ var reportDetailsJSON = {
                 </tbody>\
             </table>\
             </div>\
-\
             <h3>Population</h3>\
             <div class='freetext'>\
             <p>\
@@ -368,11 +367,7 @@ var reportDetailsJSON = {
                     </tr>\
                     <tr>\
                         <td  colspan='2'>\
-                        \
-                            \
                                 221.9 million\
-                            \
-                        \
                         </td>\
                     </tr>\
                     <tr><td></td><td></td></tr>\
@@ -395,12 +390,8 @@ var reportDetailsJSON = {
                     </tr>\
                     <tr>\
                         <td colspan='2'>\
-                            \
-                                \
                                     29.4 million\
-                                \
                                 (13%)\
-                            \
                         </td>\
                     </tr>\
                     <tr><td></td><td></td></tr>\
@@ -426,14 +417,8 @@ var reportDetailsJSON = {
                     </tr>\
                     <tr>\
                         <td colspan='2' style='width:225px'>\
-                        \
-                            \
                                 261.4 million\
-                            \
-                            \
                                 (increase of 18%)\
-                            \
-                        \
                         </td>\
                     </tr>\
                     <tr><td></td><td></td></tr>\
@@ -441,7 +426,6 @@ var reportDetailsJSON = {
                 </tbody>\
             </table>\
             </div>\
-\
             <h3>Temperature</h3>\
                 <div id=\"temp\" style=\"display: none\">\
                     <p>More information on the Temperature data layers can be found <a href=\"http://www.worldclim.org/\" target=\"_blank\">here</a>.\
@@ -462,9 +446,7 @@ var reportDetailsJSON = {
                     </tr>\
                     <tr>\
                         <td>\
-                            \
                                 3&deg; Celsius / 38&deg; Fahrenheit\
-                            \
                         </td>\
                     </tr>\
                     <tr><td></td><td></td></tr>\
@@ -528,7 +510,6 @@ var reportDetailsJSON = {
                 </tbody>\
             </table>\
             </div>\
-\
             <h3>Precipitation</h3>\
             <div class='freetext'>\
             <p>\
@@ -664,300 +645,750 @@ var reportDetailsJSON = {
             </table>\
             </div>\
         ",
-        'resources':"\
-        <h3>Net Primary Production</h3>\
-\
+        'resources':"<h3>Net Primary Production</h3>\
         <div class='freetext'>\
-        <p>\
-        <table  style='width:430px' class='analysis_report_container'>\
-            <tbody>\
-                <tr class=\"grey\">\
-                    <td colspan='2'>\
-                        <b>Average Terrestrial Net Primary Production</b> \
-                        <sup><a id=\"displayText\" href=\"javascript:toggleDiv('npp_terr');\">Learn More</a><sup>\
-                        <div id=\"npp_terr\" style=\"display: none\">\
-                            <p>Terrestrial Net Primary Production (NPP) is defined as the measure of organic compound production from atmospheric \
-                               carbon dioxide.\
-                               It is the rate at which all plants in an ecosystem produce net useful chemical energy.  \
-                            <p>NPP is measured in mass / area / time.  The following report uses a measure of grams of carbon per meter squared per year. \
-                            <p><b>The average global terrestrial NPP is 426 g C/m<sup>2</sup>/year.</b>\
-                            <p>More information on the Terrestrial NPP dataset can be found <a href=\"http://sedac.ciesin.columbia.edu/es/hanpp.html\" target=\"_blank\">here</a>.\
-                            <p>NOTE:  Many significant land masses are not represented within this dataset, such absences are reported as\
-                               'No Data Available'.  \
-                        </div>\
-                    </td>\
-                </tr>\
-                <tr>\
-                    <td colspan='2'>\
-                        \
-                            615 g C/m<sup>2</sup>/yr\
-                        \
-                    </td>\
-                </tr>\
-                <tr><td></td><td></td></tr>\
-                <tr><td></td><td></td></tr>\
-                <tr class=\"grey\">\
-                    <td colspan='2'>\
-                        <b>Average Oceanic Net Primary Production</b> \
-                        <sup><a id=\"displayText\" href=\"javascript:toggleDiv('npp_ocn');\">Learn More</a><sup>\
-                        <div id=\"npp_ocn\" style=\"display: none\">\
-                            <p>Oceanic Net Primary Production (NPP) is defined as the measure of organic compound production from aquatic\
-                               carbon dioxide.\
-                               It is the rate at which all plants in an ecosystem produce net useful chemical energy.  \
-                            <p>NPP is measured in mass / area / time.  The following report uses a measure of grams of carbon per meter squared per year. \
-                            <p><b>The average global oceanic NPP is 140 g C/m<sup>2</sup>/year with coastal areas tending higher than deep sea areas.</b>\
-                            <p>More information on the Oceanic NPP dataset can be found <a href=\"http://www.science.oregonstate.edu/ocean.productivity/index.php\" target=\"_blank\">here</a>.\
-                        </div>\
-                    </td>\
-                </tr>\
-                <tr>\
-                    <td colspan='2'>\
-                        \
-                            1267 g C/m<sup>2</sup>/yr\
-                        \
-                    </td>\
-                </tr>\
-                <tr><td></td><td></td></tr>\
-                <tr><td></td><td></td></tr>\
-            </tbody>\
-        </table>\
-        </div>\
-\
-        <h3>Land-Based Agicultural Characteristics</h3>\
-        <div class='freetext'>\
-        <p>\
-        <table  style='width:430px' class='analysis_report_container'>\
-            <tbody>\
-                <tr class=\"grey\">\
-                    <td colspan='2'>\
-                        <b>Proportion Suitable for Agriculture</b>\
-                        <sup><a id=\"displayText\" href=\"javascript:toggleDiv('agriculture');\">Learn More</a><sup>\
-                        <div id=\"agriculture\" style=\"display: none\">\
-                            <p>This value represents the proportion of the terrestrial area in the bioregion that is considered suitable for \
-                               agriculture based on temperature and soil quality measurements.  \
-                            <p>The data was created by Ramnkutty, N., J.A. Foley, J. Norman, and K. McSweeney in 2001.  \
-                            <p>More information on the Agricultural Suitability dataset can be found <a href=\"http://www.sage.wisc.edu/atlas/maps.php?datasetid=19&includerelatedlinks=1&dataset=19\" target=\"_blank\">here</a>.\
-                            <p>NOTE:  Many significant land masses were not included within this dataset, such absences are reported as\
-                               'No Data Available'.  \
-                        </div>\
-                    </td>\
-                </tr>\
-                <tr>\
-                    <td colspan='2'>\
-                        \
-                            38% \
-                            <p>(350,122 km<sup>2</sup> / 135,183 mi<sup>2</sup>)\
-                        \
-                    </td>\
-                </tr>\
-                <tr><td></td><td></td></tr>\
-                <tr><td></td><td></td></tr>\
-                <tr class=\"grey\">\
-                    <td colspan='2'>\
-                        <b>Proportion Equipped for Irrigation</b>\
-                        <sup><a id=\"displayText\" href=\"javascript:toggleDiv('irrigation');\">Learn More</a><sup>\
-                        <div id=\"irrigation\" style=\"display: none\">\
-                            <p>This value represents the proportion of the terrestrial area in the bioregion that is equipped for irrigation.\
-                            <p>Source: Stefan Siebert, Petra Doll, Sebastian Feick, Jippe Hoogeveen, and Karen Frenken (2007) \
-                               Global Map of Irrigation Areas version 4.0.1 Johann Wolfgang, Goethe University, Frankfurt am Main, Germain / Food\
-                               and Agriculture Organization of the United Nations, Rome, Italy.  \
-                            <p>More information on the Irrigation dataset can be found <a href=\"http://www.fao.org/nr/water/aquastat/irrigationmap/index.stm\" target=\"_blank\">here</a>.\
-                        </div>\
-                    </td>\
-                </tr>\
-                <tr>\
-                    <td colspan='2'>\
-                        \
-                            6.5%\
-                            <p>(59,437 km<sup>2</sup> / 22,949 mi<sup>2</sup>)\
-                        \
-                    </td>\
-                </tr>\
-                <tr><td></td><td></td></tr>\
-                <tr><td></td><td></td></tr>\
-            </tbody>\
-        </table>\
-        </div>\
-\
-        <h3>Ecological Regions</h3>\
-        <div class='freetext'>\
-        <p>\
-        <table  style='width:430px' class='analysis_report_container'>\
-            <tbody>\
-                <tr class=\"grey\">\
-                    <td colspan='2'>\
-                        <b>WWF Ecoregions</b>\
-                        <sup><a id=\"displayText\" href=\"javascript:toggleDiv('ecoregions');\">Learn More</a><sup>\
-                        <div id=\"ecoregions\" style=\"display: none\">\
-                            <p>World Wildlife Federation Terrestrial Ecoregions of the World.  \
-                            <p>More information on the WWF Ecoregions dataset can be found <a href=\"http://www.worldwildlife.org/science/ecoregions/item1267.html\" target=\"_blank\">here</a>.\
-                        </div>\
-                    </td>\
-                </tr>\
-                \
-                \
-                <tr>\
-                    <td colspan='2'>Brahmaputra Valley semi-evergreen forests (56,840 km<sup>2</sup> / 21,946 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Chhota-Nagpur dry deciduous forests (399 km<sup>2</sup> / 154 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Chin Hills-Arakan Yoma montane forests (26,580 km<sup>2</sup> / 10,262 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Eastern Himalayan alpine shrub and meadows (65,184 km<sup>2</sup> / 25,168 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Eastern Himalayan broadleaf forests (73,746 km<sup>2</sup> / 28,473 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                \
-                \
-                <tr><td></td><td></td></tr>\
-                <tr><td></td><td></td></tr>\
-                <tr class=\"grey\">\
-                    <td colspan='2'>\
-                        <b>Wild Regions</b>\
-                        <sup><a id=\"displayText\" href=\"javascript:toggleDiv('last_wild');\">Learn More</a><sup>\
-                        <div id=\"last_wild\" style=\"display: none\">\
-                            <p>This report represents the amount of the world's 10% least influenced areas. \
-                            <p>More information on the Wild Regions dataset can be found <a href=\"http://sedac.ciesin.columbia.edu/wildareas/methods.jsp\" target=\"_blank\">here</a>.\
-                        </div>\
-                    </td>\
-                </tr>\
-                \
-                \
-                <tr>\
-                    <td colspan='2'>Brahmaputra Valley semi-evergreen forests (15 km<sup>2</sup> / 6 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Eastern Himalayan alpine shrub and meadows (39,926 km<sup>2</sup> / 15,415 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Eastern Himalayan broadleaf forests (13,059 km<sup>2</sup> / 5,042 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Eastern Himalayan subalpine conifer forests (7,554 km<sup>2</sup> / 2,917 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Hengduan Mountains subalpine conifer forests (4,462 km<sup>2</sup> / 1,723 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                <tr>\
-                    <td colspan='2'>Irrawaddy moist deciduous forests (1,123 km<sup>2</sup> / 434 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                \
-                \
-                <tr><td></td><td></td></tr>\
-                <tr><td></td><td></td></tr>\
-                <tr class=\"grey\">\
-                    <td colspan='2'>\
-                        <b>Watersheds</b>\
-                        <sup><a id=\"displayText\" href=\"javascript:toggleDiv('watersheds');\">Learn More</a><sup>\
-                        <div id=\"watersheds\" style=\"display: none\">\
-                            <p>Watershed data (HydroSHEDS) has been developed by the Conservation Science Program of World Wildlife Fund (WWF), \
-                               in partnership with the U.S. Geological Survey (USGS), the International Centre for Tropical Agriculture (CIAT), \
-                               The Nature Conservancy (TNC), and the Center for Environmental Systems Research (CESR) of the University of Kassel, \
-                               Germany. Major funding for this project was provided to WWF by JohnsonDiversey, Inc.\
-                            <p>More information on the Watersheds dataset can be found <a href=\"http://hydrosheds.cr.usgs.gov/overview.php\" target=\"_blank\">here</a>.\
-                            <p>NOTE:  Many significant land masses were not included within this dataset, we report on such absences with\
-                               'No Data Available'.  \
-                        </div>\
-                    </td>\
-                </tr>\
-                \
-                    \
-                    <tr>\
-                        <td colspan='2'>Bay of Bengal, North East Coast (67,456 km<sup>2</sup> / 26,045 mi<sup>2</sup>)</td>\
+            <p>\
+            <table  style='width:430px' class='analysis_report_container'>\
+                <tbody>\
+                    <tr class=\"grey\">\
+                        <td colspan='2'>\
+                            <b>Average Terrestrial Net Primary Production</b> \
+                            <sup><a id=\"displayText\" href=\"javascript:toggleDiv('npp_terr');\">Learn More</a><sup>\
+                            <div id=\"npp_terr\" style=\"display: none\">\
+                                <p>Terrestrial Net Primary Production (NPP) is defined as the measure of organic compound production from atmospheric \
+                                   carbon dioxide.\
+                                   It is the rate at which all plants in an ecosystem produce net useful chemical energy.  \
+                                <p>NPP is measured in mass / area / time.  The following report uses a measure of grams of carbon per meter squared per year. \
+                                <p><b>The average global terrestrial NPP is 426 g C/m<sup>2</sup>/year.</b>\
+                                <p>More information on the Terrestrial NPP dataset can be found <a href=\"http://sedac.ciesin.columbia.edu/es/hanpp.html\" target=\"_blank\">here</a>.\
+                                <p>NOTE:  Many significant land masses are not represented within this dataset, such absences are reported as\
+                                   'No Data Available'.  \
+                            </div>\
+                        </td>\
                     </tr>\
-                    \
                     <tr>\
-                        <td colspan='2'>Ganges - Bramaputra (517,307 km<sup>2</sup> / 199,733 mi<sup>2</sup>)</td>\
+                        <td colspan='2'>\
+                                615 g C/m<sup>2</sup>/yr\
+                        </td>\
                     </tr>\
-                    \
+                    <tr><td></td><td></td></tr>\
+                    <tr><td></td><td></td></tr>\
+                    <tr class=\"grey\">\
+                        <td colspan='2'>\
+                            <b>Average Oceanic Net Primary Production</b> \
+                            <sup><a id=\"displayText\" href=\"javascript:toggleDiv('npp_ocn');\">Learn More</a><sup>\
+                            <div id=\"npp_ocn\" style=\"display: none\">\
+                                <p>Oceanic Net Primary Production (NPP) is defined as the measure of organic compound production from aquatic\
+                                   carbon dioxide.\
+                                   It is the rate at which all plants in an ecosystem produce net useful chemical energy.  \
+                                <p>NPP is measured in mass / area / time.  The following report uses a measure of grams of carbon per meter squared per year. \
+                                <p><b>The average global oceanic NPP is 140 g C/m<sup>2</sup>/year with coastal areas tending higher than deep sea areas.</b>\
+                                <p>More information on the Oceanic NPP dataset can be found <a href=\"http://www.science.oregonstate.edu/ocean.productivity/index.php\" target=\"_blank\">here</a>.\
+                            </div>\
+                        </td>\
+                    </tr>\
                     <tr>\
-                        <td colspan='2'>Irrawaddy (255,189 km<sup>2</sup> / 98,529 mi<sup>2</sup>)</td>\
+                        <td colspan='2'>\
+                                1267 g C/m<sup>2</sup>/yr\
+                        </td>\
                     </tr>\
-                    \
-                    <tr>\
-                        <td colspan='2'>Mekong (20,614 km<sup>2</sup> / 7,959 mi<sup>2</sup>)</td>\
-                    </tr>\
-                    \
-                    <tr>\
-                        <td colspan='2'>Salween (36,307 km<sup>2</sup> / 14,018 mi<sup>2</sup>)</td>\
-                    </tr>\
-                    \
-                    <tr>\
-                        <td colspan='2'>Yangtze (21,202 km<sup>2</sup> / 8,186 mi<sup>2</sup>)</td>\
-                    </tr>\
-                    \
-                \
-                <tr><td></td><td></td></tr>\
-                <tr><td></td><td></td></tr>\
-                <tr class=\"grey\">\
-                    <td colspan='2'>\
-                        <b>WWF Marine Ecoregions</b>\
-                        <sup><a id=\"displayText\" href=\"javascript:toggleDiv('marine_regions');\">Learn More</a><sup>\
-                        <div id=\"marine_regions\" style=\"display: none\">\
-                            <p>World Wildlife Federation Marine Ecoregions of the World.  \
-                            <p>More information on the WWF Marine Ecoregions dataset can be found <a href=\"http://www.worldwildlife.org/science/ecoregions/marine/item1266.html\" target=\"_blank\">here</a>.\
-                        </div>\
-                    </td>\
-                </tr>\
-                \
-                \
-                <tr>\
-                    <td colspan='2'>Northern Bay of Bengal (4,284 km<sup>2</sup> / 1,654 mi<sup>2</sup>)</td>\
-                </tr>\
-                \
-                \
-                <tr><td></td><td></td></tr>\
-                <tr><td></td><td></td></tr>\
-            </tbody>\
-        </table>\
-        </div>\
-        <p>\
-        <script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js\"></script>\
-        <script type=\"text/javascript\">\
-        function toggleDiv(divId) {\
-           $(\"#\"+divId).toggle();\
-        }\
-        </script>\
-\
-        <style type=\"text/css\">\
-        h3 { font-weight: bold; }\
-        </style>\
-\
+                    <tr><td></td><td></td></tr>\
+                    <tr><td></td><td></td></tr>\
+                </tbody>\
+            </table>\
             </div>\
-        "
+            <h3>Land-Based Agicultural Characteristics</h3>\
+            <div class='freetext'>\
+                <p>\
+                <table  style='width:430px' class='analysis_report_container'>\
+                    <tbody>\
+                        <tr class=\"grey\">\
+                            <td colspan='2'>\
+                                <b>Proportion Suitable for Agriculture</b>\
+                                <sup><a id=\"displayText\" href=\"javascript:toggleDiv('agriculture');\">Learn More</a><sup>\
+                                <div id=\"agriculture\" style=\"display: none\">\
+                                    <p>This value represents the proportion of the terrestrial area in the bioregion that is considered suitable for \
+                                       agriculture based on temperature and soil quality measurements.  \
+                                    <p>The data was created by Ramnkutty, N., J.A. Foley, J. Norman, and K. McSweeney in 2001.  \
+                                    <p>More information on the Agricultural Suitability dataset can be found <a href=\"http://www.sage.wisc.edu/atlas/maps.php?datasetid=19&includerelatedlinks=1&dataset=19\" target=\"_blank\">here</a>.\
+                                    <p>NOTE:  Many significant land masses were not included within this dataset, such absences are reported as\
+                                       'No Data Available'.  \
+                                </div>\
+                            </td>\
+                        </tr>\
+                        <tr>\
+                            <td colspan='2'>\
+                                \
+                                    38% \
+                                    <p>(350,122 km<sup>2</sup> / 135,183 mi<sup>2</sup>)\
+                                \
+                            </td>\
+                        </tr>\
+                        <tr><td></td><td></td></tr>\
+                        <tr><td></td><td></td></tr>\
+                        <tr class=\"grey\">\
+                            <td colspan='2'>\
+                                <b>Proportion Equipped for Irrigation</b>\
+                                <sup><a id=\"displayText\" href=\"javascript:toggleDiv('irrigation');\">Learn More</a><sup>\
+                                <div id=\"irrigation\" style=\"display: none\">\
+                                    <p>This value represents the proportion of the terrestrial area in the bioregion that is equipped for irrigation.\
+                                    <p>Source: Stefan Siebert, Petra Doll, Sebastian Feick, Jippe Hoogeveen, and Karen Frenken (2007) \
+                                       Global Map of Irrigation Areas version 4.0.1 Johann Wolfgang, Goethe University, Frankfurt am Main, Germain / Food\
+                                       and Agriculture Organization of the United Nations, Rome, Italy.  \
+                                    <p>More information on the Irrigation dataset can be found <a href=\"http://www.fao.org/nr/water/aquastat/irrigationmap/index.stm\" target=\"_blank\">here</a>.\
+                                </div>\
+                            </td>\
+                        </tr>\
+                        <tr>\
+                            <td colspan='2'>\
+                                \
+                                    6.5%\
+                                    <p>(59,437 km<sup>2</sup> / 22,949 mi<sup>2</sup>)\
+                                \
+                            </td>\
+                        </tr>\
+                        <tr><td></td><td></td></tr>\
+                        <tr><td></td><td></td></tr>\
+                    </tbody>\
+                </table>\
+            </div>\
+            <h3>Ecological Regions</h3>\
+            <div class='freetext'>\
+            <p>\
+            <table  style='width:430px' class='analysis_report_container'>\
+                <tbody>\
+                    <tr class=\"grey\">\
+                        <td colspan='2'>\
+                            <b>WWF Ecoregions</b>\
+                            <sup><a id=\"displayText\" href=\"javascript:toggleDiv('ecoregions');\">Learn More</a><sup>\
+                            <div id=\"ecoregions\" style=\"display: none\">\
+                                <p>World Wildlife Federation Terrestrial Ecoregions of the World.  \
+                                <p>More information on the WWF Ecoregions dataset can be found <a href=\"http://www.worldwildlife.org/science/ecoregions/item1267.html\" target=\"_blank\">here</a>.\
+                            </div>\
+                        </td>\
+                    </tr>\
+                    \
+                    \
+                    <tr>\
+                        <td colspan='2'>Brahmaputra Valley semi-evergreen forests (56,840 km<sup>2</sup> / 21,946 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Chhota-Nagpur dry deciduous forests (399 km<sup>2</sup> / 154 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Chin Hills-Arakan Yoma montane forests (26,580 km<sup>2</sup> / 10,262 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Eastern Himalayan alpine shrub and meadows (65,184 km<sup>2</sup> / 25,168 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Eastern Himalayan broadleaf forests (73,746 km<sup>2</sup> / 28,473 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    \
+                    \
+                    <tr><td></td><td></td></tr>\
+                    <tr><td></td><td></td></tr>\
+                    <tr class=\"grey\">\
+                        <td colspan='2'>\
+                            <b>Wild Regions</b>\
+                            <sup><a id=\"displayText\" href=\"javascript:toggleDiv('last_wild');\">Learn More</a><sup>\
+                            <div id=\"last_wild\" style=\"display: none\">\
+                                <p>This report represents the amount of the world's 10% least influenced areas. \
+                                <p>More information on the Wild Regions dataset can be found <a href=\"http://sedac.ciesin.columbia.edu/wildareas/methods.jsp\" target=\"_blank\">here</a>.\
+                            </div>\
+                        </td>\
+                    </tr>\
+                    \
+                    \
+                    <tr>\
+                        <td colspan='2'>Brahmaputra Valley semi-evergreen forests (15 km<sup>2</sup> / 6 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Eastern Himalayan alpine shrub and meadows (39,926 km<sup>2</sup> / 15,415 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Eastern Himalayan broadleaf forests (13,059 km<sup>2</sup> / 5,042 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Eastern Himalayan subalpine conifer forests (7,554 km<sup>2</sup> / 2,917 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Hengduan Mountains subalpine conifer forests (4,462 km<sup>2</sup> / 1,723 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    <tr>\
+                        <td colspan='2'>Irrawaddy moist deciduous forests (1,123 km<sup>2</sup> / 434 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    \
+                    \
+                    <tr><td></td><td></td></tr>\
+                    <tr><td></td><td></td></tr>\
+                    <tr class=\"grey\">\
+                        <td colspan='2'>\
+                            <b>Watersheds</b>\
+                            <sup><a id=\"displayText\" href=\"javascript:toggleDiv('watersheds');\">Learn More</a><sup>\
+                            <div id=\"watersheds\" style=\"display: none\">\
+                                <p>Watershed data (HydroSHEDS) has been developed by the Conservation Science Program of World Wildlife Fund (WWF), \
+                                   in partnership with the U.S. Geological Survey (USGS), the International Centre for Tropical Agriculture (CIAT), \
+                                   The Nature Conservancy (TNC), and the Center for Environmental Systems Research (CESR) of the University of Kassel, \
+                                   Germany. Major funding for this project was provided to WWF by JohnsonDiversey, Inc.\
+                                <p>More information on the Watersheds dataset can be found <a href=\"http://hydrosheds.cr.usgs.gov/overview.php\" target=\"_blank\">here</a>.\
+                                <p>NOTE:  Many significant land masses were not included within this dataset, we report on such absences with\
+                                   'No Data Available'.  \
+                            </div>\
+                        </td>\
+                    </tr>\
+                    \
+                        \
+                        <tr>\
+                            <td colspan='2'>Bay of Bengal, North East Coast (67,456 km<sup>2</sup> / 26,045 mi<sup>2</sup>)</td>\
+                        </tr>\
+                        \
+                        <tr>\
+                            <td colspan='2'>Ganges - Bramaputra (517,307 km<sup>2</sup> / 199,733 mi<sup>2</sup>)</td>\
+                        </tr>\
+                        \
+                        <tr>\
+                            <td colspan='2'>Irrawaddy (255,189 km<sup>2</sup> / 98,529 mi<sup>2</sup>)</td>\
+                        </tr>\
+                        \
+                        <tr>\
+                            <td colspan='2'>Mekong (20,614 km<sup>2</sup> / 7,959 mi<sup>2</sup>)</td>\
+                        </tr>\
+                        \
+                        <tr>\
+                            <td colspan='2'>Salween (36,307 km<sup>2</sup> / 14,018 mi<sup>2</sup>)</td>\
+                        </tr>\
+                        \
+                        <tr>\
+                            <td colspan='2'>Yangtze (21,202 km<sup>2</sup> / 8,186 mi<sup>2</sup>)</td>\
+                        </tr>\
+                        \
+                    \
+                    <tr><td></td><td></td></tr>\
+                    <tr><td></td><td></td></tr>\
+                    <tr class=\"grey\">\
+                        <td colspan='2'>\
+                            <b>WWF Marine Ecoregions</b>\
+                            <sup><a id=\"displayText\" href=\"javascript:toggleDiv('marine_regions');\">Learn More</a><sup>\
+                            <div id=\"marine_regions\" style=\"display: none\">\
+                                <p>World Wildlife Federation Marine Ecoregions of the World.  \
+                                <p>More information on the WWF Marine Ecoregions dataset can be found <a href=\"http://www.worldwildlife.org/science/ecoregions/marine/item1266.html\" target=\"_blank\">here</a>.\
+                            </div>\
+                        </td>\
+                    </tr>\
+                    \
+                    \
+                    <tr>\
+                        <td colspan='2'>Northern Bay of Bengal (4,284 km<sup>2</sup> / 1,654 mi<sup>2</sup>)</td>\
+                    </tr>\
+                    \
+                    \
+                    <tr><td></td><td></td></tr>\
+                    <tr><td></td><td></td></tr>\
+                </tbody>\
+            </table>\
+            </div>\
+            <p>\
+            <script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js\"></script>\
+            <script type=\"text/javascript\">\
+                function toggleDiv(divId) {\
+                   $(\"#\"+divId).toggle();\
+                }\
+            </script>\
+            <style type=\"text/css\">\
+                h3 { font-weight: bold; }\
+            </style>\
+        </div>"
     },
     'vulnerabilities': {
-        'definition': '<div class="box">
+        'definition': '\
+            <div class="box">\
                 <p>\
                     <strong>Climate Change:</strong>\
-                    provides information r... due to sea level rise.\
+                    provides information related to impacts on agriculture, water, and land loss due to sea level rise.\
                 </p>\
                 <p>\
                     <strong>Socio-Economic:</strong>\
-                    provides information r...and cultural pressures.\
-                </p>\
+                    provides information related to human impacts, human needs, social equity, and cultural pressures.\
+                    </p>\
                 <p>\
                     <strong>Natural Hazards:</strong>\
-                    provides information r...d their economic costs.\
+                    provides information related to potential natural hazards and their economic costs.\
                 </p>\
             </div>',
-        'climate': "<p>Climate Change placeholder</p>",
-        'socecon': "<p>Socio-Economic placeholder</p>",
-        'hazards': "<p>Natural Hazards placeholder</p>"
+        'climate': '\
+            <div class="panel">\
+                <h3>Climate Change Vulnerabilities</h3>\
+                <div class="freetext">\
+                    <p> </p>\
+                    <table class="analysis_report_container" style="width:430px">\
+                        <tbody>\
+                            <tr class="grey">\
+                                <td colspan="2">\
+                                    <b>Human Vulnerabilities to Climate Change</b>\
+                                    <sup>\
+                                        <a id="displayText" href="javascript:toggleDiv(\'human\');">Learn More</a>\
+                                        <sup>\
+                                            <div id="human" style="display: none">\
+                                                <p>This report is an indicator of the Global Climate-Demography Vulnerability Index (CDVI) which is estimated by subtacting climate vulnerabilities from demographic annual growth rates. In this case, high vulnerability is predicted for regions where a decline in climate conditions currently supporting high population density is combined with rapid population growth.</p>\
+                                                <p>CDVI < -12 is considered Low, </p>\
+                                                <p>-12 <= CDVI < -4 is Moderately low, </p>\
+                                                <p>-4 <= CDVI < 4 is Moderate, </p>\
+                                                <p>4 <= CDVI < 12 is Moderately high, </p>\
+                                                <p>and CDVI >= 12 is considered high </p>\
+                                                <p>\
+                                                    More information on this dataset can be found\
+                                                    <a target="_blank" href="http://chairedb.uqar.qc.ca/documents/2011Samsonetal.GEB.pdf">here</a>\
+                                                    .\
+                                                </p>\
+                                            </div>\
+                                        </sup>\
+                                    </sup>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> Moderate (CDVI = 1.0) </td>\
+                            </tr>\
+                            <tr class="grey">\
+                                <td colspan="2">\
+                                    <b>Impact on Temperature</b>\
+                                    <sup>\
+                                        <a id="displayText" href="javascript:toggleDiv(\'temp_change\');">Learn More</a>\
+                                        <sup>\
+                                            <div id="temp_change" style="display: none">\
+                                                <p>This report represents anticipated temperature changes by end of century and was created by Ecotrust solely for use in the Bioregion Discovery Tool reports section. </p>\
+                                                <p>\
+                                                    The results reflect a mean change in temperature between 2010 and 2050, using the International Panel on Climate Change\'s\
+                                                    <a target="_blank" href="http://www.ipcc.ch/ipccreports/sres/emission/index.php?idp=98">scenario A2</a>\
+                                                    . This research uses data provided by the \
+                                                    <a target="_blank" href="http://www.ccsm.ucar.edu">Community Climate System Model project</a>\
+                                                    , supported by the Directorate for Geoscience of the National Science Foundation and the Office of Biological and Environmental Research of the U.S. Department of Energy. NCAR GIS Initiative provided CCSM data in the GIS format through \
+                                                    <a target="_blank" href="http://www.gisclimatechange.org">GIS Climate Change Scenarios portal</a>\
+                                                    .\
+                                                </p>\
+                                                <p>\
+                                                    The data this research was based on can be found\
+                                                    <a target="_blank" href="http://www.gisclimatechange.org/startPage.do">here</a>\
+                                                    .\
+                                                </p>\
+                                                <p>NOTE: Due to the nature of predictive modeling and the inherent complexities of unseen climatic variables, the results of this analysis are only meant to serve as a rough calculation of potential changes in temperature over time. </p>\
+                                            </div>\
+                                        </sup>\
+                                    </sup>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> Increase of 0.9Â° Celsius / 1.6Â° Fahrenheit by 2050 </td>\
+                            </tr>\
+                            <tr class="grey">\
+                                <td colspan="2">\
+                                    <b>Impact on Agricultural Production</b>\
+                                    <sup>\
+                                        <a id="displayText" href="javascript:toggleDiv(\'ag_prod\');">Learn More</a>\
+                                        <sup>\
+                                            <div id="ag_prod" style="display: none">\
+                                                <p>This report represents the expected impacts that climate change will have on terrestrial agriculture. </p>\
+                                                <p>The data was created by the International Institute for Applied Systems Analysis (IIASA) and the Food and Agriculture Organization (FAO) of the United Nations for the Global Agro-ecological Assessment for Agriculture in the 21st Century. Data is from Plate 69 of this report.</p>\
+                                                <p>\
+                                                    More information on this dataset can be found\
+                                                    <a target="_blank" href="http://www.iiasa.ac.at/Research/LUC/SAEZ/index.html">here</a>\
+                                                    .\
+                                                </p>\
+                                            </div>\
+                                        </sup>\
+                                    </sup>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> 36% of this region can expect a Slight Decrease in Production  </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> 31% of this region can expect a Slight Increase in Production </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> 28% of this region is not covered by this dataset  </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> 2% of this region can expect a General Decrease in Production </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> 2% of this region can expect a Major Increase in Production  </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> 0% of this region can expect an General Increase in Production </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan="2"> 0% of this region can expect a Major Decrease in Production </td>\
+                            </tr>\
+                            <tr class="grey">\
+                                <td colspan="2">\
+                                    <b>Impact on Precipitation</b>\
+                                    <sup><a id="displayText" href="javascript:toggleDiv(\'water\');">Learn More</a><sup>\
+                                    <div id="water" style="display: none">\
+                                        <p>This report represents anticipated precipitation changes by end of century and was created by Ecotrust solely for use\
+                                           in the Bioregion Discovery Tool reports section.  \
+                                        <p>The results reflect a mean change in precipitation data between 2010 and 2099, using the International Panel on \
+                                           Climate Change\'s <a href="http://www.ipcc.ch/ipccreports/sres/emission/index.php?idp=98" target="_blank">scenario A2</a>.\
+                                           This research uses data provided by the <a href="http://www.ccsm.ucar.edu" target="_blank">Community Climate System Model project</a>, \
+                                           supported by the Directorate for Geoscience of the National Science Foundation and the Offic of Biological and Environmental Research\
+                                           of the U.S. Department of Energy.  NCAR GIS Initiative provided CCSM data in the GIS format through \
+                                           <a href="http://www.gisclimatechange.org" target="_blank">GIS Climate Change Scenarios portal</a>.\
+                                        <p>The data this research was based on can be found <a href="http://www.gisclimatechange.org/startPage.do" target="_blank">here</a>.\
+                                        <p>NOTE:  Due to the nature of predictive modeling and the inherent complexities of unseen climatic variables, the results\
+                                           of this analysis are only meant to serve as a rough calculation of potential changes in precipitation over time. \
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan=2>\
+                                    98% of this region can expect Less Precipitation\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan=2>\
+                                    2% of this region can expect More Precipitation\
+                                </td>\
+                            </tr>\
+                        </tbody>\
+                    </table>\
+                </div>\
+                <h3>Rising Sea Levels</h3>\
+                <h3 align="center" class="analysis_report_container">1 Meter</h3>\
+                <div class=\'freetext\'>\
+                    <p>\
+                    <table  style=\'width:430px\' class=\'analysis_report_container\'>\
+                        <tbody>  \
+                            <tr class="grey">\
+                                <td colspan=2>\
+                                    <b>Estimated Loss of Land</b><sup><a id="displayText" href="javascript:toggleDiv(\'land_loss_1m\');">Learn More</a><sup>\
+                                    <div id="land_loss_1m" style="display: none" align="center">\
+                                        <p>The following report estimates the loss of land that would result from a 1 meter rise in sea levels.\
+                                        <p>More information on the sea rise datasets can be found <a href="https://www.cresis.ku.edu/data/sea-level-rise-maps" target="_blank">here</a>.\
+                                    </div>\
+                                </td>\
+                            </tr>      \
+                            <tr>\
+                                <td colspan=2>\
+                                    \
+                                        2,074 km<sup>2</sup> / 800 mi<sup>2</sup>\
+                                    \
+                                </td>\
+                            </tr>\
+                        </tbody>\
+                    </table>\
+                </div>\
+                <h3 align="center" class="analysis_report_container">3 Meter</h3>\
+                <div class=\'freetext\'>\
+                    <p>\
+                    <table  style=\'width:430px\' class=\'analysis_report_container\'>\
+                        <tbody>  \
+                            <tr class="grey">\
+                                <td colspan=2>\
+                                    <b>Estimated Loss of Land</b><sup><a id="displayText" href="javascript:toggleDiv(\'land_loss_3m\');">Learn More</a><sup>\
+                                    <div id="land_loss_3m" style="display: none" align="center">\
+                                        <p>The following report estimates the loss of land that would result from a 3 meter rise in sea levels.\
+                                        <p>More information on the sea rise datasets can be found <a href="https://www.cresis.ku.edu/data/sea-level-rise-maps" target="_blank">here</a>.\
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan=2>\
+                                    15,458 km<sup>2</sup> / 5,968 mi<sup>2</sup>\
+                                </td>\
+                            </tr>\
+                        </tbody>\
+                    </table>\
+                </div>\
+                <h3 align="center" class="analysis_report_container">6 Meter</h3>\
+                <div class=\'freetext\'>\
+                    <p>\
+                    <table  style=\'width:430px\' class=\'analysis_report_container\'>\
+                        <tbody>  \
+                            <tr class="grey">\
+                                <td colspan=2>\
+                                    <b>Estimated Loss of Land</b><sup><a id="displayText" href="javascript:toggleDiv(\'land_loss_6m\');">Learn More</a><sup>\
+                                    <div id="land_loss_6m" style="display: none" align="center">\
+                                        <p>The following report estimates the loss of land that would result from a 6 meter rise in sea levels.\
+                                        <p>More information on the sea rise datasets can be found <a href="https://www.cresis.ku.edu/data/sea-level-rise-maps" target="_blank">here</a>.\
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan=2>\
+                                    \
+                                        38,632 km<sup>2</sup> / 14,915 mi<sup>2</sup></td>\
+                                    \
+                            </tr>\
+                        </tbody>\
+                    </table>\
+                </div>\
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>\
+                <script type="text/javascript">\
+                function toggleDiv(divId) {\
+                   $("#"+divId).toggle();\
+                }\
+                </script>\
+                <style type="text/css">\
+                h3 { font-weight: bold; }\
+                </style>\
+            </div>',
+        'socecon': '\
+            <div class="panel">\
+                <h3>Human Impacts</h3>\
+                <div class=\'freetext\'>\
+                    <p>\
+                    <table  style=\'width:430px\' class=\'analysis_report_container\'>\
+                        <tbody>\
+                            <tr class="grey">\
+                                <td>\
+                                    <b>Area of Land Developed</b>\
+                                    <sup><a id="displayText" href="javascript:toggleDiv(\'land\');">Learn More</a><sup>\
+                                    <div id="land" style="display: none">\
+                                        <p>The Developed Land dataset represents a combination of modeled built-up areas (based on nighttime lights) and \
+                                           observed built-up areas (based on IGBP (International Geosphere-Biosphere Programme) land cover data).\
+                                        <p>More information on the Developed Land dataset can be found <a href="http://www.sage.wisc.edu/atlas/maps.php?datasetid=18&includerelatedlinks=1&dataset=18" target="_blank">here</a>.\
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td>\
+                                        22.19%\
+                                </td>\
+                            </tr>\
+                            <tr class="grey">\
+                                <td>\
+                                    <b>Human Consumption</b>\
+                                    <sup><a id="displayText" href="javascript:toggleDiv(\'consumption\');">Learn More</a><sup>\
+                                    <div id="consumption" style="display: none">\
+                                        <p>This report represents the Human Appropriation of the local Terrestrial Net Primary Productivity.\
+                                           This is the amount of carbon required to derive food and fiber products consumed by humans, \
+                                           and can be seen as a ratio of consumption to the local food system.  \
+                                        <p>More information on the HANPP dataset can be found <a href="http://sedac.ciesin.columbia.edu/es/hanpp.html" target="_blank">here</a>.\
+                                        <p>NOTE: This report does not directly capture other forms of environmental impact, such as freshwater abstraction,\
+                                           use of fossil fuels, pollutant emissions, and appropriation of NPP from freshwater and marine systems.  Nor does \
+                                           it include components of NPP that are lost due to land transformations (e.g. shifting cultivation and land clearing\
+                                           for development). \
+                                        <p>ALSO:  Many significant land masses are not represented within this dataset, such absences are reported as\
+                                           \'No Data Available\'.  \
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td>\
+                                        44% of Net Primary Production \
+                                </td>\
+                            </tr>\
+                            <tr class="grey">\
+                                <td>\
+                                    <b>Human Impact of Marine Ecosystems</b>\
+                                    <sup><a id="displayText" href="javascript:toggleDiv(\'marine\');">Learn More</a><sup>\
+                                    <div id="marine" style="display: none">\
+                                        <p>From the <a href="http://www.nceas.ucsb.edu/globalmarine" target="_blank">Human Impacts to Marine Ecosystems website</a>,\
+                                           this report is a measure of the ecological impacts of 17 different activities that include categories of fishing, \
+                                           climate change, and pollution.   \
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td>\
+                                        Low Impact\
+                                </td>\
+                            </tr>\
+                        </tbody>\
+                    </table>\
+                </div>\
+                <h3>Human Needs</h3>\
+                <div class=\'freetext\'>\
+                    <p>\
+                    <table  style=\'width:430px\' class=\'analysis_report_container\'>\
+                        <tbody>\
+                            <tr class="grey">\
+                                <td>\
+                                    <b>Proportion Suitable for Agriculture</b>\
+                                    <sup><a id="displayText" href="javascript:toggleDiv(\'suit\');">Learn More</a><sup>\
+                                    <div id="suit" style="display: none">\
+                                        <p>This value represents the proportion of the terrestrial area in the bioregion that is considered suitable for \
+                                           agriculture based on temperature and soil quality measurements.  \
+                                        <p>The data was created by Ramnkutty, N., J.A. Foley, J. Norman, and K. McSweeney in 2001.  \
+                                        <p>More information on the Agricultural Suitability dataset can be found <a href="http://www.sage.wisc.edu/atlas/maps.php?datasetid=19&includerelatedlinks=1&dataset=19" target="_blank">here</a>.\
+                                        <p>NOTE:  Many significant land masses were not included within this dataset, such absences are reported as\
+                                           \'No Data Available\'.  \
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td>\
+                                        38%\
+                                </td>\
+                            </tr>\
+                            <tr class="grey">\
+                                <td>\
+                                    <b>Water Stress Index</b>\
+                                    <sup><a id="displayText" href="javascript:toggleDiv(\'water_stress\');">Learn More</a><sup>\
+                                    <div id="water_stress" style="display: none">\
+                                        <p>This report is based on the ratio of human water use (sum of domestic, industrial, and agricultural demand) to \
+                                           renewable water supply (available local run-off (precipitation less evaporation) as delivered through streams, \
+                                           rivers, and shallow groundwaters).\
+                                        <p>This dataset was reclassed into 4 categories: \
+                                            <p>1 is considered Unstressed.\
+                                            <p>2 is considered Low Stress.\
+                                            <p>3 is considered Medium Stress.\
+                                            <p>4 is considered High Stress.\
+                                        <p>and the zonal average is reported below. \
+                                        <p>Metadata on the Water Stress dataset can be found <a href="http://wwdrii.sr.unh.edu/sourcematerial/Water_stress_metadata.html" target="_blank">here</a>.\
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>            \
+                                <td>\
+                                        Unstressed (Stress Index of 1.1)\
+                                </td>\
+                            </tr>\
+                        </tbody>\
+                    </table>\
+                </div>\
+                <h3>Social Equity</h3>\
+                <div class=\'freetext\'>\
+                    <p>\
+                    <table  style=\'width:430px\' class=\'analysis_report_container\'>\
+                        <tbody>\
+                            <tr class="grey">\
+                                <td>\
+                                    <b>Estimated Population in Poverty</b>\
+                                    <sup><a id="displayText" href="javascript:toggleDiv(\'poverty\');">Learn More</a><sup>\
+                                    <div id="poverty" style="display: none">\
+                                        <p>This report is derived from a global dataset that enumerates the number of children under 5 years of age \
+                                           who are underweight.  This data is being used to estimate poverty due to the current absence of a gridded\
+                                           global poverty data layer.  \
+                                        <p>The analysis makes the assumption that the number of underweight children directly corresponds to the number\
+                                           of children living in poverty for a given region.  Using this enumeration of underweight children, \
+                                           an estimate is derived of the total population living in poverty within this bioregion.  \
+                                        <p>To estimate the total poverty population we first estimate the proportion of the world\'s impoverished\
+                                           contained within this bioregion.  This is achieved by dividing the number of underweight children reported\
+                                           in this bioregion by the estimated number of underweight children under the age of 5 worldwide\
+                                           (<a href="http://www.who.int/whosis/whostat/EN_WHS2011_Part1.pdf" target="_blank">estimated at 115 million</a>).  \
+                                        <p>We then estimate the number of people living in poverty by multiplying the proportion of the world\'s impoverished,  \
+                                           as estimated, by the global population of impoverised (as <a href="http://en.wikipedia.org/wiki/Poverty" target="_blank">estimated on Wikipedia</a>\
+                                           as 1.7 billion in <a href="http://en.wikipedia.org/wiki/Poverty_threshold" target="_blank">absolute poverty</a>).  \
+                                        <p>More information on the dataset used to estimate the number of underweight children under 5 years of age can be found \
+                                           <a href="http://sedac.ciesin.columbia.edu/legacy?url=http://sedac.ciesin.columbia.edu/povmap/methods.jsp" target="_blank">here</a>.\
+                                        <p>NOTE:  Many areas around the globe are not accounted for in this dataset.  If your bioregion includes any of  \
+                                           these areas of no data, it will be reported as \'No Data Available\'.  \
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td>\
+                                            193.3 million \
+                                        (87.1% of population)\
+                                </td>\
+                            </tr>\
+                        </tbody>\
+                    </table>\
+                </div>\
+                <h3>Cultural Pressures</h3>\
+                <div class=\'freetext\'>\
+                    <p>\
+                    <table  style=\'width:430px\' class=\'analysis_report_container\'>\
+                        <tbody>\
+                            <tr class="grey">\
+                                <td>\
+                                    <b>Extinct / Near Extinct Languages</b>\
+                                    <sup><a id="displayText" href="javascript:toggleDiv(\'ex_lang\');">Learn More</a><sup>\
+                                    <div id="ex_lang" style="display: none">\
+                                        <p>Data was obtained from the World Language Mapping System (WLMS), which has locations of the world\'s 6,900 languages,\
+                                           including languages that are classified as "extinct" in the 15th Ethnologue.\
+                                        <p>More information on the WLMS datasets can be found <a href="http://www.worldgeodatasets.com/language/" target="_blank">here</a>.\
+                                    </div>\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td colspan=\'2\'>Ahom (Estimated Speakers: 0)</td>\
+                            </tr>\
+                            \
+                            <tr>\
+                                <td colspan=\'2\'>Pali (Estimated Speakers: 0)</td>\
+                            </tr>\
+                            \
+                            <tr>\
+                                <td colspan=\'2\'>Taman (Estimated Speakers: 0)</td>\
+                            </tr>\
+                            \
+                            <tr>\
+                                <td colspan=\'2\'>Turung (Estimated Speakers: 0)</td>\
+                            </tr>\
+                        </tbody>\
+                    </table>\
+                </div>\
+                <p>\
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>\
+                <script type="text/javascript">\
+                    function toggleDiv(divId) {\
+                       $("#"+divId).toggle();\
+                    }\
+                </script>\
+                <style type="text/css">\
+                    h3 { font-weight: bold; }\
+                </style>\
+            </div>',
+        'hazards': '\
+            <div class="panel">\
+                <h3>Natural Hazards</h3>\
+                <div class=\'freetext\'>\
+                <p>\
+                <table  style=\'width:430px\' class=\'analysis_report_container\'>\
+                    <tbody>\
+                        <tr class="grey">\
+                            <td><b>Natural Disaster Vulnerabilities</b>\
+                                <sup><a id="displayText" href="javascript:toggleDiv(\'hazards\');">Learn More</a><sup>\
+                                <div id="hazards" style="display: none">\
+                                    <p>This report represents which of six major natural hazards (earthquakes, volancoes, landslides, floods, \
+                                       drought, and cyclones) are considered high risk for the bioregion.\
+                                    <p>Risk has been estimated by combining hazard exposure with historical vulnerability for two indicators of \
+                                       elements at risk -- population and Gross Domestic Product per unit area.\
+                                    <p>More information on the Natural Hazards datasets can be found <a href="http://www.ldeo.columbia.edu/chrr/research/hotspots/" target="_blank">here</a>.\
+                                </div>\
+                            </td>\
+                        </tr>\
+                        <tr>\
+                            <td>High Risk of Cyclone <p>(with High economic impact)</td>\
+                        </tr>\
+                        <tr>\
+                            <td>High Risk of Drought <p>(with High economic impact)</td>\
+                        </tr>\
+                        <tr>\
+                            <td>High Risk of Earthquake <p>(with High economic impact)</td>\
+                        </tr>\
+                        <tr>\
+                            <td>High Risk of Flood <p>(with High economic impact)</td>\
+                        </tr>\
+                        <tr>\
+                            <td>High Risk of Landslide <p>(with High economic impact)</td>\
+                        </tr>\
+                    </tbody>\
+                </table>\
+                </div>\
+                <p>\
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>\
+                <script type="text/javascript">\
+                function toggleDiv(divId) {\
+                   $("#"+divId).toggle();\
+                }\
+                </script>\
+                <style type="text/css">\
+                    h3 { font-weight: bold; }\
+                </style>\
+            </div>'
     }
 };

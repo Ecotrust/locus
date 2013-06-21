@@ -54,7 +54,7 @@ def create_superuser():
 
 def import_data():
     """ Fetches and installs data fixtures (WARNING: 5+GB of data; hence not checking fixtures into the repo) """
-    run('cd %(app_dir)s && %(venv)s/bin/python manage.py import_data' % vars)
+    run('cd %(app_dir)s && %(venv)s/bin/python manage.py loaddata %(app_dir)s/fbapp/fixtures/initial_data.json && %(venv)s/bin/python manage.py loaddata %(app_dir)s/fbapp/fixtures/other_loci.json' % vars)
 
 
 def init():

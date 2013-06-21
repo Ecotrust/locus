@@ -3,6 +3,7 @@ class install {
     $appuser = "vagrant"
     $sourcepath = "/vagrant"
     $dbname = "locus"
+    $dbuser = "vagrant"
     $reponame = "locus"
     $projectname = "locus"
     $appname = "fbapp"
