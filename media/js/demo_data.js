@@ -942,7 +942,20 @@ var reportDetailsJSON = {
         "
     },
     'vulnerabilities': {
-        'definition': "<p>Definition placeholder</p>",
+        'definition': '<div class="box">
+                <p>\
+                    <strong>Climate Change:</strong>\
+                    provides information r... due to sea level rise.\
+                </p>\
+                <p>\
+                    <strong>Socio-Economic:</strong>\
+                    provides information r...and cultural pressures.\
+                </p>\
+                <p>\
+                    <strong>Natural Hazards:</strong>\
+                    provides information r...d their economic costs.\
+                </p>\
+            </div>',
         'climate': "<p>Climate Change placeholder</p>",
         'socecon': "<p>Socio-Economic placeholder</p>",
         'hazards': "<p>Natural Hazards placeholder</p>"
