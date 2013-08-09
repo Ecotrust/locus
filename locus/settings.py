@@ -22,7 +22,29 @@ COMPRESS_JS['application']['source_filenames'] += (
     'js/project.js',
 )
 
-INSTALLED_APPS += ('fbapp', )
+TEMPLATE_CONTEXT_PROCESSORS += (
+    "django.core.context_processors.request",
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
+ )
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+INSTALLED_APPS += (
+	'fbapp',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+)
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 GEOMETRY_DB_SRID = 3857
 GEOMETRY_CLIENT_SRID = 4326 #for latlon
@@ -31,6 +53,7 @@ APP_NAME = "locus"
 
 TEMPLATE_DIRS = (
     os.path.realpath(os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/')), 
+    os.path.abspath(os.path.dirname(sys.argv[0])) +'/admin_utils/templates/',
 )
 
 import logging
@@ -47,10 +70,13 @@ ADMIN_MEDIA_ROOT = os.path.abspath(os.path.dirname(sys.argv[0])) + ADMIN_MEDIA_P
 STATICFILES_ROOT = os.path.abspath(os.path.dirname(sys.argv[0])) + STATIC_URL
 STATIC_ROOT = os.path.abspath(os.path.dirname(sys.argv[0])) + STATIC_URL
 
-# STATICFILES_DIRS = (
-    # os.path.abspath('c:\\Python27\Lib\site-packages\django_extjs\static'),
-# )
-
+SOCIALACCOUNT_PROVIDERS = { 
+    'facebook':
+    { 'SCOPE': ['email', 'publish_stream'],
+      # 'AUTH_PARAMS': { 'auth_type': 'reauthenticate' },
+      'METHOD': 'js_sdk'  
+    }
+}
 
 
 from settings_local import *

@@ -12,12 +12,13 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     """
     Launch screen / Home page for application
     """
-    context = {}
+    context = RequestContext(request,{})
     context.update(extra_context)
-    return render_to_response(template_name, context)
+
+    return render_to_response(template_name, context_instance=context)
     
 def get_bioregions(request):
-    qs = Locus.objects.filter(AREA__gt=80)
+    qs = Locus.objects.all()
     return render_to_geojson(
         qs,
         geom_attribute='poly',

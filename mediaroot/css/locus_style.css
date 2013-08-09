@@ -1,0 +1,560 @@
+body {
+	margin-top: 90px;
+    overflow: auto !important;
+}
+
+.main-page{
+    margin-top: 80px;
+}
+
+/* -----------------------------------------------------------------------
+Begin Map
+----------------------------------------------------------------------- */
+
+img.olTileImage {
+    /*max-width: 256px !important;*/
+    max-width: none !important;
+}
+
+.map-holder{
+    /*margin: 0 0 2% 0;*/
+    border: solid #78A22F;
+}
+
+.olMap{
+    max-width: 1024px;
+}
+
+.olControlLayerSwitcher {
+    width: 15% !important;
+    min-width: 95px;
+}
+
+label.olButton {
+    display: inline-table;
+}
+
+input.olButton{
+    vertical-align: top;
+    margin-right: 1%;
+}
+
+.olControlMousePosition{
+    background: white;
+    padding: 0 1%;
+    right: 0 !important;
+    opacity: 0.75;
+}
+
+/* -----------------------------------------------------------------------
+End Map
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Header
+----------------------------------------------------------------------- */
+
+header .ProfileWidget .LoginWithFacebook{
+    height:22px;
+    width:153px;
+    float:right;
+    padding:9px 9px 0 0;
+}
+
+.navbar .header-logo{
+    margin: 10px 0 5px 0;
+}
+
+.navbar-fixed-top .container{
+    max-width:940px;
+    width:95%;
+}
+
+.right-head {
+    margin-top: 3%;
+}
+
+.user-name {
+    text-align: right;
+    margin-top: 2%;
+}
+
+.base-login {
+    color: #FFFFFF;
+    background: #4c66a4;
+    float: right;
+}
+
+.base-logout {
+    color: #FFFFFF;
+    background: #4c66a4;
+    float: right;
+}
+
+/* -----------------------------------------------------------------------
+End Header
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Facebook Login Button
+----------------------------------------------------------------------- */
+a.btnFacebookLogin,a.btnFacebookLogin:link,a.btnFacebookLogin:visited,a.btnFacebookLogin:hover,a.btnFacebookLogin:active{
+    color:#fff !important;
+    cursor:pointer;
+    text-decoration:none;
+    margin-top:20px;
+    float:right;
+}
+
+a.btnFacebookLogin{
+    background:#29447e url('../img/facebook/facebook_sm.png') no-repeat 0 0;
+    font:bold 11px/14px "lucida grande",Tahoma,Verdana,arial,sans-serif;
+    padding:0 0 0 1px;
+    margin-left:1em;
+    display:inline-block;
+}
+
+a.btnFacebookLogin span{
+    background-color:#5f78ab;
+    border-bottom:1px solid #1a356e;
+    border-top:1px solid #879ac0;
+    margin:1px 1px 0 21px;
+    padding:2px 6px 3px;
+    display:block;
+}
+.ProfileWidget a.btnFacebookLogin{
+    float:right;
+    margin-left:0;
+}
+
+/* -----------------------------------------------------------------------
+End Facebook Login Button
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Home Page
+----------------------------------------------------------------------- */
+
+.home-left img{
+    width: 85%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.home-left-left .home-left-img{
+    text-align: left;
+    padding-left: 2%;
+}
+
+.home-left-right .home-left-img{
+    text-align: right;
+    padding-right: 2%;
+}
+
+.home-page img{
+    border: solid #78A22F;
+}
+
+.home-left-right .home-left-img img{
+    margin-bottom: 0;
+}
+
+.home-left p{
+    font-size: 1em;
+}
+    
+.home-left-left p{
+    padding-top: 12%;
+    margin-top: 12%;
+    padding-bottom: 3%;
+    margin-bottom: 3%;
+    text-align: right;
+}
+
+.home-left-right p{
+    padding-top: 6%;
+    margin-top: 6%;
+    padding-bottom: 12%;
+    margin-bottom: 12%;
+    text-align: left;
+    width: 65%;
+}
+
+.home-buttons{
+    background: gainsboro;
+    border: solid;
+    padding: 2%;
+    text-align: center;
+    margin: 3%;
+}
+
+.home-buttons .btn{
+    margin: 2%;
+}
+
+.home-right img{
+    width: 90%;
+    height: 90%;
+    margin: 1%;
+}
+
+/* -----------------------------------------------------------------------
+End Home Page
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Dasboard Page
+----------------------------------------------------------------------- */
+
+#dash-map{
+  height:  500px;
+  min-height: 100%;
+  position: relative;
+}
+
+.dash-textarea{
+    width:100%;
+}
+/*--- Override Bootstrap styles to display bubble images correctly -----*/
+#point-popup_FrameDecorationImg_0, 
+#point-popup_FrameDecorationImg_1, 
+#point-popup_FrameDecorationImg_2, 
+#point-popup_FrameDecorationImg_3, 
+#point-popup_FrameDecorationImg_4, 
+#new-popup_FrameDecorationImg_0, 
+#new-popup_FrameDecorationImg_1, 
+#new-popup_FrameDecorationImg_2, 
+#new-popup_FrameDecorationImg_3, 
+#new-popup_FrameDecorationImg_4{
+/*#point-popup img{*/
+    max-width: none !important;
+}
+
+.news-title{
+    color:#333333;
+}
+
+.friend-card:hover {
+    background-color:#E5E5E5;
+}
+
+.news-img{
+    float: left;
+    max-width: 25%;
+    margin-right: 4%;
+}
+
+#point-popup{
+    max-width: none !important;
+}
+
+#new-popup{
+    max-width: none !important;
+    min-width: 300px;
+    max-height: none !important;
+}
+
+#new-popup_contentDiv{
+    width: 100%;
+    margin-right: 20px;
+    height: 145 !important;
+}
+
+.news-bubble{
+    max-width: 400px;
+    max-height: 300px;
+    min-width: 250px;
+    min-height: 70px;
+}
+
+.news-bubble-img{
+    max-width:100px;
+    float: left;
+    margin-right: 8px;
+}
+
+.news-bubble p{
+    text-size: 70%;
+}
+
+.post-bubble{
+    max-width: 400px;
+    max-height: 300px;
+    min-width: 250px;
+    min-height: 70px;
+}
+
+.post-bubble img{
+    max-width: 60px;
+    max-height: 70px;
+    float: left;
+    margin-right: 8px;
+    vertical-align: center;
+}
+
+div.new-storypoint{
+    min-width: 200px;
+    width: 100%;
+    min-height: 100px;
+}
+
+form.new-storypoint{
+    margin-bottom: 8px;
+}
+
+textarea.new-storypoint{
+    margin-left: 30px;
+    width: 100%;
+    min-width: 250px;
+}
+
+button.new-storypoint{
+    margin-left: 30px;
+}
+
+.new-storypoint-controls{
+    min-width: 250px;
+}
+
+div.legend{
+    float: left;
+    z-index: 755;
+    bottom: 0px;
+    position: absolute;
+    border: medium solid;
+    height: 25%;
+    max-height: 99px;
+}
+
+.legend img{
+    width: 100%;
+    max-width: 100px;
+    height: 100%;
+    max-height: 99px;
+}
+
+/* -----------------------------------------------------------------------
+End Dashboard Page
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Details Page
+----------------------------------------------------------------------- */
+
+.rename-link{
+    margin-top: 2%;
+}
+
+.details h3{
+    color: #47556C; 
+    font-size: 14px; 
+    margin-bottom: 0px;
+}
+
+.details h3.analysis_report_container {
+    width: 430px;
+    margin-left: 5%;
+}
+
+.details table.analysis_report_container {
+    background: none repead scroll 0 0 #FFFFFF;
+    border-color: lightgray;
+    border-spacing: 0;
+    border-width: 0;
+    font-size: small;
+    padding: 0;
+    text-align: center;
+    margin-left: 5%;
+/*    
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+*/
+}
+
+.details table.analysis_report_container tr.grey {
+    background: none repeat scroll 0 0 #ECECEC;
+}
+
+.details table.analysis_report_container td, th{
+   border-color: gray;
+   border-style: solid;
+   border-width: 0;
+   padding: 2px;
+   text-align: center;
+}
+
+.details sub, .details sup {
+    font-size: 100% !important;
+    line-height: 14px !important;
+    position: static !important;
+}
+
+/* -----------------------------------------------------------------------
+End Details Page
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Settings Page
+----------------------------------------------------------------------- */
+
+.settings-form label{
+    margin-right: 1%;
+}
+
+.settings-form .well{
+    margin-bottom: 0;
+}
+
+.news-select{
+    margin-top: 20px;
+}
+
+#your-locus{
+    height: 300px;
+}
+
+#draw-instruct{
+    margin: 5% 2% 0 0;
+}
+
+img.demo {
+    width: 70%;
+    margin: 2% auto;
+    text-align: center;
+}
+
+.locus-review-btn {
+    margin: 5% 15% auto auto !important;
+    width: 45%;
+}
+
+.locus-review-bottom{
+    margin-top: 3%;
+}
+
+/* -----------------------------------------------------------------------
+End Settings Page
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Friends Page
+----------------------------------------------------------------------- */
+
+.friend-card{
+    margin: 2% !important;
+    min-height: 85px !important;
+}
+
+.middle-column{
+    margin-left: 1% !important;
+}
+
+.right-column{
+    margin-left: 1% !important;
+}
+
+.friend-search{
+    width: 90% !important;
+}
+
+.friend-select{
+    border: medium groove; 
+    margin-left: 1%; 
+    width: 96% !important;
+}
+
+.friend-select .scrollable{
+    overflow:auto; 
+    height:130px; 
+    padding:2%
+}
+
+.friend-textarea{
+    margin:1%; 
+    width:94%
+}
+
+.invite{
+    margin: 1% auto 8% 2%;
+    min-width: 40px;
+    width: 40%;
+}
+
+.mug{
+    min-height: 50px;
+}
+
+/* -----------------------------------------------------------------------
+End Friends Page
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin World Page
+----------------------------------------------------------------------- */
+
+.world-learn-btn{
+    margin: 2%;
+    text-align: right;
+}
+
+#loci-map{
+    height: 450px;
+}
+
+/* -----------------------------------------------------------------------
+End World Page
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Tabs
+----------------------------------------------------------------------- */
+
+.pan-span{
+    margin-left: 3% !important;
+}
+
+.place-holder{
+    border:solid; 
+}
+
+.place-holder-short{
+    border:solid; 
+    height:10%; 
+    min-height:5em !important;
+}
+
+.place-holder-map{
+    border:solid; 
+    height:50%; 
+    min-height:35em !important;
+}
+
+.place-holder-short-map{
+    border:solid; 
+    height:40%; 
+    min-height:20em !important;
+}
+
+
+/* -----------------------------------------------------------------------
+End Tabs
+----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Footer
+----------------------------------------------------------------------- */
+
+footer {
+    border-top: 1px solid #EEEEEE;
+    margin-top: 13px;
+    padding-top: 13px;
+}
+
+div.footer{
+    margin-left: 3%;
+}
+
+/* -----------------------------------------------------------------------
+End Footer
+----------------------------------------------------------------------- */

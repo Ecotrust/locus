@@ -1,2 +1,5 @@
-madrona
+madrona>=4.1
 #-e git+https://github.com/Ecotrust/madrona.git@master#egg=madrona
+
+django>=1.4,<1.5
+django-allauth==0.10.1

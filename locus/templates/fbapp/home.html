@@ -1,4 +1,5 @@
 {% extends "fbapp/base.html" %}
+{% load account %}
 {% block include %}
 {% endblock %}
 {% block feedback %}
@@ -33,6 +34,26 @@
                     <div class="tab-content pan-span">
                         <div class="tab-pane active home-page" id="home-tab-content">
                             <div class="span5 home-left">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        {% load account %}
+                                        {% load socialaccount %}
+                                        <!--
+                                        <table>
+                                            <tr><td>ID</td><td>{{user.socialaccount_set.all.0.uid}}</td></tr>
+                                            <tr><td>Username</td><td>{{user.socialaccount_set.all.0.extra_data.username}}</td></tr>
+                                            <tr><td>Bio</td><td>{{user.socialaccount_set.all.0.extra_data.bio}}</td></tr>
+                                            <tr><td>Hometown</td><td>{{user.socialaccount_set.all.0.extra_data.hometown.name}}</td></tr>
+                                            <tr><td>Employer</td><td>{{user.socialaccount_set.all.0.extra_data.work.0.employer.name}}</td></tr>
+                                            <tr><td>Position</td><td>{{user.socialaccount_set.all.0.extra_data.work.1.position.name}}</td></tr>
+                                            <tr><td>Quotes</td><td>{{user.socialaccount_set.all.0.extra_data.quotes}}</td></tr>
+                                            <tr><td>Link</td><td><a href="{{user.socialaccount_set.all.0.extra_data.link}}">{{user.socialaccount_set.all.0.extra_data.link}}</a></td></tr>
+                                            <tr><td>Location</td><td>{{user.socialaccount_set.all.0.extra_data.location.name}}</td></tr>
+                                            <tr><td>Gender</td><td>{{user.socialaccount_set.all.0.extra_data.gender}}</td></tr>
+                                        </table>
+                                        -->
+                                    </div>
+                                </div>
                                 <div class="row-fluid">
                                     <div class="span6 home-left-left">
                                         <div class="home-left-img">
