@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from django.contrib.auth.models import User
 from madrona.features.models import PolygonFeature, PointFeature, LineFeature, FeatureCollection
 from madrona.features import register
 
@@ -24,5 +25,6 @@ class Locus(models.Model):
     AREA = models.FloatField()
     PERIMETER = models.FloatField()
     BIOREG = models.IntegerField()
+    # LYR_ID = models.IntegerField()
     GRID_CODE = models.IntegerField()
     objects = models.GeoManager()

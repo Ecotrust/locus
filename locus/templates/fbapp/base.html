@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
-{% load analytics %}
 {% load appname %}
+{% load account %}
+{% load socialaccount %}
         
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>{% block title %}{% appname %}{% endblock %}</title>
 
@@ -27,6 +28,7 @@
     
     <script src="/media/js/locus.js"></script>
 
+    {% providers_media_js %}
     
     {% block include %}
     {% endblock %}
@@ -39,18 +41,43 @@
     <header role="banner">
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
-			    <div class="container">
-			    	<div class="row-fluid">
-			    		<div class="span5">
-					        <a href="/">
-					        	<img class="header-logo" src="/media/img/locus_logo.gif"/>
-					        </a>
-					    </div>
-					    <div class="span7">
+                <div class="container">
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <a href="/">
+                                <img class="header-logo" src="/media/img/locus_logo.gif"/>
+                            </a>
+                        </div>
+                        <div class="span7">
                             <div class="nav-collapse">
-                                <div>
-                                    <a id="ctl00_uxSignIn" title="Login with Facebook" class="btnFacebookLogin NoWrap" href="javascript:__doPostBack('ctl00$uxSignIn','')"><span>
-                                        Login with Facebook</span></a>
+                                <div class="row-fluid right-head">
+                                    {% if user.is_authenticated %}
+                                        <div class="span9 user-name">
+                                            <p><b>Hello </b>
+                                            {% if user.first_name %}
+                                                <b>{{user.first_name}}</b>
+                                                {% if user.last_name %}
+                                                    <b>{{user.last_name}}</b>
+                                                {% endif %}
+                                            {% else %}
+                                                <b>{{user.username}}</b>
+                                            {% endif %}
+                                            </p>
+                                        </div>
+                                        <div class="span3">
+                                            <form method="POST" action="/accounts/logout/">
+                                                <button type="submit" class="base-logout btn">logout</button>
+                                            </form>
+                                        </div>
+                                    {% else %}
+                                        <div class="span12">
+                                            <form method="POST" action="{% provider_login_url "facebook" method="js_sdk" %}">
+                                                <button type="submit" class="base-login btn">Log In With Facebook</button>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                    <!-- <a id="ctl00_uxSignIn" title="Login with Facebook" class="btnFacebookLogin NoWrap" href="javascript:__doPostBack('ctl00$uxSignIn','')"><span> -->
+                                        <!-- Login with Facebook</span></a> -->
                                 </div><!--/.nav-collapse -->
                             </div>
 					    </div>
@@ -101,7 +128,7 @@
     {% endblock %}
 </script>
     
-    {% analytics %}
+    <!-- % analytics % -->
 </body>
 </html>
 

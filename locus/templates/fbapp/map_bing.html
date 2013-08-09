@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+    <!--<link rel="shortcut icon" href="/media/marco/ico/favicon.ico">-->
+    <script src="/media/third-party/jquery/jquery-1.9.1.min.js"></script>
+
+    <link rel="stylesheet" href="/media/css/locus_style.css"/>
+  
+  
+  
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>OpenLayers Bing Example</title>
+    <link rel="stylesheet" href="http://openlayers.org/dev/theme/default/style.css" type="text/css">
+    <link rel="stylesheet" href="http://openlayers.org/dev/examples/style.css" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script src="/media/third-party/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!--
+    <script src="/media/third-party/OpenLayers-2.12/OpenLayers.js"></script>
+    <link rel="stylesheet" href="/media/third-party/OpenLayers-2.12/theme/default/style.css"/>
+    -->
+    <script>
+    function init() {
+        // API key for http://openlayers.org. Please get your own at
+        // http://bingmapsportal.com/ and use that instead.
+        var apiKey = "AvD-cuulbvBqwFDQGNB1gCXDEH4S6sEkS7Yw9r79gOyCvd2hBvQYPaRBem8cpkjv";
+        //var map = new OpenLayers.Map("map");
+        var map = new OpenLayers.Map(null, {
+          displayProjection: new OpenLayers.Projection("EPSG:4326"),
+          projection: "EPSG:3857"
+        });
+        //map.addControl(new OpenLayers.Control.LayerSwitcher());
+
+        var road = new OpenLayers.Layer.Bing({
+            name: "Road",
+            key: apiKey,
+            type: "Road"
+        });
+        var hybrid = new OpenLayers.Layer.Bing({
+            name: "Hybrid",
+            key: apiKey,
+            type: "AerialWithLabels"
+        });
+        var aerial = new OpenLayers.Layer.Bing({
+            name: "Aerial",
+            key: apiKey,
+            type: "Aerial"
+        });
+
+        map.addLayers([aerial]);
+
+        //function init() {
+        $('#tab2').on('shown', function(e) {
+            map.renderTo("map");
+            alert('bing!');
+            /*
+            map.updateSize();
+            map.mapPx=255;
+            map.zoomToExtent();
+            map.zoomTo(3);
+            */
+        });
+        
+        $('a[data-toggle="tab"]').on('shown', function (e) {
+            e.target;
+            e.relatedTarget;
+            if (e.target.id == 'bing-tab') {
+                map.render("map");
+                map.setCenter(new OpenLayers.LonLat(-110, 45), 3);
+            } 
+        });
+        
+        
+        
+        /*
+        $('#tab2').on('shown', function (e) {
+            init();
+        });
+        */
+    }
+    </script>
+  </head>
+  <body onload="init()" >
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="tabbable">
+                <ul class="nav nav-tabs" id="locusTabs">
+                    <li class="active">
+                        <a id="home-tab" href="#tab1" data-toggle="tab">Home</a>
+                    </li>
+                    <li>
+                        <a id="bing-tab" href="#tab2" data-toggle="tab">Bing</a>
+                    </li>
+                </ul> 
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <h1>Bing Example</h1>
+                                <div style="height:120px; width:120px; border:solid"></div>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                                <h1>Next Tab</h1>
+
+
+                                <div id="tags">
+                                    Bing, Microsoft, Virtual Earth, light
+                                </div>
+                                <p id="shortdesc">
+                                    Demonstrates the use of Bing layers.
+                                </p>
+
+                                <div id="map" style="height:250px"></div>
+                                
+                                <div id="docs"><p>This example demonstrates the ability to create layers
+                                using tiles from Bing maps.</p></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+
