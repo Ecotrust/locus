@@ -4,6 +4,8 @@ settings_local.py
 *.log
 *.orig
 media/third-party/*
+media/DEMO/*
+mediaroot/*
 locus/wsgi.py
 data/*
 env/*
