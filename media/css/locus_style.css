@@ -70,6 +70,27 @@ header .ProfileWidget .LoginWithFacebook{
     width:95%;
 }
 
+.right-head {
+    margin-top: 3%;
+}
+
+.user-name {
+    text-align: right;
+    margin-top: 2%;
+}
+
+.base-login {
+    color: #FFFFFF;
+    background: #4c66a4;
+    float: right;
+}
+
+.base-logout {
+    color: #FFFFFF;
+    background: #4c66a4;
+    float: right;
+}
+
 /* -----------------------------------------------------------------------
 End Header
 ----------------------------------------------------------------------- */
