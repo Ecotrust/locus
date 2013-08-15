@@ -59,16 +59,9 @@ TEMPLATE_DIRS = (
 import logging
 logging.getLogger('django.db.backends').setLevel(logging.ERROR)
 
+STATIC_URL = 'set-in-settings-local'
 
-
-ADMIN_MEDIA_PREFIX = '/admin-media/'
-
-STATIC_URL = '/install-media/'
-
-ADMIN_MEDIA_ROOT = os.path.abspath(os.path.dirname(sys.argv[0])) + ADMIN_MEDIA_PREFIX # like: /admin-media - where the Django development server goes to look for your static admin files
-
-STATICFILES_ROOT = os.path.abspath(os.path.dirname(sys.argv[0])) + STATIC_URL
-STATIC_ROOT = os.path.abspath(os.path.dirname(sys.argv[0])) + STATIC_URL
+STATIC_ROOT = 'set-in-settings-local'
 
 SOCIALACCOUNT_PROVIDERS = { 
     'facebook':
