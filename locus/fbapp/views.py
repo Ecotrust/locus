@@ -5,6 +5,7 @@ from models import Locus
 import datetime
 from django.utils import simplejson
 from django.contrib.gis.geos import Polygon
+import json
 
 from django.conf import settings
 
@@ -12,9 +13,29 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     """
     Launch screen / Home page for application
     """
-    context = RequestContext(request,{})
-    context.update(extra_context)
 
+    from allauth.socialaccount.models import SocialToken, SocialAccount
+    from models import User
+    users = {}
+    for user in SocialAccount.objects.all():
+        users[str(user.user.id)] = {"name": user.user.get_full_name(), "id": user.user.id}
+
+    if request.user.is_authenticated():
+        tokens = SocialToken.objects.filter(account__user=request.user, account__provider='facebook')
+
+        if tokens.count() > 0:
+            token = tokens[0]
+        else :
+            token = None
+
+        avatar_url = SocialAccount.objects.get(user=request.user, provider='facebook').get_avatar_url()
+
+        context = RequestContext(request,{"users": json.dumps(users, ensure_ascii=False), "token": token, "avatar": avatar_url})
+
+    else:
+        context = RequestContext(request,{"users": json.dumps(users, ensure_ascii=False), "token": "", "avatar": ""})
+
+    context.update(extra_context)
     return render_to_response(template_name, context_instance=context)
     
 def get_bioregions(request):

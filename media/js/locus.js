@@ -21,12 +21,13 @@ function AppViewModel() {
     
     this.userID = ko.observable(userID);
     
-    this.users = users;
+    this.users = ko.observable(users);
     
     this.storyPoints = storyPoints;
     
     this.locations = locations;
-    
+
+
     /*---------------------------------------------------------------------
             DASHBOARD AppViewModel
     ---------------------------------------------------------------------*/
@@ -57,7 +58,8 @@ function AppViewModel() {
     }
     storyPointLayer.addFeatures(this.features);
     
-    this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, this.communityUsersJSON));      //static object to be replaced with AJAX call
+    this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, users));      //static object to be replaced with AJAX call
+    // this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, this.communityUsersJSON));      //static object to be replaced with AJAX call
     
     this.newsFeed = ko.observable(JSON2NewsFeedHTML(this.newsJSON));      //static object to be replaced with AJAX call
     
@@ -103,10 +105,10 @@ function AppViewModel() {
     
     this.otherFriendsJSON = [];
     
-    this.user = this.users[this.userID()];
+    this.user = this.users()[this.userID()];
     for (var key in this.users){
         if (key != this.userID()) {
-            if (this.user['friends'].indexOf(key) > -1) {   //If user is a friend
+            if (this.user['friends'] && this.user['friends'].indexOf(key) > -1) {   //If user is a friend
                 if (this.users[key].isLocusUser == true) {      //if friend is locus user
                     this.friendsJSON.push(this.users[key]);
                     // this.friendLocationsJSON.push(this.locations[this.users[key].location])
@@ -124,6 +126,7 @@ function AppViewModel() {
     }
 
     this.friendsList = ko.observable(JSON2UserFeedHTML(this.friendsJSON, this.locations));
+    getFriendsList();
   
     this.usersList = ko.observable(JSON2UserFeedHTML(this.otherUsersJSON, this.locations));
 
@@ -148,9 +151,35 @@ function AppViewModel() {
         }
     }
     
-    this.otherCommunityFeed = ko.observable(JSON2ComFeedHTML(this.otherCommunityJSON, this.otherCommunityUsersJSON));      //static object to be replaced with AJAX call
+    this.otherCommunityFeed = ko.observable(JSON2ComFeedHTML(this.otherCommunityJSON, users));      //static object to be replaced with AJAX call
     this.otherNewsFeed = ko.observable(JSON2NewsFeedHTML(this.otherNewsJSON));      //static object to be replaced with AJAX call
     
+}
+
+/*---------------------------------------------------------------------
+        ACCOUNT
+---------------------------------------------------------------------*/
+
+function getFriendsList(){
+    url = 'https://graph.facebook.com/me/friends';
+    $.ajax({
+        url: url,
+        data: {
+            'method': 'GET',
+            'format': 'json',
+            'access_token':token
+        },
+        dataType: 'jsonp',
+        success: function(data){
+            if(!data.error){
+                frndlst = "";
+                for(var i = 0; i < data.data.length; i++) {
+                    frndlst = frndlst + "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + data.data[i].id + "/picture?type=large\">" + data.data[i].name + "</p>";
+                }
+                app.friendsList(frndlst);
+            }
+        }
+    });
 }
 
 /*---------------------------------------------------------------------
@@ -205,9 +234,11 @@ function JSON2ComFeedHTML(json, users){
     html = "";
     for (var i=0; i<json.length; i++) {
         html += start_div;
-        html += "                        <div class=\"mug\"><img src=\"" + users[json[i].source].img + "\"/></div>";
+        html += "                        <div class=\"mug\"><img src=\"" + avatar_url + "\"/></div>";
+        // html += "                        <div class=\"mug\"><img src=\"" + users[json[i].source].img + "\"/></div>";
         html += mid_div;
-        html += "                        <h4>" + users[json[i].source].name + "</h4>";
+        html += "                        <h4>" + users["2"].name + "</h4>";
+        // html += "                        <h4>" + users[json[i].source].name + "</h4>";
         html += mid_div_2;
         html += "                        <p>" + json[i].text + "</p>";
         html += end_div;

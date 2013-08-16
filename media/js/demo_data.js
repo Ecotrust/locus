@@ -1,5 +1,5 @@
 
-var userID = '1';
+var userID = '2';
 
 var userLocus = new OpenLayers.Geometry.LinearRing([
             // Cascadia
@@ -42,7 +42,7 @@ var userLocus = new OpenLayers.Geometry.LinearRing([
             new OpenLayers.Geometry.Point(10441913.472857, 2172033.2354491)
 ]);
 
-var users = {
+/* var users = {
     '1':{
         'id': '1',
         'name': 'You',
@@ -172,7 +172,7 @@ var users = {
         'isLocusUser': false
     }
 };
-
+*/
 var storyPoints = {
     "1": {
         'id': '1',

@@ -22,6 +22,12 @@
     <script src="/media/js/demo_data.js"></script>
     
     <script src="/media/js/map.js"></script>
+
+    <script type='text/javascript'>
+        var users = $.parseJSON('{{users}}'.replace(/&quot;/ig, '"'));
+        var token = '{{token}}';
+        var avatar_url = '{{avatar}}'      //TODO: Replace with id and plug in to avatar address.
+    </script>
     
     <script src="/media/js/locus.js"></script>
 
@@ -50,15 +56,19 @@
                                 <div class="row-fluid right-head">
                                     {% if user.is_authenticated %}
                                         <div class="span9 user-name">
-                                            <p><b>Hello </b>
-                                            {% if user.first_name %}
-                                                <b>{{user.first_name}}</b>
-                                                {% if user.last_name %}
-                                                    <b>{{user.last_name}}</b>
+                                            <p>
+                                                {% if avatar %}
+                                                    <img class="header-avatar" src="{{avatar}}"/>
                                                 {% endif %}
-                                            {% else %}
-                                                <b>{{user.username}}</b>
-                                            {% endif %}
+                                                <b>Hello </b>
+                                                {% if user.first_name %}
+                                                    <b>{{user.first_name}}</b>
+                                                    {% if user.last_name %}
+                                                        <b>{{user.last_name}}</b>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <b>{{user.username}}</b>
+                                                {% endif %}
                                             </p>
                                         </div>
                                         <div class="span3">

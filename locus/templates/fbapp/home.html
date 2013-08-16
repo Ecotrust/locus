@@ -50,6 +50,9 @@
                                             <tr><td>Link</td><td><a href="{{user.socialaccount_set.all.0.extra_data.link}}">{{user.socialaccount_set.all.0.extra_data.link}}</a></td></tr>
                                             <tr><td>Location</td><td>{{user.socialaccount_set.all.0.extra_data.location.name}}</td></tr>
                                             <tr><td>Gender</td><td>{{user.socialaccount_set.all.0.extra_data.gender}}</td></tr>
+                                            <tr><td>Token</td><td>{{token}}</td></tr>
+                                            <tr><td>Users</td><td><div data-bind="text: users"></div></td></tr>
+                                            <tr><td>Friends</td><td><div data-bind="html: friendsList"></div></td></tr>
                                         </table>
                                         -->
                                     </div>
@@ -520,7 +523,6 @@
 {% endblock %}		
 
 {% block js %}
-        
 
 {% endblock %}
 
