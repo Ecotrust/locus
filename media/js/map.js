@@ -9,6 +9,7 @@ function mapInit() {
     map = new OpenLayers.Map(null, {
       restrictedExtent: map_extent,
       displayProjection: new OpenLayers.Projection("EPSG:4326"),
+      toProjection: new OpenLayers.Projection("EPSG:900913"),
       // projection: new OpenLayers.Projection("EPSG:3857")
       projection: new OpenLayers.Projection("EPSG:4326")
     });
@@ -89,7 +90,40 @@ function mapInit() {
                     OpenLayers.Handler.Polygon),
         select: selectLocusControl
     };
-    
+
+    OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
+        defaultHandlerOptions: {
+            'single': true,
+            'double': false,
+            'pixelTolerance': 0,
+            'stopSingle': false,
+            'stopDouble': false
+        },
+
+        initialize: function(options) {
+            this.handlerOptions = OpenLayers.Util.extend(
+                {}, this.defaultHandlerOptions
+            );
+            OpenLayers.Control.prototype.initialize.apply(
+                this, arguments
+            ); 
+            this.handler = new OpenLayers.Handler.Click(
+                this, {
+                    'click': this.trigger
+                }, this.handlerOptions
+            );
+        }, 
+
+        trigger: function(e) {
+            var lonlat = map.getLonLatFromPixel(e.xy);
+            lonlat.transform(map.toProjection, map.projection);
+            getLocusByPoint(lonlat);
+        }
+
+    });
+
+    clickControl = new OpenLayers.Control.Click(locusLayer);
+
     for(var key in drawPointControls) {
         map.addControl(drawPointControls[key]);
     }
@@ -104,7 +138,7 @@ function mapInit() {
         center: new OpenLayers.LonLat(0, 0),
         zoom: 1
     };
-    
+
     $('a[data-toggle="tab"]').on('shown',function(e) {
     
         cleanOldSelected();
@@ -127,6 +161,7 @@ function mapInit() {
             selectLocusControl.deactivate();
             drawLocusControls['polygon'].deactivate();
             drawLocusControls['select'].deactivate();
+            clickControl.deactivate();
         } else if (e.relatedTarget.id == "world-tab") {
             other_map_status = {
                 center: map.center,
@@ -150,6 +185,7 @@ function mapInit() {
         } else if (e.target.id == "settings-tab" ) {
             selectLocusControl.activate();
             $('#your-locus').show();
+            clickControl.activate();
             map.render("your-locus");
             updateCenter(set_map_status);
             storyPointLayer.setVisibility(false);
@@ -193,7 +229,7 @@ function mapInit() {
 
 function getLoci() {
     $.ajax({
-        url: "/get_bioregions/json",
+        url: "/get_bioregions/json/",
         type: 'GET',
         data: {},
         dataType: 'json'
@@ -203,5 +239,38 @@ function getLoci() {
           'externalProjection': new OpenLayers.Projection("EPSG:4326")
         });
         lociLayer.addFeatures(geojson_format.read(result));
+    });
+};
+
+function getLocusByPoint(lonlat) {
+    $.ajax({
+        url: "/get_bioregions/point/",
+        type: 'GET',
+        data: {
+            'lat': lonlat.lat,
+            'lon': lonlat.lon
+        },
+        dataType: 'json'
+    }).done(function(result) {
+        var geojson_format = new OpenLayers.Format.GeoJSON({
+            'internalProjection': new OpenLayers.Projection('EPSG:900913'),
+            'externalProjection': new OpenLayers.Projection('EPSG:4326')
+        });
+        locusLayer.removeAllFeatures();
+        var features = geojson_format.read(result);
+        locusLayer.addFeatures(features);
+        if (features.length > 0) {
+            userLocus = features[0].geometry;
+       
+            map.zoomToExtent(userLocus.getBounds());
+            view = {
+                center: map.center,
+                zoom: map.zoom
+            };
+               
+            map.setCenter(view.center, view.zoom);
+        } else {
+            userLocus = null;
+        }
     });
 };

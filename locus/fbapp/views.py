@@ -20,6 +20,10 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     for user in SocialAccount.objects.all():
         users[str(user.user.id)] = {"name": user.user.get_full_name(), "id": user.user.id}
 
+    token = ""
+    avatar_url = ""
+    user_locus = "null"
+
     if request.user.is_authenticated():
         tokens = SocialToken.objects.filter(account__user=request.user, account__provider='facebook')
 
@@ -30,22 +34,43 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
 
         avatar_url = SocialAccount.objects.get(user=request.user, provider='facebook').get_avatar_url()
 
-        context = RequestContext(request,{"users": json.dumps(users, ensure_ascii=False), "token": token, "avatar": avatar_url})
-
-    else:
-        context = RequestContext(request,{"users": json.dumps(users, ensure_ascii=False), "token": "", "avatar": ""})
-
+    context = RequestContext(
+        request,{
+            "users": json.dumps(users, ensure_ascii=False), 
+            "token": token, 
+            "userLocus": user_locus,
+            "avatar": avatar_url
+        }
+    )
     context.update(extra_context)
     return render_to_response(template_name, context_instance=context)
     
 def get_bioregions(request):
     qs = Locus.objects.all()
-    return render_to_geojson(
+
+    bioregions = render_to_geojson(
         qs,
         geom_attribute='poly',
         mimetype = 'text/plain',
         pretty_print=True
     )
+
+    return bioregions
+
+def get_bioregions_by_point(request):
+
+    pnt_wkt = 'POINT(' + request.GET['lon'] + ' ' + request.GET['lat'] + ')'
+
+    qs = Locus.objects.filter(poly__contains=pnt_wkt)
+
+    bioregions = render_to_geojson(
+        qs,
+        geom_attribute='poly',
+        mimetype = 'text/plain',
+        pretty_print=True
+    )
+
+    return bioregions
     
 
 def render_to_geojson(query_set, geom_field=None, geom_attribute=None, extra_attributes=[],mimetype='text/plain', pretty_print=False, excluded_fields=[],included_fields=[],proj_transform=None):

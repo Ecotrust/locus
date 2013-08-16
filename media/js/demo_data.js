@@ -1,6 +1,7 @@
 
 var userID = '2';
 
+/*
 var userLocus = new OpenLayers.Geometry.LinearRing([
             // Cascadia
             // new OpenLayers.Geometry.Point(-13789481.843754, 4852833.2010937),
@@ -41,6 +42,7 @@ var userLocus = new OpenLayers.Geometry.LinearRing([
             new OpenLayers.Geometry.Point(11498578.951724, 3463513.2651756),
             new OpenLayers.Geometry.Point(10441913.472857, 2172033.2354491)
 ]);
+*/
 
 /* var users = {
     '1':{
