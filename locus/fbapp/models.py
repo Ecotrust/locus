@@ -24,7 +24,10 @@ class Locus(models.Model):
     poly = models.PolygonField(srid=4326) # we want our model in a different SRID
     AREA = models.FloatField()
     PERIMETER = models.FloatField()
-    BIOREG = models.IntegerField()
-    # LYR_ID = models.IntegerField()
+    # BIOREG_2_ = models.IntegerField()
+    BIOREG_2_I = models.IntegerField()
     GRID_CODE = models.IntegerField()
     objects = models.GeoManager()
+
+    def __unicode__(self):
+        return 'Name: %d' % self.BIOREG_2_I
