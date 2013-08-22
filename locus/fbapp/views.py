@@ -36,15 +36,16 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
         avatar_url = SocialAccount.objects.get(user=request.user, provider='facebook').get_avatar_url()
 
         userSettings, created = UserSettings.objects.get_or_create(user=request.user)
-        user_locus = userSettings.get_bioregion()
-        if not user_locus == "null":
+        user_bioregion = userSettings.get_bioregion()
+        if not user_bioregion == "null":
             gen_id = user_locus.id
+            user_locus = user_locus.geometry_final.json
 
     context = RequestContext(
         request,{
             "users": json.dumps(users, ensure_ascii=False), 
             "token": token, 
-            "userLocus": user_locus.geometry_final.json,
+            "userLocus": user_locus,
             "avatar": avatar_url,
             "genId": gen_id
         }
