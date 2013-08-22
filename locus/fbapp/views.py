@@ -1,10 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError, HttpResponseForbidden
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
-from models import Locus
+from models import GeneratedBioregion, DrawnBioregion, UserSettings
 import datetime
 from django.utils import simplejson
-from django.contrib.gis.geos import Polygon
+from django.contrib.gis.geos import Polygon, GEOSGeometry
 import json
 
 from django.conf import settings
@@ -23,6 +23,7 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     token = ""
     avatar_url = ""
     user_locus = "null"
+    gen_id = "null"
 
     if request.user.is_authenticated():
         tokens = SocialToken.objects.filter(account__user=request.user, account__provider='facebook')
@@ -34,25 +35,59 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
 
         avatar_url = SocialAccount.objects.get(user=request.user, provider='facebook').get_avatar_url()
 
+        userSettings, created = UserSettings.objects.get_or_create(user=request.user)
+        user_locus = userSettings.get_bioregion()
+        if not user_locus == "null":
+            gen_id = user_locus.id
+
     context = RequestContext(
         request,{
             "users": json.dumps(users, ensure_ascii=False), 
             "token": token, 
-            "userLocus": user_locus,
-            "avatar": avatar_url
+            "userLocus": user_locus.geometry_final.json,
+            "avatar": avatar_url,
+            "genId": gen_id
         }
     )
     context.update(extra_context)
     return render_to_response(template_name, context_instance=context)
     
+def set_user_settings(request):
+    userSettings, created = UserSettings.objects.get_or_create(user=request.user)
+    # TODO: get news sources
+    locus_type = request.POST.get('locus_type')
+    if locus_type == 'drawn':
+        geom = GEOSGeometry(request.POST.get('wkt'), srid=settings.GEOMETRY_DB_SRID)
+        try:
+            drawnBioregion = DrawnBioregion.objects.get(user=request.user)
+            drawnBioregion.geometry_final = geom
+            drawnBioregion.save()
+        except DrawnBioregion.DoesNotExist:
+            drawnBioregion = DrawnBioregion.objects.create(user=request.user, name=request.user.username, geometry_final=geom)
+        userSettings.bioregion_drawn = drawnBioregion
+        userSettings.bioregion_gen = None
+    elif locus_type == 'generated':
+        bioregion_gen = request.POST.get('bioregion_gen')
+        userSettings.bioregion_gen = GeneratedBioregion.objects.get(id=bioregion_gen)
+        userSettings.bioregion_drawn = None
+
+    userSettings.save()
+
+    return HttpResponse("groovy", status=200)
+
+def delete_user_settings(request):
+    #Todo
+    pass
+
 def get_bioregions(request):
-    qs = Locus.objects.all()
+    qs = GeneratedBioregion.objects.all()
 
     bioregions = render_to_geojson(
         qs,
-        geom_attribute='poly',
+        geom_attribute='geometry_final',
         mimetype = 'text/plain',
-        pretty_print=True
+        pretty_print=True,
+        excluded_fields=['date_created', 'date_modified']
     )
 
     return bioregions
@@ -61,13 +96,14 @@ def get_bioregions_by_point(request):
 
     pnt_wkt = 'POINT(' + request.GET['lon'] + ' ' + request.GET['lat'] + ')'
 
-    qs = Locus.objects.filter(poly__contains=pnt_wkt)
+    qs = GeneratedBioregion.objects.filter(geometry_final__contains=pnt_wkt, size_class='medium')
 
     bioregions = render_to_geojson(
         qs,
-        geom_attribute='poly',
+        geom_attribute='geometry_final',
         mimetype = 'text/plain',
-        pretty_print=True
+        pretty_print=True,
+        excluded_fields=['date_created', 'date_modified']
     )
 
     return bioregions
@@ -201,26 +237,28 @@ def render_to_geojson(query_set, geom_field=None, geom_attribute=None, extra_att
     collection['features'] = features
     
     # Attach extent of all features
-    if query_set:
-        ex = None
-        query_set.query.distinct = False
-        if hasattr(query_set,'agg_extent'): 
-            ex = [x for x in query_set.agg_extent.tuple]
-        elif '.' in geometry_name:
-            prop, meth = geometry_name.split('.')
-            a = getattr(item,prop)
-            if a:
-                ex = [x for x in a.extent()]
-        else:
-            # make sure qs does not have .distinct() in it...
-            ex = [x for x in query_set.extent()]
-        if ex:
-            if proj_transform:
-                poly = Polygon.from_bbox(ex)
-                poly.srid = srid
-                poly.transform(proj_transform)
-                ex = poly.extent
-        collection['bbox'] = ex
+    # if query_set:
+    #     ex = None
+    #     query_set.query.distinct = False
+    #     if hasattr(query_set,'agg_extent'): 
+    #         ex = [x for x in query_set.agg_extent.tuple]
+    #     elif '.' in geometry_name:
+    #         prop, meth = geometry_name.split('.')
+    #         a = getattr(item,prop)
+    #         if a:
+    #             ex = [x for x in a.extent()]
+    #     else:
+    #         import pdb
+    #         pdb.set_trace()
+    #         # make sure qs does not have .distinct() in it...
+    #         ex = [x for x in query_set.extent()]
+    #     if ex:
+    #         if proj_transform:
+    #             poly = Polygon.from_bbox(ex)
+    #             poly.srid = srid
+    #             poly.transform(proj_transform)
+    #             ex = poly.extent
+    #     collection['bbox'] = ex
     
     # Return response
     response = HttpResponse()

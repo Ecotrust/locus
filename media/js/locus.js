@@ -85,14 +85,40 @@ function AppViewModel() {
     $('#draw-button').on('click', function(evt){
             locusLayer.removeAllFeatures();
             drawLocusControls['polygon'].activate();
+            locus_type = 'drawn';
+            gen_id = null;
         }
     );
     
     $('#cancel-locus-button').on('click', function(evt){
             locusLayer.removeAllFeatures();
+            locus_type = null;
+            gen_id = null;
         }
     );
     
+    this.setUserLocus = function(self, event) {
+        //Check if locus is selected
+        var feature = locusLayer.features[0];
+
+        //Ajax call
+        $.ajax({
+            url: "/set_user_settings/",
+            type: 'POST',
+            data: {
+                // 'feature': geoJSON,
+                //TODO: Get wkt from OpenLayers, create Polygon or GEOSGeometry on server side.
+                'wkt': feature.geometry.toString(),
+                'locus_type': locus_type,
+                'bioregion_gen': gen_id
+            },
+            dataType: 'json'
+        }).done(function(result) { 
+            alert('settings saved! Oh joy!');
+        });
+
+    };
+
     /*---------------------------------------------------------------------
             FRIENDS AppViewModel
     ---------------------------------------------------------------------*/
@@ -106,18 +132,18 @@ function AppViewModel() {
     this.otherFriendsJSON = [];
     
     this.user = this.users()[this.userID()];
-    for (var key in this.users){
+    for (var key in this.users()){
         if (key != this.userID()) {
             if (this.user['friends'] && this.user['friends'].indexOf(key) > -1) {   //If user is a friend
-                if (this.users[key].isLocusUser == true) {      //if friend is locus user
-                    this.friendsJSON.push(this.users[key]);
-                    // this.friendLocationsJSON.push(this.locations[this.users[key].location])
+                if (this.users()[key].isLocusUser == true) {      //if friend is locus user
+                    this.friendsJSON.push(this.users()[key]);
+                    // this.friendLocationsJSON.push(this.locations[this.users()[key].location])
                 } else {        //if friend is not locus user
-                    this.otherFriendsJSON.push(this.users[key]);
-                    // this.otherLocationsJSON.push(this.locations[this.users[key].location])
+                    this.otherFriendsJSON.push(this.users()[key]);
+                    // this.otherLocationsJSON.push(this.locations[this.users()[key].location])
                 }
             } else {        //if user is not a friend
-                if (this.users[key].isLocusUser == true) {      //if other is locus user
+                if (this.users()[key].isLocusUser == true) {      //if other is locus user
                     this.otherUsersJSON.push(this.users[key])
                 }
             }
@@ -237,7 +263,7 @@ function JSON2ComFeedHTML(json, users){
         html += "                        <div class=\"mug\"><img src=\"" + avatar_url + "\"/></div>";
         // html += "                        <div class=\"mug\"><img src=\"" + users[json[i].source].img + "\"/></div>";
         html += mid_div;
-        html += "                        <h4>" + users["2"].name + "</h4>";
+        //html += "                        <h4>" + users["2"].name + "</h4>";
         // html += "                        <h4>" + users[json[i].source].name + "</h4>";
         html += mid_div_2;
         html += "                        <p>" + json[i].text + "</p>";
@@ -431,7 +457,7 @@ function postBubble(storyPoint) {
 }
 
 function getBubbleContentHTML(lonlat) {
-    lonlat.transform(new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
+    // lonlat.transform(new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
     html = '<div class="row-fluid">\
         <div class="span12">\
             <textarea rows="3" class="dash-textarea">What\'s going on?</textarea>\

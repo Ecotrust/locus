@@ -19,17 +19,27 @@
     <script src="/media/third-party/openlayers/2-12/OpenLayers.js"></script>
     <script type='text/javascript' src='/media/third-party/knockoutjs/knockout-2.2.1.js'></script>
     
-    <script src="/media/js/demo_data.js"></script>
-    
-    <script src="/media/js/map.js"></script>
-
     <script type='text/javascript'>
         var users = $.parseJSON('{{users}}'.replace(/&quot;/ig, '"'));
         var token = '{{token}}';
         var avatar_url = '{{avatar}}'      //TODO: Replace with id and plug in to avatar address.
-        var userLocus = {{userLocus}};
+        var geojson_format = new OpenLayers.Format.GeoJSON();
+        var userLocus = geojson_format.read('{{userLocus}}'.replace(/&quot;/ig, '"'))[0].geometry;
+        var locus_type = null;
+        if (userLocus) {
+            if (userLocus.size_class) {     //Locus is generated
+                locus_type = 'generated';
+            } else {                        //Locus is drawn
+                locus_type = 'drawn';
+            }
+        }
+        var gen_id = {{genId}};
         
     </script>
+
+    <script src="/media/js/demo_data.js"></script>
+    
+    <script src="/media/js/map.js"></script>
     
     <script src="/media/js/locus.js"></script>
 

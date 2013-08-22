@@ -1,5 +1,6 @@
 *.pyc
 locus/settings_local.py
+locus/fbapp/fixtures/social.json
 settings_local.py
 *.log
 *.orig

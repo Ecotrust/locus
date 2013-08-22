@@ -8,10 +8,10 @@ function mapInit() {
     
     map = new OpenLayers.Map(null, {
       restrictedExtent: map_extent,
-      displayProjection: new OpenLayers.Projection("EPSG:4326"),
+      displayProjection: new OpenLayers.Projection("EPSG:900913"),
       toProjection: new OpenLayers.Projection("EPSG:900913"),
       // projection: new OpenLayers.Projection("EPSG:3857")
-      projection: new OpenLayers.Projection("EPSG:4326")
+      projection: new OpenLayers.Projection("EPSG:900913")
     });
     
     /*
@@ -236,7 +236,7 @@ function getLoci() {
     }).done(function(result) { 
         var geojson_format = new OpenLayers.Format.GeoJSON({
           'internalProjection': new OpenLayers.Projection("EPSG:900913"),
-          'externalProjection': new OpenLayers.Projection("EPSG:4326")
+          'externalProjection': new OpenLayers.Projection("EPSG:900913")
         });
         lociLayer.addFeatures(geojson_format.read(result));
     });
@@ -254,7 +254,7 @@ function getLocusByPoint(lonlat) {
     }).done(function(result) {
         var geojson_format = new OpenLayers.Format.GeoJSON({
             'internalProjection': new OpenLayers.Projection('EPSG:900913'),
-            'externalProjection': new OpenLayers.Projection('EPSG:4326')
+            'externalProjection': new OpenLayers.Projection('EPSG:900913')
         });
         locusLayer.removeAllFeatures();
         var features = geojson_format.read(result);
@@ -269,8 +269,12 @@ function getLocusByPoint(lonlat) {
             };
                
             map.setCenter(view.center, view.zoom);
+            locus_type = 'generated';
+            gen_id = features[0].data.id;
         } else {
             userLocus = null;
+            locus_type = null;
+            gen_id = null;
         }
     });
 };

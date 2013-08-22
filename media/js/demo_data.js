@@ -1,5 +1,5 @@
 
-var userID = '2';
+var userID = '3';
 
 /*
 var userLocus = new OpenLayers.Geometry.LinearRing([
