@@ -22,7 +22,7 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
 
     token = ""
     avatar_url = ""
-    user_locus = "null"
+    user_locus = {}
     gen_id = "null"
 
     if request.user.is_authenticated():
@@ -38,8 +38,8 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
         userSettings, created = UserSettings.objects.get_or_create(user=request.user)
         user_bioregion = userSettings.get_bioregion()
         if not user_bioregion == "null":
-            gen_id = user_locus.id
-            user_locus = user_locus.geometry_final.json
+            user_locus = user_bioregion.geometry_final.json
+            gen_id = user_bioregion.id
 
     context = RequestContext(
         request,{
