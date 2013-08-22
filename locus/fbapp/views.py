@@ -47,7 +47,8 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
             "token": token, 
             "userLocus": user_locus,
             "avatar": avatar_url,
-            "genId": gen_id
+            "genId": gen_id,
+            "userID": request.user.id
         }
     )
     context.update(extra_context)
