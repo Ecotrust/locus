@@ -25,6 +25,7 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     user_locus = {}
     gen_id = "null"
 
+
     if request.user.is_authenticated():
         tokens = SocialToken.objects.filter(account__user=request.user, account__provider='facebook')
 
@@ -75,7 +76,10 @@ def set_user_settings(request):
 
     userSettings.save()
 
-    return HttpResponse("groovy", status=200)
+    return HttpResponse(simplejson.dumps({
+        'message': 'groovy',
+        'status':200
+    }))
 
 def delete_user_settings(request):
     #Todo
@@ -110,7 +114,6 @@ def get_bioregions_by_point(request):
 
     return bioregions
     
-
 def render_to_geojson(query_set, geom_field=None, geom_attribute=None, extra_attributes=[],mimetype='text/plain', pretty_print=False, excluded_fields=[],included_fields=[],proj_transform=None):
     '''
     

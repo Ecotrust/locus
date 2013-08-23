@@ -82,6 +82,8 @@ function AppViewModel() {
             SETTINGS AppViewModel
     ---------------------------------------------------------------------*/
     
+    this.showSpinner = ko.observable(false);
+
     $('#draw-button').on('click', function(evt){
             locusLayer.removeAllFeatures();
             drawLocusControls['polygon'].activate();
@@ -100,21 +102,22 @@ function AppViewModel() {
     this.setUserLocus = function(self, event) {
         //Check if locus is selected
         var feature = locusLayer.features[0];
+        app.showSpinner(true);
 
         //Ajax call
         $.ajax({
             url: "/set_user_settings/",
             type: 'POST',
             data: {
-                // 'feature': geoJSON,
-                //TODO: Get wkt from OpenLayers, create Polygon or GEOSGeometry on server side.
                 'wkt': feature.geometry.toString(),
                 'locus_type': locus_type,
                 'bioregion_gen': gen_id
             },
-            dataType: 'json'
-        }).done(function(result) { 
-            alert('settings saved! Oh joy!');
+            dataType: 'json',
+            success: function(data){
+                app.showSpinner(false);
+                alert('settings saved! Oh joy!');
+            }
         });
 
     };
