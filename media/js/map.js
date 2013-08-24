@@ -117,6 +117,7 @@ function mapInit() {
         trigger: function(e) {
             var lonlat = map.getLonLatFromPixel(e.xy);
             lonlat.transform(map.toProjection, map.projection);
+            app.clearLocus();
             getLocusByPoint(lonlat);
         }
 
@@ -243,38 +244,54 @@ function getLoci() {
 };
 
 function getLocusByPoint(lonlat) {
+    locusPointLatitude = lonlat.lat;
+    locusPointLongitude = lonlat.lon;
+    getBioregionByPoint(locusPointLatitude, locusPointLongitude, locusSizeClass);
+};
+
+function getBioregionByPoint(lat, lon, size, callback) {
+
+    if (callback == null) {
+        callback = defaultCallback;
+    }
+
     $.ajax({
         url: "/get_bioregions/point/",
         type: 'GET',
         data: {
-            'lat': lonlat.lat,
-            'lon': lonlat.lon
+            'lat': lat,
+            'lon': lon,
+            'size': size
         },
         dataType: 'json'
-    }).done(function(result) {
-        var geojson_format = new OpenLayers.Format.GeoJSON({
-            'internalProjection': new OpenLayers.Projection('EPSG:900913'),
-            'externalProjection': new OpenLayers.Projection('EPSG:900913')
-        });
-        locusLayer.removeAllFeatures();
-        var features = geojson_format.read(result);
-        locusLayer.addFeatures(features);
-        if (features.length > 0) {
-            userLocus = features[0].geometry;
-       
-            map.zoomToExtent(userLocus.getBounds());
-            view = {
-                center: map.center,
-                zoom: map.zoom
-            };
-               
-            map.setCenter(view.center, view.zoom);
-            locus_type = 'generated';
-            gen_id = features[0].data.id;
-        } else {
-            userLocus = null;
-            locus_type = null;
-            gen_id = null;
-        }
+    }).done(callback);
+};
+
+function defaultCallback(result) {
+    var geojson_format = new OpenLayers.Format.GeoJSON({
+        'internalProjection': new OpenLayers.Projection('EPSG:900913'),
+        'externalProjection': new OpenLayers.Projection('EPSG:900913')
     });
+    locusLayer.removeAllFeatures();
+    var features = geojson_format.read(result);
+    locusLayer.addFeatures(features);
+    if (features.length > 0) {
+        userLocus = features[0].geometry;
+        app.userHasLocus(true);
+   
+        map.zoomToExtent(userLocus.getBounds());
+        view = {
+            center: map.center,
+            zoom: map.zoom
+        };
+           
+        map.setCenter(view.center, view.zoom);
+        locus_type = 'generated';
+        gen_id = features[0].data.id;
+    } else {
+        userLocus = null;
+        app.userHasLocus(false);
+        locus_type = null;
+        gen_id = null;
+    }
 };

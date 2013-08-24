@@ -20,6 +20,11 @@ function AppViewModel() {
     ---------------------------------------------------------------------*/
     
     this.userID = ko.observable(userID);
+
+    this.userHasLocus = ko.observable(false);
+    if (userLocus){
+        this.userHasLocus(true);
+    }
     
     this.users = ko.observable(users);
     
@@ -83,33 +88,49 @@ function AppViewModel() {
     ---------------------------------------------------------------------*/
     
     this.showSpinner = ko.observable(false);
+    this.biggest = ko.observable(false);
+    this.smallest = ko.observable(false);
+
+    this.clearLocus = function() {
+        locusLayer.removeAllFeatures();
+        gen_id = null;
+        userLocus = null;
+        this.userHasLocus(false);
+        locusSizeClass='medium';
+        locus_type = null;
+        this.biggest(false);
+        this.smallest(false);
+    };
 
     $('#draw-button').on('click', function(evt){
-            locusLayer.removeAllFeatures();
+            app.clearLocus();
             drawLocusControls['polygon'].activate();
             locus_type = 'drawn';
-            gen_id = null;
         }
     );
     
     $('#cancel-locus-button').on('click', function(evt){
-            locusLayer.removeAllFeatures();
+            app.clearLocus();
             locus_type = null;
-            gen_id = null;
         }
     );
-    
+
     this.setUserLocus = function(self, event) {
         //Check if locus is selected
         var feature = locusLayer.features[0];
         app.showSpinner(true);
+        if (feature) {
+            var geometry = feature.geometry.toString();
+        } else {
+            var geometry = "";
+        }
 
         //Ajax call
         $.ajax({
             url: "/set_user_settings/",
             type: 'POST',
             data: {
-                'wkt': feature.geometry.toString(),
+                'wkt': geometry,
                 'locus_type': locus_type,
                 'bioregion_gen': gen_id
             },
@@ -120,6 +141,32 @@ function AppViewModel() {
             }
         });
 
+    };
+
+    this.getBiggerLocus = function(self, event) {
+        if (locusSizeClass == 'medium') {
+            locusSizeClass = 'large';
+            this.biggest(true);
+            this.smallest(false);
+        } else if (locusSizeClass == 'small') {
+            locusSizeClass = 'medium';
+            this.biggest(false);
+            this.smallest(false);
+        }
+        getBioregionByPoint(locusPointLatitude, locusPointLongitude, locusSizeClass);
+    };
+
+    this.getSmallerLocus = function(self, event) {
+        if (locusSizeClass == 'medium') {
+            locusSizeClass = 'small';
+            this.smallest(true);
+            this.biggest(false);
+        } else if (locusSizeClass == 'large') {
+            locusSizeClass = 'medium';
+            this.smallest(false);
+            this.biggest(false);
+        }
+        getBioregionByPoint(locusPointLatitude, locusPointLongitude, locusSizeClass);
     };
 
     /*---------------------------------------------------------------------

@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html lang=en>
 {% load appname %}
 {% load account %}
 {% load socialaccount %}
@@ -11,14 +11,18 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <!--<link rel="shortcut icon" href="/media/marco/ico/favicon.ico">-->
-    <script src="/media/third-party/jquery/jquery-1.9.1.min.js"></script>
-
     <link rel="stylesheet" href="/media/third-party/bootstrap/css/bootstrap.css"/>
+    
+    <!--<link rel="shortcut icon" href="/media/marco/ico/favicon.ico">-->
+    
+    {% providers_media_js %}
+
+    <script src="/media/third-party/jquery/jquery-1.9.1.min.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script> -->
     
     <script src="/media/third-party/openlayers/2-12/OpenLayers.js"></script>
     <script type='text/javascript' src='/media/third-party/knockoutjs/knockout-2.2.1.js'></script>
-    
+        
     <script type='text/javascript'>
         var users = $.parseJSON('{{users}}'.replace(/&quot;/ig, '"'));
         var userID = '{{userID}}';
@@ -38,6 +42,7 @@
             }
         }
         var gen_id = {{genId}};
+        var locusSizeClass = 'medium';
         
     </script>
 
@@ -47,7 +52,6 @@
     
     <script src="/media/js/locus.js"></script>
 
-    {% providers_media_js %}
     
     {% block include %}
     {% endblock %}
@@ -103,7 +107,7 @@
                                         <!-- Login with Facebook</span></a> -->
                                 </div><!--/.nav-collapse -->
                             </div>
-					    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,43 +119,37 @@
     {% block body %}{% endblock %}
     
     {% block footer %}
-			<footer>
-			  <div class="row footer">
-			    <div class="span9 social">
-			      <h5>Contact Us</h5>
-			      	<a href="" data-toggle="modal" data-target="#feedback-modal">rhodges@ecotrust.org</a><br/>
-			      	503-467-0800
-			      </p>
-			    </div>
-			    <div class="span3 social">
-			    	<div class="pull-right">
-				        <h5>connect with us</h5>              
-				        <p class="pull-right">
-					        <a href="http://portal.midatlanticocean.org/portal/feed/"><i class="icon-rss icon-large"></i></a>
-					        <a href="https://twitter.com/PortalMARCO"><i class="icon-twitter icon-large"></i></a>
-					    </p>
-				        <a href=""><i class="icon-linkedin icon-large"></i></a>
-				        <a href=""><i class="icon-google-plus icon-large"></i></a>
+            <footer>
+              <div class="row footer">
+                <div class="span9 social">
+                  <h5>Contact Us</h5>
+                    <a href="" data-toggle="modal" data-target="#feedback-modal">rhodges@ecotrust.org</a><br/>
+                    503-467-0800
+                  </p>
+                </div>
+                <div class="span3 social">
+                    <div class="pull-right">
+                        <h5>connect with us</h5>              
+                        <p class="pull-right">
+                            <a href="http://portal.midatlanticocean.org/portal/feed/"><i class="icon-rss icon-large"></i></a>
+                            <a href="https://twitter.com/PortalMARCO"><i class="icon-twitter icon-large"></i></a>
+                        </p>
+                        <a href=""><i class="icon-linkedin icon-large"></i></a>
+                        <a href=""><i class="icon-google-plus icon-large"></i></a>
 
-				    </div>
+                    </div>
 
-			    </div>
-			  </div>
-			</footer>
+                </div>
+              </div>
+            </footer>
     {% endblock %}      <!-- footer -->
-    
-    
-<SCRIPT src="/media/third-party/bootstrap/js/bootstrap.min.js" ></SCRIPT>    
     
     {% block scripts %}
     {% endblock %}
     
-<script>    
-    {% block js %}
-    {% endblock %}
-</script>
-    
     <!-- % analytics % -->
+    <script src="/media/third-party/bootstrap/js/bootstrap.js" ></script>
+    <!-- <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script> -->
 </body>
 </html>
 

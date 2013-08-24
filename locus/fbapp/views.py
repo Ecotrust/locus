@@ -57,22 +57,28 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     
 def set_user_settings(request):
     userSettings, created = UserSettings.objects.get_or_create(user=request.user)
-    # TODO: get news sources
+    # TODO: get news sources, Locus name, etc...
     locus_type = request.POST.get('locus_type')
-    if locus_type == 'drawn':
-        geom = GEOSGeometry(request.POST.get('wkt'), srid=settings.GEOMETRY_DB_SRID)
-        try:
-            drawnBioregion = DrawnBioregion.objects.get(user=request.user)
-            drawnBioregion.geometry_final = geom
-            drawnBioregion.save()
-        except DrawnBioregion.DoesNotExist:
-            drawnBioregion = DrawnBioregion.objects.create(user=request.user, name=request.user.username, geometry_final=geom)
-        userSettings.bioregion_drawn = drawnBioregion
-        userSettings.bioregion_gen = None
-    elif locus_type == 'generated':
-        bioregion_gen = request.POST.get('bioregion_gen')
-        userSettings.bioregion_gen = GeneratedBioregion.objects.get(id=bioregion_gen)
-        userSettings.bioregion_drawn = None
+    if request.POST.get('wkt') != "":
+        if locus_type == 'drawn':
+            geom = GEOSGeometry(request.POST.get('wkt'), srid=settings.GEOMETRY_DB_SRID)
+            try:
+                drawnBioregion = DrawnBioregion.objects.get(user=request.user)
+                drawnBioregion.geometry_final = geom
+                drawnBioregion.save()
+            except DrawnBioregion.DoesNotExist:
+                drawnBioregion = DrawnBioregion.objects.create(user=request.user, name=request.user.username, geometry_final=geom)
+            userSettings.bioregion_drawn = drawnBioregion
+            userSettings.bioregion_gen = None
+        elif locus_type == 'generated':
+            DrawnBioregion.objects.filter(user=request.user).delete()
+            bioregion_gen = request.POST.get('bioregion_gen')
+            userSettings.bioregion_gen = GeneratedBioregion.objects.get(id=bioregion_gen)
+            userSettings.bioregion_drawn = None
+    else:
+            DrawnBioregion.objects.filter(user=request.user).delete()
+            userSettings.bioregion_gen = None
+            userSettings.bioregion_drawn = None
 
     userSettings.save()
 
@@ -102,7 +108,9 @@ def get_bioregions_by_point(request):
 
     pnt_wkt = 'POINT(' + request.GET['lon'] + ' ' + request.GET['lat'] + ')'
 
-    qs = GeneratedBioregion.objects.filter(geometry_final__contains=pnt_wkt, size_class='medium')
+    size_class = request.GET['size']
+
+    qs = GeneratedBioregion.objects.filter(geometry_final__contains=pnt_wkt, size_class=size_class)
 
     bioregions = render_to_geojson(
         qs,
