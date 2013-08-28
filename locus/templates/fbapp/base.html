@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <link rel="stylesheet" href="/media/third-party/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/media/third-party/bootstrap/css/bootstrap-responsive.css"/>
     
     <!--<link rel="shortcut icon" href="/media/marco/ico/favicon.ico">-->
     
@@ -33,16 +34,11 @@
         if (userLocus && userLocus.length > 0) {
             userLocus = userLocus[0].geometry;
         }
-        var locus_type = null;
-        if (userLocus) {
-            if (userLocus.size_class) {     //Locus is generated
-                locus_type = 'generated';
-            } else {                        //Locus is drawn
-                locus_type = 'drawn';
-            }
-        }
         var gen_id = {{genId}};
+        var locus_name = '{{locusName}}';
+        var news_sources = $.parseJSON('{{newsSources}}'.replace(/&quot;/ig, '"'));
         var locusSizeClass = 'medium';
+
         
     </script>
 

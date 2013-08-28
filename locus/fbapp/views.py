@@ -41,6 +41,11 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
         if not user_bioregion == "null":
             user_locus = user_bioregion.geometry_final.json
             gen_id = user_bioregion.id
+        newsSources = {
+            'ns_public_story_points': userSettings.ns_public_story_points,
+            'ns_friend_story_points': userSettings.ns_friend_story_points,
+            'ns_tweets': userSettings.ns_tweets
+        }
 
     context = RequestContext(
         request,{
@@ -49,7 +54,9 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
             "userLocus": user_locus,
             "avatar": avatar_url,
             "genId": gen_id,
-            "userID": request.user.id
+            "userID": request.user.id,
+            "locusName": userSettings.locus_name,
+            "newsSources": json.dumps(newsSources, ensure_ascii=False)
         }
     )
     context.update(extra_context)
@@ -57,7 +64,11 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     
 def set_user_settings(request):
     userSettings, created = UserSettings.objects.get_or_create(user=request.user)
-    # TODO: get news sources, Locus name, etc...
+    news_sources = simplejson.loads(request.POST.get('news_sources'))
+    userSettings.ns_public_story_points = news_sources['ns_public_story_points']
+    userSettings.ns_friend_story_points = news_sources['ns_friend_story_points']
+    userSettings.ns_tweets = news_sources['ns_tweets']
+    userSettings.locus_name = request.POST.get('locus_name')
     locus_type = request.POST.get('locus_type')
     if request.POST.get('wkt') != "":
         if locus_type == 'drawn':

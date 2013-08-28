@@ -80,14 +80,24 @@ function mapInit() {
     selectStoryPointControl = new OpenLayers.Control.SelectFeature(storyPointLayer
         // {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect}
     );
+
     drawPointControls = {
         point: new OpenLayers.Control.DrawFeature(storyPointLayer,
                     OpenLayers.Handler.Point),
         select: selectStoryPointControl
     };
+
     drawLocusControls = {
-        polygon: new OpenLayers.Control.DrawFeature(locusLayer,
-                    OpenLayers.Handler.Polygon),
+        polygon: new OpenLayers.Control.DrawFeature(
+            locusLayer,
+            OpenLayers.Handler.Polygon,
+            {
+                "featureAdded": function(polygon){
+                    app.drawing(false);
+                    app.userHasLocus(true);
+                }
+            }
+        ),
         select: selectLocusControl
     };
 
@@ -286,12 +296,12 @@ function defaultCallback(result) {
         };
            
         map.setCenter(view.center, view.zoom);
-        locus_type = 'generated';
+        app.locus_type('generated');
         gen_id = features[0].data.id;
     } else {
         userLocus = null;
         app.userHasLocus(false);
-        locus_type = null;
+        app.locus_type(null);
         gen_id = null;
     }
 };

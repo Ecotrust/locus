@@ -68,7 +68,11 @@ class UserSettings(models.Model):
     user = models.ForeignKey(User, blank=True, null=True)
     bioregion_drawn = models.ForeignKey(DrawnBioregion, blank=True, null=True)
     bioregion_gen = models.ForeignKey(GeneratedBioregion, blank=True, null=True)
-    # TODO: news_sources = many_to_many
+    locus_name = models.CharField(null=True, blank=True, default="", max_length=255)
+    # TODO: news_sources = many_to_many?
+    ns_public_story_points = models.BooleanField(default=True)
+    ns_friend_story_points = models.BooleanField(default=True)
+    ns_tweets = models.BooleanField(default=True)
 
     def get_bioregion(self):
         if self.bioregion_drawn:

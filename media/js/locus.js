@@ -90,6 +90,20 @@ function AppViewModel() {
     this.showSpinner = ko.observable(false);
     this.biggest = ko.observable(false);
     this.smallest = ko.observable(false);
+    this.drawing = ko.observable(false);
+    this.locusName = ko.observable(locus_name);
+    this.locus_type = ko.observable(null)
+    this.ns_public_box = ko.observable(news_sources.ns_public_story_points);
+    this.ns_friend_box = ko.observable(news_sources.ns_friend_story_points);
+    this.ns_tweets_box = ko.observable(news_sources.ns_tweets);
+
+    if (userLocus) {
+            if (userLocus.size_class) {     //Locus is generated
+                this.locus_type('generated');
+            } else {                        //Locus is drawn
+                this.locus_type('drawn');
+            }
+        }
 
     this.clearLocus = function() {
         locusLayer.removeAllFeatures();
@@ -97,23 +111,37 @@ function AppViewModel() {
         userLocus = null;
         this.userHasLocus(false);
         locusSizeClass='medium';
-        locus_type = null;
+        this.locus_type(null);
         this.biggest(false);
         this.smallest(false);
+        this.drawing(false);
     };
 
-    $('#draw-button').on('click', function(evt){
-            app.clearLocus();
-            drawLocusControls['polygon'].activate();
-            locus_type = 'drawn';
+    this.drawing.subscribe(function(bool) {
+        if (bool) {
+            $('#settings-map').toggleClass('span8', true);
+            $('#settings-map').toggleClass('span12', false);
+            $('#draw-instructions').toggleClass('span4', true);
+            $('#draw-instructions').toggleClass('span0', false);
+        } else {
+            $('#settings-map').toggleClass('span8', false);
+            $('#settings-map').toggleClass('span12', true);
+            $('#draw-instructions').toggleClass('span8', false);
+            $('#draw-instructions').toggleClass('span0', true);
         }
-    );
+    });
+
+    this.drawLocus = function(self, event){
+        app.clearLocus();
+        drawLocusControls['polygon'].activate();
+        app.locus_type('drawn');
+        app.drawing(true);
+    };
     
-    $('#cancel-locus-button').on('click', function(evt){
-            app.clearLocus();
-            locus_type = null;
-        }
-    );
+    this.cancelLocus = function(self, event){
+        app.clearLocus();
+        app.locus_type(null);
+    };
 
     this.setUserLocus = function(self, event) {
         //Check if locus is selected
@@ -131,13 +159,19 @@ function AppViewModel() {
             type: 'POST',
             data: {
                 'wkt': geometry,
-                'locus_type': locus_type,
-                'bioregion_gen': gen_id
+                'locus_type': app.locus_type(),
+                'bioregion_gen': gen_id,
+                'locus_name': app.locusName,
+                'news_sources': '{\
+                    "ns_tweets": ' + app.ns_tweets_box() + ',\
+                    "ns_public_story_points": ' + app.ns_public_box() + ',\
+                    "ns_friend_story_points": ' + app.ns_friend_box() + '\
+                }'
             },
             dataType: 'json',
             success: function(data){
                 app.showSpinner(false);
-                alert('settings saved! Oh joy!');
+                alert('Settings saved.');
             }
         });
 
