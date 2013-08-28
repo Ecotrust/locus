@@ -19,7 +19,26 @@ function AppViewModel() {
             Example JSON AppViewModel
     ---------------------------------------------------------------------*/
     
-    this.userID = ko.observable(userID);
+    this.userID = ko.observable();
+
+    this.userID.subscribe(function(str) {
+        if (str == 'None') {
+            $('#locusTabs').children('li').children('a').attr('data-toggle', null);
+            $('#locusTabs').children('li').children('a').attr('class', 'tab-disabled');
+            $('#locusTabs').children('li').children('a').attr('href', null);
+        } else {
+            $('#locusTabs').children('li').children('a').attr('data-toggle', 'tab');
+            $('#locusTabs').children('li').children('a').attr('class', null);
+            $('#home-tab').attr('href', '#home-tab-content');
+            $('#dashboard-tab').attr('href', '#dashboard-tab-content');
+            $('#details-tab').attr('href', '#details-tab-content');
+            $('#settings-tab').attr('href', '#settings-tab-content');
+            $('#friends-tab').attr('href', '#friends-tab-content');
+            $('#world-tab').attr('href', '#world-tab-content');
+        }
+    });
+
+    this.userID(userID);
 
     this.userHasLocus = ko.observable(false);
     if (userLocus){
@@ -98,12 +117,12 @@ function AppViewModel() {
     this.ns_tweets_box = ko.observable(news_sources.ns_tweets);
 
     if (userLocus) {
-            if (userLocus.size_class) {     //Locus is generated
-                this.locus_type('generated');
-            } else {                        //Locus is drawn
-                this.locus_type('drawn');
-            }
+        if (userLocus.size_class) {     //Locus is generated
+            this.locus_type('generated');
+        } else {                        //Locus is drawn
+            this.locus_type('drawn');
         }
+    }
 
     this.clearLocus = function() {
         locusLayer.removeAllFeatures();
@@ -215,23 +234,24 @@ function AppViewModel() {
     
     this.otherFriendsJSON = [];
     
-    this.user = this.users()[this.userID()];
-    for (var key in this.users()){
-        if (key != this.userID()) {
-            if (this.user['friends'] && this.user['friends'].indexOf(key) > -1) {   //If user is a friend
-                if (this.users()[key].isLocusUser == true) {      //if friend is locus user
-                    this.friendsJSON.push(this.users()[key]);
-                    // this.friendLocationsJSON.push(this.locations[this.users()[key].location])
-                } else {        //if friend is not locus user
-                    this.otherFriendsJSON.push(this.users()[key]);
-                    // this.otherLocationsJSON.push(this.locations[this.users()[key].location])
-                }
-            } else {        //if user is not a friend
-                if (this.users()[key].isLocusUser == true) {      //if other is locus user
-                    this.otherUsersJSON.push(this.users[key])
+    if (this.userID() != 'None') {
+        this.user = this.users()[this.userID()];
+        for (var key in this.users()){
+            if (key != this.userID()) {
+                if (this.user && this.user['friends'] && this.user['friends'].indexOf(key) > -1) {   //If user is a friend
+                    if (this.users()[key].isLocusUser == true) {      //if friend is locus user
+                        this.friendsJSON.push(this.users()[key]);
+                        // this.friendLocationsJSON.push(this.locations[this.users()[key].location])
+                    } else {        //if friend is not locus user
+                        this.otherFriendsJSON.push(this.users()[key]);
+                        // this.otherLocationsJSON.push(this.locations[this.users()[key].location])
+                    }
+                } else {        //if user is not a friend
+                    if (this.users()[key].isLocusUser == true) {      //if other is locus user
+                        this.otherUsersJSON.push(this.users[key])
+                    }
                 }
             }
-                
         }
     }
 

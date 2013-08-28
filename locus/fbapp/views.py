@@ -46,6 +46,14 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
             'ns_friend_story_points': userSettings.ns_friend_story_points,
             'ns_tweets': userSettings.ns_tweets
         }
+        locus_name = userSettings.locus_name
+    else:
+        locus_name = ""
+        newsSources = {
+            'ns_public_story_points': True,
+            'ns_friend_story_points': True,
+            'ns_tweets': True
+        }
 
     context = RequestContext(
         request,{
@@ -55,7 +63,7 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
             "avatar": avatar_url,
             "genId": gen_id,
             "userID": request.user.id,
-            "locusName": userSettings.locus_name,
+            "locusName": locus_name,
             "newsSources": json.dumps(newsSources, ensure_ascii=False)
         }
     )
