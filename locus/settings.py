@@ -72,6 +72,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # SERVER_SRID = 4326
+# SERVER_SRID = 3857
 SERVER_SRID = 900913
 
 from settings_local import *

@@ -132,7 +132,7 @@ def get_bioregions_by_point(request):
     try:
         thiessen = ThiessenPolygon.objects.get(geometry__contains=pnt_wkt)
     except:
-        thiessen = {}
+        thiessen = None
         pass
 
     qs = GeneratedBioregion.objects.filter(thiessen=thiessen, size_class=size_class)
