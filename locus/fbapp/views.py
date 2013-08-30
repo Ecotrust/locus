@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError, HttpResponseForbidden
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
-from models import GeneratedBioregion, DrawnBioregion, UserSettings
+from models import GeneratedBioregion, DrawnBioregion, UserSettings, ThiessenPolygon
 import datetime
 from django.utils import simplejson
 from django.contrib.gis.geos import Polygon, GEOSGeometry
@@ -129,7 +129,13 @@ def get_bioregions_by_point(request):
 
     size_class = request.GET['size']
 
-    qs = GeneratedBioregion.objects.filter(geometry_final__contains=pnt_wkt, size_class=size_class)
+    try:
+        thiessen = ThiessenPolygon.objects.get(geometry__contains=pnt_wkt)
+    except:
+        thiessen = {}
+        pass
+
+    qs = GeneratedBioregion.objects.filter(thiessen=thiessen, size_class=size_class)
 
     bioregions = render_to_geojson(
         qs,

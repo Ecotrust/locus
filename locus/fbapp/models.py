@@ -36,6 +36,11 @@ class Locus(models.Model):
     def __unicode__(self):
         return 'Name: %d' % self.BIOREG_2_I
 
+class ThiessenPolygon(models.Model):
+    base_id = models.IntegerField(primary_key = True)
+    geometry = models.MultiPolygonField(srid=settings.SERVER_SRID)
+    objects = models.GeoManager()
+
 @register
 class GeneratedBioregion(PolygonFeature):
     size_choices = (
@@ -44,6 +49,7 @@ class GeneratedBioregion(PolygonFeature):
         ('large', 'large')
     )
     size_class = models.CharField( max_length=30, choices = size_choices, default = 'medium' )
+    thiessen = models.ForeignKey(ThiessenPolygon, blank=True, null=True)
 
     class Options:
         verbose_name = 'Generated Bioregion'
