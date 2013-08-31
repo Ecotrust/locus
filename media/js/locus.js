@@ -95,7 +95,16 @@ function AppViewModel() {
     
     this.detailsSummaryDefinition = ko.observable(this.reportDetailsJSON['summary']['definition']);
     this.detailsSummaryOverview = ko.observable(this.reportDetailsJSON['summary']['overview']);
-    this.detailsSummaryLanguage = ko.observable(this.reportDetailsJSON['summary']['language']);
+    this.detailsSummaryLanguage = ko.observable();
+
+    $.ajax({
+            url: "/reports/language/3", // + this.userID(),
+            type: 'GET',
+            success: function(data){
+                app.detailsSummaryLanguage(data);
+            }
+        });
+
     this.detailsSummaryResources = ko.observable(this.reportDetailsJSON['summary']['resources']);
     this.detailsVulnerabilitiesDefinition = ko.observable(this.reportDetailsJSON['vulnerabilities']['definition']);
     this.detailsVulnerabilitiesClimate = ko.observable(this.reportDetailsJSON['vulnerabilities']['climate']);

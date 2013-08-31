@@ -42,12 +42,16 @@ INSTALLED_APPS += (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'madrona.raster_stats',
+    'analysis',
+    'django.contrib.humanize'
 )
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
 GEOMETRY_DB_SRID = 3857
 GEOMETRY_CLIENT_SRID = 4326 #for latlon
+REPORT_VECTOR_SRID = 54009
 
 APP_NAME = "locus"
 

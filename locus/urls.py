@@ -9,6 +9,7 @@ django_dir = os.path.dirname(django.__file__)
 urlpatterns = patterns(
 	'',
     (r'', include('fbapp.urls')),
+    (r'^reports', include('analysis.urls'))
 )
 
 if settings.DEBUG:

@@ -1,3 +1,9 @@
+THIESSEN_LOCATION = '../media/DEMO/geo/bioreg_2_polygon.shp'
+BIOREGION_LOCATION = '../media/DEMO/geo/generated_bioregions_2.shp'
+BR_LAYER_SRID = 4326
+APP_SRID = 3857
+BIOREGION_US_ID = 2
+
 from django.core.management import setup_environ
 import os
 import sys
@@ -15,13 +21,13 @@ from fbapp.models import ThiessenPolygon
 ThiessenPolygon.objects.all().delete()
 
 tp_mapping = {'base_id': 'BIOREG_2_','geometry': 'MULTIPOLYGON'}
-tp_lm = LayerMapping(ThiessenPolygon, '../media/DEMO/geo/bioreg_2_polygon.shp', tp_mapping) # TODO: Later make this come from SETTINGS
+tp_lm = LayerMapping(ThiessenPolygon, THIESSEN_LOCATION, tp_mapping)
 tp_lm.save(verbose=True)
 tp_count = ThiessenPolygon.objects.all().count()
 print "Thiessen Polygon Count = %s" % tp_count
 
 from django.contrib.gis.gdal import DataSource
-ds = DataSource('../media/DEMO/geo/generated_bioregions_2.shp')             # TODO: Later make this come from SETTINGS
+ds = DataSource(BIOREGION_LOCATION)   
 layer = ds[0]
 
 for feature in layer:
@@ -37,9 +43,9 @@ for feature in layer:
     name = feature['BIOREG_2_'].as_string()    
     base_id = feature['BIOREG_2_'].as_int()
     size_class = feature['SIZE_CLASS'].as_string()
-    user_id = 2                                                             # TODO: Later make this come from SETTINGS
-    final_geom.srid = 4326
-    final_geom.transform(3857)
+    user_id = BIOREGION_US_ID
+    final_geom.srid = BR_LAYER_SRID
+    final_geom.transform(APP_SRID)
     try:
         gb = GeneratedBioregion.objects.create(geometry_final=final_geom.geos, name=name, size_class=size_class, user_id=user_id)
     except:

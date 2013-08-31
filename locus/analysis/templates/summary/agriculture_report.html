@@ -1,0 +1,67 @@
+{% extends 'common/panel.html' %}
+
+{% block panel %}
+{% load humanize %}
+{% load analysis_extras %}
+
+<h3>Agicultural Characteristics</h3>
+<div class='freetext'>
+<p>
+<table  style='width:430px' class='analysis_report_container'>
+    <tbody>
+        <tr class="grey">
+            <td colspan='2'>
+                <b>Proportion Suitable for Agriculture</b>
+                <sup><a id="displayText" href="javascript:toggleDiv('agriculture');">Learn More</a><sup>
+                <div id="agriculture" style="display: none">
+                    <p>More information on the Agriculture Suitability data layer can be found <a href="http://www.sage.wisc.edu/atlas/maps.php?datasetid=19&includerelatedlinks=1&dataset=19" target="_blank">here</a>.
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2'>
+                {% if soil_suitability == 0 %}
+                    No Data Available
+                {% else %}
+                    {{soil_suitability|percentage:0}}
+                {% endif %}
+            </td>
+        </tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+        <tr class="grey">
+            <td colspan='2'>
+                <b>Proportion Equipped for Irrigation</b>
+                <sup><a id="displayText" href="javascript:toggleDiv('irrigation');">Learn More</a><sup>
+                <div id="irrigation" style="display: none">
+                    <p>More information on the Irrigation data layer can be found <a href="http://www.fao.org/nr/water/aquastat/irrigationmap/index30.stm" target="_blank">here</a>.
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2'>
+                {% if equipped_for_irrigation == 0 %}
+                    No Data Available
+                {% else %}
+                    {{equipped_for_irrigation|percentage:0}}
+                {% endif %}
+            </td>
+        </tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+    </tbody>
+</table>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript">
+function toggleDiv(divId) {
+   $("#"+divId).toggle();
+}
+</script>
+
+<style type="text/css">
+h3 { font-weight: bold; }
+</style>
+
+{% endblock panel %}

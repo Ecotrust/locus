@@ -57,6 +57,10 @@ class GeneratedBioregion(PolygonFeature):
         form_template = 'fbapp/form.html'
         manipulators = []
 
+    @property
+    def output_geom(self):
+        return self.geometry_final.transform(54009, clone=True)
+
 @register
 class DrawnBioregion(PolygonFeature):
 
@@ -68,7 +72,10 @@ class DrawnBioregion(PolygonFeature):
     
     @property
     def output_geom(self):
-        return self.geometry_final
+        return self.geometry_final.transform(54009, clone=True)
+
+class BioregionError(Exception):
+    pass
 
 class UserSettings(models.Model):
     user = models.ForeignKey(User, blank=True, null=True)
@@ -86,4 +93,4 @@ class UserSettings(models.Model):
         elif self.bioregion_gen:
             return self.bioregion_gen
         else:
-            return "null"
+            raise BioregionError('No bioregion exists for this User Settings')

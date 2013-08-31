@@ -1,0 +1,58 @@
+{% extends 'common/panel.html' %}
+
+{% block panel %}
+{% load humanize %}
+{% load analysis_extras %}
+
+<h3>Languages</h3>
+<div class='freetext'>
+<p>
+<table  style='width:430px' class='analysis_report_container'>
+    <tbody>
+        <tr class="grey">
+            <td colspan='2'>
+                <b>Spoken Languages</b>
+                <sup><a id="displayText" href="javascript:toggleDiv('lang');">Learn More</a><sup>
+                <div id="lang" style="display: none">
+                    <p>The languages reported below are ordered by estimated population within the bioregion, with languages estimated 
+                       to have more speakers at the top of the list and languages estimated to have fewer speakers at the bottom.
+                    <p>Language data was obtained from the World Language Mapping System (WLMS), which has locations of the world's 6,900 languages.
+                    <p>More information on the WLMS can be found <a href="http://www.worldgeodatasets.com/language/" target="_blank">here</a>.
+                    <p>PLEASE NOTE:  Due to the spatial complexity of language and certain limitations of the data, not all languages from 
+                       a given area (nor all areas) may be properly represented.  
+                </div>
+            </td>
+        </tr>
+        {% if lang_count == 0 %}
+            <tr>
+                <td colspan='2'>
+                    The area within this Bioregion is not covered by the WLMS dataset.
+                </td>
+            </tr>
+        {% else %}
+            {% for language in languages %}
+                {% if language.1 != 'No Data' %} 
+                <tr>
+                    <td colspan='2'>{{language.1}}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+    </tbody>
+</table>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript">
+function toggleDiv(divId) {
+   $("#"+divId).toggle();
+}
+</script>
+
+<style type="text/css">
+h3 { font-weight: bold; }
+</style>
+
+{% endblock panel %}
