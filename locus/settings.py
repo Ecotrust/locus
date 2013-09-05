@@ -79,4 +79,6 @@ SOCIALACCOUNT_PROVIDERS = {
 # SERVER_SRID = 3857
 SERVER_SRID = 900913
 
+STARSPAN_REMOVE_TMP = False
+
 from settings_local import *

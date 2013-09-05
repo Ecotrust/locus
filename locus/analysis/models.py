@@ -2,9 +2,31 @@ from django.db import models
 from django.contrib.gis.db import models
 from django.conf import settings
 from picklefield import PickledObjectField
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+from django.utils.safestring import mark_safe 
 
 # Create your models here.
+
+class Report(models.Model):
+    report_type_choices = (
+        ('overview', 'overview'),
+        ('language', 'language'),
+        ('resources', 'resources'),
+        ('climate', 'climate'),
+        ('socioeconomic', 'socioeconomic'),
+        ('hazards', 'hazards')
+    )
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    bioregion = generic.GenericForeignKey('content_type', 'object_id')
+    report_type = models.CharField( max_length=50, choices = report_type_choices)
+    html = models.TextField()
+
+    def get_html(self):
+        return mark_safe(self.html)
     
+#TODO: Kill this model - the Report model makes it useless.
 class ReportCache(models.Model):
     wkt_hash = models.CharField(max_length=255)
     context = PickledObjectField()

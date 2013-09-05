@@ -94,22 +94,67 @@ function AppViewModel() {
     this.reportDetailsJSON = reportDetailsJSON;
     
     this.detailsSummaryDefinition = ko.observable(this.reportDetailsJSON['summary']['definition']);
-    this.detailsSummaryOverview = ko.observable(this.reportDetailsJSON['summary']['overview']);
-    this.detailsSummaryLanguage = ko.observable();
+    this.detailsSummaryOverview = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
 
     $.ajax({
-            url: "/reports/language/3", // + this.userID(),
-            type: 'GET',
-            success: function(data){
-                app.detailsSummaryLanguage(data);
-            }
-        });
+        url: "/reports/overview/3", // + this.userID(),
+        type: 'GET',
+        success: function(data){
+            app.detailsSummaryOverview(data);
+        }
+    });
 
-    this.detailsSummaryResources = ko.observable(this.reportDetailsJSON['summary']['resources']);
+    this.detailsSummaryLanguage = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+
+    $.ajax({
+        url: "/reports/language/3", // + this.userID(),
+        type: 'GET',
+        success: function(data){
+            app.detailsSummaryLanguage(data);
+        }
+    });
+
+    this.detailsSummaryResources = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+
+    $.ajax({
+        url: "/reports/resources/3", // + this.userID(),
+        type: 'GET',
+        success: function(data){
+            app.detailsSummaryResources(data);
+        }
+    });
+
     this.detailsVulnerabilitiesDefinition = ko.observable(this.reportDetailsJSON['vulnerabilities']['definition']);
-    this.detailsVulnerabilitiesClimate = ko.observable(this.reportDetailsJSON['vulnerabilities']['climate']);
-    this.detailsVulnerabilitiesSocEcon = ko.observable(this.reportDetailsJSON['vulnerabilities']['socecon']);
-    this.detailsVulnerabilitiesHazards = ko.observable(this.reportDetailsJSON['vulnerabilities']['hazards']);
+    this.detailsVulnerabilitiesClimate = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+
+    $.ajax({
+        url: "/reports/climate/3", // + this.userID(),
+        type: 'GET',
+        success: function(data){
+            app.detailsVulnerabilitiesClimate(data);
+        }
+    });
+
+    this.detailsVulnerabilitiesSocEcon = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+
+    $.ajax({
+        url: "/reports/socioeconomic/3", // + this.userID(),
+        type: 'GET',
+        success: function(data){
+            app.detailsVulnerabilitiesSocEcon(data);
+        }
+    });
+
+    this.detailsVulnerabilitiesHazards = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+
+
+    $.ajax({
+        url: "/reports/hazards/3", // + this.userID(),
+        type: 'GET',
+        success: function(data){
+            app.detailsVulnerabilitiesHazards(data);
+        }
+    });
     
     /*---------------------------------------------------------------------
             SETTINGS AppViewModel
