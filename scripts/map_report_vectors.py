@@ -18,7 +18,7 @@ Watersheds: Z:\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\
 WorldMask: Z:\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\worldMask_mw.shp
 UrbanExtent: Z:\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\urb_extnt_mw.shp
 """
-'''
+
 from analysis.models import Language, EcoRegions, LastWild, MarineRegions, Watersheds, WorldMask, UrbanExtent
 
 print "Importing Language Layer"
@@ -161,7 +161,6 @@ ue_lm = LayerMapping(
 )
 ue_lm.save()
 
-'''
 
 #Vulnerabilities
 """
