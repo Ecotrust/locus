@@ -23,6 +23,8 @@ class Report(models.Model):
     report_type = models.CharField( max_length=50, choices = report_type_choices)
     html = models.TextField()
 
+    #TODO: Unique together bioregion, report_type
+
     def get_html(self):
         return mark_safe(self.html)
     
