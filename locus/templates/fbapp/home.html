@@ -17,7 +17,7 @@
                     <a id="dashboard-tab" href="#dashboard-tab-content" data-toggle="tab">Dashboard</a>
                 </li>
                 <li>
-                    <a id="details-tab" href="#details-tab-content" data-toggle="tab">Details</a>
+                    <a id="details-tab" href="#details-tab-content" data-bind="click: clearReports" data-toggle="tab">Details</a>
                 </li>
                 <li>
                     <a id="settings-tab" href="#settings-tab-content" data-toggle="tab">Settings</a>
@@ -152,7 +152,7 @@
                                 <div class="span12">
                                     <div class="row-fluid">
                                         <div class="span3">
-                                            <h2>[LOCUS NAME]</h2>
+                                            <h2 data-bind="text: locusName"></h2>
                                         </div>
                                         <div class="span9 rename-link">
                                             <a>Rename</a>
@@ -176,7 +176,7 @@
                                                 </div>
                                                 <div class="accordion-group">
                                                     <div class="accordion-heading">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#summary-overview" href="#collapseSummaryOverview">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#summary-overview" data-bind='click: getSummaryOverview' href="#collapseSummaryOverview">
                                                             Overview
                                                         </a>
                                                     </div>
@@ -188,7 +188,7 @@
                                                 </div>
                                                 <div class="accordion-group">
                                                     <div class="accordion-heading">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#summary-language" href="#collapseSummaryLanguage">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-bind='click: getSummaryLanguage' data-parent="#summary-language" href="#collapseSummaryLanguage">
                                                             Language
                                                         </a>
                                                     </div>
@@ -200,7 +200,7 @@
                                                 </div>
                                                 <div class="accordion-group">
                                                     <div class="accordion-heading">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#summary-resources" href="#collapseSummaryResources">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-bind='click: getSummaryResources' data-parent="#summary-resources" href="#collapseSummaryResources">
                                                             Natural Resources
                                                         </a>
                                                     </div>
@@ -232,7 +232,7 @@
                                                 </div>
                                                 <div class="accordion-group">
                                                     <div class="accordion-heading">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#vulnerability-climate" href="#collapseVulnerabilityClimate">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-bind='click: getVulnerabilityClimate' data-parent="#vulnerability-climate" href="#collapseVulnerabilityClimate">
                                                             Climate Change
                                                         </a>
                                                     </div>
@@ -244,7 +244,7 @@
                                                 </div>
                                                 <div class="accordion-group">
                                                     <div class="accordion-heading">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#vulnerability-economic" href="#collapseVulnerabilityEconomic">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-bind='click: getVulnerabilitySocEcon' data-parent="#vulnerability-economic" href="#collapseVulnerabilityEconomic">
                                                             Socio-Economic
                                                         </a>
                                                     </div>
@@ -256,7 +256,7 @@
                                                 </div>
                                                 <div class="accordion-group">
                                                     <div class="accordion-heading">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#vulnerability-hazards" href="#collapseVulnerabilityHazards">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-bind='click: getVulnerabilityHazards' data-parent="#vulnerability-hazards" href="#collapseVulnerabilityHazards">
                                                             Natural Hazards
                                                         </a>
                                                     </div>

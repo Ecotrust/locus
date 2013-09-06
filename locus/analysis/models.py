@@ -22,8 +22,8 @@ class Report(models.Model):
     bioregion = generic.GenericForeignKey('content_type', 'object_id')
     report_type = models.CharField( max_length=50, choices = report_type_choices)
     html = models.TextField()
-
-    #TODO: Unique together bioregion, report_type
+    class Meta:
+        unique_together = (("object_id", "content_type", "report_type"),)
 
     def get_html(self):
         return mark_safe(self.html)
