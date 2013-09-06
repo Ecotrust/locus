@@ -11,6 +11,8 @@ from django.contrib.gis.utils import LayerMapping
 # Summary
 from analysis.models import Language, EcoRegions, LastWild, MarineRegions, Watersheds, WorldMask, UrbanExtent
 
+layers = '//terra/gis/projects/projects2011/BigIdea/BioregionTool/data/Reports/'
+
 print "Importing Language Layer"
 Language.objects.all().delete()
 lang_mapping = {
@@ -31,7 +33,7 @@ lang_mapping = {
 }
 lang_lm = LayerMapping(
     Language, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\language\final\lang_multi.shp', 
+    layers + 'summary/language/final/lang_multi.shp', 
     lang_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -53,7 +55,7 @@ ecoreg_mapping = {
 }
 ecoreg_lm = LayerMapping(
     EcoRegions, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\Terr_eco_mw.shp', 
+    layers + 'summary/Terr_eco_mw.shp', 
     ecoreg_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -74,7 +76,7 @@ lw_mapping = {
 }
 lw_lm = LayerMapping(
     LastWild, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\lstwild\final\lstwild_multi.shp', 
+    layers + 'summary/lstwild/final/lstwild_multi.shp', 
     lw_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -93,7 +95,7 @@ mr_mapping = {
 }
 mr_lm = LayerMapping(
     MarineRegions, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\mar_eco_mw2.shp', 
+    layers + 'summary/mar_eco_mw2.shp', 
     mr_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -111,7 +113,7 @@ ws_mapping = {
 }
 ws_lm = LayerMapping(
     Watersheds, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\MJR_Basins.shp', 
+    layers + 'summary/MJR_Basins.shp', 
     ws_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -127,7 +129,7 @@ wm_mapping = {
 }
 wm_lm = LayerMapping(
     WorldMask, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\worldMask_mw.shp', 
+    layers + 'summary/worldMask_mw.shp', 
     wm_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -143,7 +145,7 @@ ue_mapping = {
 }
 ue_lm = LayerMapping(
     UrbanExtent, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\summary\urb_extnt_mw.shp', 
+    layers + 'summary/urb_extnt_mw.shp', 
     ue_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -174,7 +176,7 @@ el_mapping = {
 }
 el_lm = LayerMapping(
     ExtinctLanguages, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\vulnerability\lang_ext_mw.shp', 
+    layers + 'vulnerability/lang_ext_mw.shp', 
     el_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -190,7 +192,7 @@ sr1_mapping = {
 }
 sr1_lm = LayerMapping(
     SeaRise1m, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\vulnerability\resample_1m_nn_no_simp.shp', 
+    layers + 'vulnerability/resample_1m_nn_no_simp.shp', 
     sr1_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -206,7 +208,7 @@ sr3_mapping = {
 }
 sr3_lm = LayerMapping(
     SeaRise3m, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\vulnerability\resample_3m_nn_no_simp.shp', 
+    layers + 'vulnerability/resample_3m_nn_no_simp.shp', 
     sr3_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -222,7 +224,7 @@ sr6_mapping = {
 }
 sr6_lm = LayerMapping(
     SeaRise6m, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\vulnerability\resample_6m_nn_no_simp.shp', 
+    layers + 'vulnerability/resample_6m_nn_no_simp.shp', 
     sr6_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -238,7 +240,7 @@ pov_mapping = {
 }
 pov_lm = LayerMapping(
     PovertyNoData, 
-    '\\terra\gis\projects\projects2011\BigIdea\BioregionTool\data\Reports\vulnerability\uw5_nodata_mask\uw5_nodata.shp', 
+    layers + 'vulnerability/uw5_nodata_mask/uw5_nodata.shp', 
     pov_mapping, 
     transform=False, 
     source_srs=54009, 
