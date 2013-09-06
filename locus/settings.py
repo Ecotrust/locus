@@ -63,9 +63,10 @@ TEMPLATE_DIRS = (
 import logging
 logging.getLogger('django.db.backends').setLevel(logging.ERROR)
 
-STATIC_URL = 'set-in-settings-local'
+MEDIA_ROOT = '/usr/local/apps/locus/mediaroot/'
+MEDIA_URL = '/media/'
 
-STATIC_ROOT = 'set-in-settings-local'
+STATIC_URL = '/media/'
 
 SOCIALACCOUNT_PROVIDERS = { 
     'facebook':
