@@ -83,9 +83,9 @@ class UserSettings(models.Model):
     bioregion_gen = models.ForeignKey(GeneratedBioregion, blank=True, null=True)
     locus_name = models.CharField(null=True, blank=True, default="", max_length=255)
     # TODO: news_sources = many_to_many?
-    ns_public_story_points = models.BooleanField(default=True)
-    ns_friend_story_points = models.BooleanField(default=True)
-    ns_tweets = models.BooleanField(default=True)
+    ns_public_story_points = models.BooleanField(default=True, verbose_name='Public Points')
+    ns_friend_story_points = models.BooleanField(default=True, verbose_name='Friend Points')
+    ns_tweets = models.BooleanField(default=True, verbose_name='Tweets')
 
     def get_bioregion(self):
         if self.bioregion_drawn:
@@ -94,3 +94,19 @@ class UserSettings(models.Model):
             return self.bioregion_gen
         else:
             raise BioregionError('No bioregion exists for this User Settings')
+
+    def has_bioregion(self):
+        if self.bioregion_drawn:
+            return True
+        elif self.bioregion_gen:
+            return True
+        else:
+            return False
+
+    def bioregion_type(self):
+        if self.bioregion_drawn:
+            return 'Drawn'
+        elif self.bioregion_gen:
+            return 'Generated'
+        else:
+            return 'None'

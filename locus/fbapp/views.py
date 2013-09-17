@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadReque
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 from models import GeneratedBioregion, DrawnBioregion, UserSettings, ThiessenPolygon
+from models import BioregionError
 import datetime
 from django.utils import simplejson
 from django.contrib.gis.geos import Polygon, GEOSGeometry
@@ -37,7 +38,10 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
         avatar_url = SocialAccount.objects.get(user=request.user, provider='facebook').get_avatar_url()
 
         userSettings, created = UserSettings.objects.get_or_create(user=request.user)
-        user_bioregion = userSettings.get_bioregion()
+        try:
+            user_bioregion = userSettings.get_bioregion()
+        except BioregionError:
+            user_bioregion = "null"
         if not user_bioregion == "null":
             user_locus = user_bioregion.geometry_final.json
             gen_id = user_bioregion.id
