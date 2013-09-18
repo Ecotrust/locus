@@ -82,6 +82,7 @@ def set_user_settings(request):
     userSettings.ns_tweets = news_sources['ns_tweets']
     userSettings.locus_name = request.POST.get('locus_name')
     locus_type = request.POST.get('locus_type')
+
     if request.POST.get('wkt') != "":
         if locus_type == 'drawn':
             geom = GEOSGeometry(request.POST.get('wkt'), srid=settings.GEOMETRY_DB_SRID)

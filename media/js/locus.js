@@ -233,15 +233,17 @@ function AppViewModel() {
         }
     }
 
-
-    //TODO: Separate User's real locus (passed from server on load or save) from selected locus.
     this.clearLocus = function() {
         locusLayer.removeAllFeatures();
         gen_id = null;
         userLocus = null;
-        this.locusSelected(false);
-        locusSizeClass='medium';
         this.locus_type(null);
+    };
+
+    this.clearSelectedLocus = function() {
+        selectedLocusLayer.removeAllFeatures();
+        selectedLocus = null;
+        this.locusSelected(false);
         this.biggest(false);
         this.smallest(false);
         this.drawing(false);
@@ -262,21 +264,21 @@ function AppViewModel() {
     });
 
     this.drawLocus = function(self, event){
-        app.clearLocus();
+        app.clearSelectedLocus();
         drawLocusControls['polygon'].activate();
         app.locus_type('drawn');
         app.drawing(true);
     };
     
     this.cancelLocus = function(self, event){
-        app.clearLocus();
+        app.clearSelectedLocus();
         app.locus_type(null);
     };
 
     this.setUserLocus = function(self, event) {
         //Check if locus is selected
-        var feature = locusLayer.features[0];
         app.showSpinner(true);
+        var feature = selectedLocusLayer.features[0];
         if (feature) {
             var geometry = feature.geometry.toString();
         } else {
@@ -300,7 +302,10 @@ function AppViewModel() {
             },
             dataType: 'json',
             success: function(data){
+                app.clearLocus();
+                app.clearReports();
                 app.userHasLocus(true);
+                locusLayer.addFeatures([selectedLocusLayer.features[0]]);
                 app.showSpinner(false);
                 alert('Settings saved.');
             }
@@ -697,13 +702,22 @@ function getBubbleContentHTML(lonlat) {
 ---------------------------------------------------------------------*/
 
 function onLocusAdd(event) {
-    drawLocusControls['polygon'].deactivate();
 }
 
 function onLocusSelect(event) {
 }
 
 function onLocusUnselect(event) {
+}
+
+function onSelectedLocusAdd(event) {
+    drawLocusControls['polygon'].deactivate();
+}
+
+function onSelectedLocusSelect(event) {
+}
+
+function onSelectedLocusUnselect(event) {
 }
 
 

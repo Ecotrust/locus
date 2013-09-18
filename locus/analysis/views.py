@@ -1,5 +1,5 @@
 from django.http import Http404, HttpResponse
-from fbapp.models import UserSettings
+from fbapp.models import UserSettings, BioregionError
 from analysis.models import Report
 from madrona.features import get_feature_by_uid
 from django.contrib.contenttypes.models import ContentType
@@ -27,7 +27,7 @@ def get_bioregion(user_id):
     except UserSettings.DoesNotExist:
         raise Http404('Settings for user with ID %s does not exist' % user_id)
     except BioregionError:
-        raise Http404('Biorgion does not exist for user id %s' % user_id)
+        raise Http404('Bioregion does not exist for user id %s' % user_id)
 
 def analysis(request, atype, user_id):
     # Get the function by name
