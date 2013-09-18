@@ -94,7 +94,7 @@ function mapInit() {
             {
                 "featureAdded": function(polygon){
                     app.drawing(false);
-                    app.userHasLocus(true);
+                    app.locusSelected(true);
                 }
             }
         ),
@@ -287,7 +287,7 @@ function defaultCallback(result) {
     locusLayer.addFeatures(features);
     if (features.length > 0) {
         userLocus = features[0].geometry;
-        app.userHasLocus(true);
+        app.locusSelected(true);
    
         map.zoomToExtent(userLocus.getBounds());
         view = {
@@ -300,7 +300,7 @@ function defaultCallback(result) {
         gen_id = features[0].data.id;
     } else {
         userLocus = null;
-        app.userHasLocus(false);
+        app.locusSelected(false);
         app.locus_type(null);
         gen_id = null;
     }

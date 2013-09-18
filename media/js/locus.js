@@ -18,17 +18,19 @@ function AppViewModel() {
     /*---------------------------------------------------------------------
             Example JSON AppViewModel
     ---------------------------------------------------------------------*/
-    
+
     this.userID = ko.observable();
+    this.userHasLocus = ko.observable();
+    this.locusSelected = ko.observable(false);
 
     this.userID.subscribe(function(str) {
-        if (str == 'None') {
+        if (str == 'None' && app.userHasLocus() != false) {
             $('#locusTabs').children('li').children('a').attr('data-toggle', null);
             $('#locusTabs').children('li').children('a').attr('class', 'tab-disabled');
             $('#locusTabs').children('li').children('a').attr('href', null);
         } else {
             $('#locusTabs').children('li').children('a').attr('data-toggle', 'tab');
-            $('#locusTabs').children('li').children('a').attr('class', null);
+            $('#locusTabs').children('li').children('a').removeClass('tab-disabled');
             $('#home-tab').attr('href', '#home-tab-content');
             $('#dashboard-tab').attr('href', '#dashboard-tab-content');
             $('#details-tab').attr('href', '#details-tab-content');
@@ -38,11 +40,33 @@ function AppViewModel() {
         }
     });
 
+    this.userHasLocus.subscribe(function(bool) {
+        if (bool && app.userID() != 'None') {
+            $('#locusTabs').children('li').children('a').attr('data-toggle', 'tab');
+            $('#locusTabs').children('li').children('a').removeClass('tab-disabled');
+            $('#home-tab').attr('href', '#home-tab-content');
+            $('#dashboard-tab').attr('href', '#dashboard-tab-content');
+            $('#details-tab').attr('href', '#details-tab-content');
+            $('#settings-tab').attr('href', '#settings-tab-content');
+            $('#friends-tab').attr('href', '#friends-tab-content');
+            $('#world-tab').attr('href', '#world-tab-content');
+        } else {
+            // $('#settings-tab').click()
+            $('#dashboard-tab').attr('data-toggle', null);
+            $('#details-tab').attr('data-toggle', null);
+            $('#dashboard-tab').attr('class', 'tab-disabled');
+            $('#details-tab').attr('class', 'tab-disabled');
+            $('#dashboard-tab').attr('href', null);
+            $('#details-tab').attr('href', null);
+        }
+    })
+
     this.userID(userID);
 
-    this.userHasLocus = ko.observable(false);
     if (userLocus){
         this.userHasLocus(true);
+    } else {
+        this.userHasLocus(false);
     }
     
     this.users = ko.observable(users);
@@ -91,15 +115,26 @@ function AppViewModel() {
             DETAILS AppViewModel
     ---------------------------------------------------------------------*/
     
+
+    //TODO: on userLocus change, collapse the appropriate accordion groups.
+
     this.reportDetailsJSON = reportDetailsJSON;
+
+    this.detailsSummaryOverview = ko.observable("");
+    this.detailsSummaryLanguage = ko.observable("");
+    this.detailsSummaryResources = ko.observable("");
+    this.detailsVulnerabilitiesClimate = ko.observable("");
+    this.detailsVulnerabilitiesSocEcon = ko.observable("");
+    this.detailsVulnerabilitiesHazards = ko.observable("");
     
     this.clearReports = function() {
-        this.detailsSummaryOverview = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
-        this.detailsSummaryLanguage = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
-        this.detailsSummaryResources = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
-        this.detailsVulnerabilitiesClimate = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
-        this.detailsVulnerabilitiesSocEcon = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
-        this.detailsVulnerabilitiesHazards = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        app.detailsSummaryOverview("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        app.detailsSummaryLanguage("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        app.detailsSummaryResources("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        app.detailsVulnerabilitiesClimate("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        app.detailsVulnerabilitiesSocEcon("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        app.detailsVulnerabilitiesHazards("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        // $('.collapse').hide();
     };
 
     this.clearReports();
@@ -107,9 +142,9 @@ function AppViewModel() {
     this.detailsSummaryDefinition = ko.observable(this.reportDetailsJSON['summary']['definition']);
 
     this.getSummaryOverview = function() {
-        this.detailsSummaryOverview = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        url = "/reports/overview/" + this.userID();
         $.ajax({
-            url: "/reports/overview/3", // + this.userID(),
+            url: url,
             type: 'GET',
             success: function(data){
                 app.detailsSummaryOverview(data);
@@ -119,9 +154,9 @@ function AppViewModel() {
 
 
     this.getSummaryLanguage = function() {
-        this.detailsSummaryLanguage = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        url = "/reports/language/" + this.userID();
         $.ajax({
-            url: "/reports/language/3", // + this.userID(),
+            url: url,
             type: 'GET',
             success: function(data){
                 app.detailsSummaryLanguage(data);
@@ -131,9 +166,9 @@ function AppViewModel() {
 
 
     this.getSummaryResources = function() {
-        this.detailsSummaryResources = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        url = "/reports/resources/" + this.userID();
         $.ajax({
-            url: "/reports/resources/3", // + this.userID(),
+            url: url,
             type: 'GET',
             success: function(data){
                 app.detailsSummaryResources(data);
@@ -144,9 +179,9 @@ function AppViewModel() {
     this.detailsVulnerabilitiesDefinition = ko.observable(this.reportDetailsJSON['vulnerabilities']['definition']);
 
     this.getVulnerabilityClimate = function() {
-        this.detailsVulnerabilitiesClimate = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        url = "/reports/climate/" + this.userID();
         $.ajax({
-            url: "/reports/climate/3", // + this.userID(),
+            url: url,
             type: 'GET',
             success: function(data){
                 app.detailsVulnerabilitiesClimate(data);
@@ -155,9 +190,9 @@ function AppViewModel() {
     };
 
     this.getVulnerabilitySocEcon = function() {
-        this.detailsVulnerabilitiesSocEcon = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        url = "/reports/socioeconomic/" + this.userID();
         $.ajax({
-            url: "/reports/socioeconomic/3", // + this.userID(),
+            url: url,
             type: 'GET',
             success: function(data){
                 app.detailsVulnerabilitiesSocEcon(data);
@@ -166,9 +201,9 @@ function AppViewModel() {
     };
 
     this.getVulnerabilityHazards = function() {
-        this.detailsVulnerabilitiesHazards = ko.observable("<p><img src='/media/img/ajax-loader.gif' />Loading...</p>");
+        url = "/reports/hazards/" + this.userID();
         $.ajax({
-            url: "/reports/hazards/3", // + this.userID(),
+            url: url,
             type: 'GET',
             success: function(data){
                 app.detailsVulnerabilitiesHazards(data);
@@ -198,11 +233,13 @@ function AppViewModel() {
         }
     }
 
+
+    //TODO: Separate User's real locus (passed from server on load or save) from selected locus.
     this.clearLocus = function() {
         locusLayer.removeAllFeatures();
         gen_id = null;
         userLocus = null;
-        this.userHasLocus(false);
+        this.locusSelected(false);
         locusSizeClass='medium';
         this.locus_type(null);
         this.biggest(false);
@@ -263,6 +300,7 @@ function AppViewModel() {
             },
             dataType: 'json',
             success: function(data){
+                app.userHasLocus(true);
                 app.showSpinner(false);
                 alert('Settings saved.');
             }
