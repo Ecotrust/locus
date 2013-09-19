@@ -111,6 +111,10 @@ def set_user_settings(request):
         'status':200
     }))
 
+def set_storypoints(request):
+    #todo
+    pass
+
 def delete_user_settings(request):
     #Todo
     pass
