@@ -1,9 +1,9 @@
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from madrona.features.models import PolygonFeature, PointFeature, LineFeature, FeatureCollection
+from allauth.socialaccount.models import SocialAccount
 from madrona.features import register
-import settings
-
+import settings, datetime
 
 # As far as I can tell, this is only for compatibility with the Bioregion Discovery tool, and even that is suspect.
 # @register
@@ -110,3 +110,34 @@ class UserSettings(models.Model):
             return 'Generated'
         else:
             return 'None'
+
+class StoryPoint(models.Model):
+    source_type_choices = (
+        ('user', 'user'),
+        ('news', 'news'),
+        ('wiki', 'wiki'),
+        ('natgeo', 'natgeo'),
+        ('twitter', 'twitter')
+    )
+    source_type = models.CharField( max_length=30, choices = source_type_choices, default = 'user' )
+    source_user = models.ForeignKey(User, blank=True, null=True)
+    source_link = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=50, null=True, blank=True)
+    content = models.TextField(blank=True, null=True)
+    image = models.TextField(blank=True, null=True)     #just the address of the actual img file
+    is_permanent = models.BooleanField(default=False)
+    geometry = models.PointField(srid=settings.SERVER_SRID)
+    objects = models.GeoManager()
+    created = models.DateTimeField(default=datetime.datetime.now)
+    flagged = models.BooleanField(default=False)
+    flag_reason = models.TextField(null=True, blank=True)
+    #reviewed - if post is reviewed, remove option to flag?
+    #score = models.IntegerField(default=0)      #users may add or remove points based on relevence
+    #catgories = many to many, things like environment, economy, social equity, general interest
+
+    def date_string(self):
+        return self.created.strftime('%I:%M %p %b %d, %Y')
+
+    def avatar(self):
+        if self.source_user != None:
+            return SocialAccount.objects.get(user=self.source_user, provider='facebook').get_avatar_url()

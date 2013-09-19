@@ -81,6 +81,7 @@ function mapInit() {
     map.addLayers([aerial, hybrid, esriOcean, storyPointLayer, locusLayer, selectedLocusLayer, lociLayer]);
     
     getLoci();
+    getStoryPoints();
     
     map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.addControl(new OpenLayers.Control.MousePosition());
@@ -267,6 +268,21 @@ function getLoci() {
           'externalProjection': new OpenLayers.Projection("EPSG:900913")
         });
         lociLayer.addFeatures(geojson_format.read(result));
+    });
+};
+
+function getStoryPoints() {
+    $.ajax({
+        url: "/get_storypoints/json/",
+        type: 'GET',
+        data: {},
+        dataType: 'json'
+    }).done(function(result) {
+        var geojson_format = new OpenLayers.Format.GeoJSON({
+          'internalProjection': new OpenLayers.Projection("EPSG:900913"),
+          'externalProjection': new OpenLayers.Projection("EPSG:900913")
+        });
+        storyPointLayer.addFeatures(geojson_format.read(result));
     });
 };
 

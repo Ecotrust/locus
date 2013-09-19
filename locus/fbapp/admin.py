@@ -16,13 +16,18 @@ class DrawnBioregionAdmin(admin.ModelAdmin):
     list_filter = ('id',)
     search_fields = ('id',)
 
-
 class UserSettingsAdmin(admin.ModelAdmin):
     list_display = ('user', 'locus_name', 'has_bioregion', 'bioregion_type', 'ns_public_story_points', 'ns_friend_story_points', 'ns_tweets')
     list_filter = ('user', 'locus_name', 'ns_public_story_points', 'ns_friend_story_points', 'ns_tweets')
     search_fields = ('user', 'locus_name', 'bioregion_type')
 
+class StoryPointAdmin(admin.ModelAdmin):
+    list_display = ('title', 'source_type', 'source_user', 'is_permanent', 'flagged', 'created')
+    list_filter = ('title', 'source_type', 'source_user', 'is_permanent', 'flagged', 'created')
+    search_fields = ('title', 'source_type', 'source_user', 'is_permanent', 'flagged', 'created', 'content', 'flag_reason')
+
 admin.site.register(Locus, LocusAdmin)
 admin.site.register(GeneratedBioregion, GeneratedBioregionAdmin)
 admin.site.register(DrawnBioregion, DrawnBioregionAdmin)
 admin.site.register(UserSettings, UserSettingsAdmin)
+admin.site.register(StoryPoint, StoryPointAdmin)

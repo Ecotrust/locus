@@ -70,11 +70,6 @@ function AppViewModel() {
     }
     
     this.users = ko.observable(users);
-    
-    this.storyPoints = storyPoints;
-    
-    this.locations = locations;
-
 
     /*---------------------------------------------------------------------
             DASHBOARD AppViewModel
@@ -83,28 +78,10 @@ function AppViewModel() {
     this.communityJSON = [];
     this.communityUsersJSON = {};
     this.newsJSON = [];
-    this.features = [];
     
     var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
     locusLayer.addFeatures([userLocusVector]);
-    
-    for (var key in this.storyPoints) {
-        if (this.storyPoints.hasOwnProperty(key)) {
-            if (this.storyPoints[key].type == 'news') {
-                this.newsJSON.push(this.storyPoints[key]);
-            } else if (this.storyPoints[key].type == 'post') {
-                this.communityJSON.push(this.storyPoints[key]);
-                this.communityUsersJSON[this.storyPoints[key].source] = this.users[this.storyPoints[key].source];
-            }
-            var coords = this.storyPoints[key].geometry.coordinates;
-            var point = new OpenLayers.Geometry.Point(coords[0],coords[1]);
-            var feature = new OpenLayers.Feature.Vector(point,{
-                'storyPoint':storyPoints[key]
-            });
-            this.features.push(feature);
-        }
-    }
-    storyPointLayer.addFeatures(this.features);
+    addFeatures(this.features);
     
     this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, users));      //static object to be replaced with AJAX call
     // this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, this.communityUsersJSON));      //static object to be replaced with AJAX call
@@ -118,7 +95,46 @@ function AppViewModel() {
 
     //TODO: on userLocus change, collapse the appropriate accordion groups.
 
-    this.reportDetailsJSON = reportDetailsJSON;
+    this.reportDetailsJSON = {
+        'summary': {
+            'definition': '\
+                <div class="box">\
+                    <p>\
+                        <strong>Overview: </strong>\
+                        provides estimates of size, population, temperature, and\
+                        precipitation for your bioregion.\
+                    </p>\
+                    <p>\
+                        <strong>Language:</strong>\
+                        provides information related to what languages are currently\
+                        spoken within your bioregion and what languages have historically\
+                        been spoken.\
+                    </p>\
+                    <p>\
+                        <strong>Natural Resources:</strong>\
+                        provides information related to primary productivity, agriculture,\
+                        and existing ecoregions.\
+                    </p>\
+                </div>'
+        },
+        'vulnerabilities': {
+            'definition': '\
+                <div class="box">\
+                    <p>\
+                        <strong>Climate Change:</strong>\
+                        provides information related to impacts on agriculture, water, and land loss due to sea level rise.\
+                    </p>\
+                    <p>\
+                        <strong>Socio-Economic:</strong>\
+                        provides information related to human impacts, human needs, social equity, and cultural pressures.\
+                        </p>\
+                    <p>\
+                        <strong>Natural Hazards:</strong>\
+                        provides information related to potential natural hazards and their economic costs.\
+                    </p>\
+                </div>'
+        }
+    };
 
     this.detailsSummaryOverview = ko.observable("");
     this.detailsSummaryLanguage = ko.observable("");
@@ -139,7 +155,7 @@ function AppViewModel() {
 
     this.clearReports();
 
-    this.detailsSummaryDefinition = ko.observable(this.reportDetailsJSON['summary']['definition']);
+    this.detailsSummaryDefinition = ko.observable();
 
     this.getSummaryOverview = function() {
         url = "/reports/overview/" + this.userID();
@@ -372,12 +388,12 @@ function AppViewModel() {
         }
     }
 
-    this.friendsList = ko.observable(JSON2UserFeedHTML(this.friendsJSON, this.locations));
+    this.friendsList = ko.observable();
     getFriendsList();
   
-    this.usersList = ko.observable(JSON2UserFeedHTML(this.otherUsersJSON, this.locations));
+    this.usersList = ko.observable();
 
-    this.inviteList = ko.observable(JSON2CheckboxesHTML(this.otherFriendsJSON));
+    this.inviteList = ko.observable();
     
     /*---------------------------------------------------------------------
             OTHER LOCI AppViewModel
@@ -389,9 +405,9 @@ function AppViewModel() {
     
     for (var key in this.storyPoints) {
         if (this.storyPoints.hasOwnProperty(key)){
-            if (this.storyPoints[key].type == 'news') {
+            if (this.storyPoints[key].source_type == 'news') {
                 this.otherNewsJSON.push(this.storyPoints[key]);
-            } else if (this.storyPoints[key].type == 'post') {
+            } else if (this.storyPoints[key].sourcetype == 'user') {
                 this.otherCommunityJSON.push(this.storyPoints[key]);
                 this.otherCommunityUsersJSON[this.storyPoints[key].source] = this.users[this.storyPoints[key].source];
             }
@@ -642,11 +658,11 @@ function newUid(set){
 }
 
 function makePopup(feature) {
-    if (feature.attributes.storyPoint.type == 'news') {
+    if (feature.attributes.source_type != 'user') {
         var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
                                      feature.geometry.getBounds().getCenterLonLat(),
                                      new OpenLayers.Size(100,100),
-                                     newsBubble(feature.attributes.storyPoint),
+                                     newsBubble(feature.attributes),
                                      null, 
                                      true, 
                                      onPopupClose);
@@ -654,7 +670,7 @@ function makePopup(feature) {
         var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
                                      selectedFeature.geometry.getBounds().getCenterLonLat(),
                                      new OpenLayers.Size(100,100),
-                                     postBubble(feature.attributes.storyPoint),
+                                     postBubble(feature.attributes),
                                      null, true, onPopupClose);
     }
     popup.updateSize();
@@ -663,16 +679,17 @@ function makePopup(feature) {
 
 function newsBubble(storyPoint) {
     var html = "<div class=\"news-bubble\">\
-                <div class=\"news-bubble-img\"><img src=\"" + storyPoint.img + "\"/></div>\
-                <a href=\"" + storyPoint.source + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
+                <div class=\"news-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
+                <a href=\"" + storyPoint.source_link + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
             </div>";
     return html;
 }
 
 function postBubble(storyPoint) {
     var html = "<div class=\"post-bubble\">\
-                        <div class=\"post-bubble-img\"><img src=\"" + users[storyPoint.source].img + "\"/></div>\
-                        <p>" + storyPoint.text + "</p>\
+                        <div class=\"post-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
+                        <h4>" + storyPoint.title + "</h4>\
+                        <p>" + storyPoint.content + "</p>\
                 </div>";
     return html;
 }

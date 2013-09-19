@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError, HttpResponseForbidden
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
-from models import GeneratedBioregion, DrawnBioregion, UserSettings, ThiessenPolygon
+from models import GeneratedBioregion, DrawnBioregion, UserSettings, ThiessenPolygon, StoryPoint
 from models import BioregionError
 import datetime
 from django.utils import simplejson
@@ -127,6 +127,62 @@ def get_bioregions(request):
     )
 
     return bioregions
+
+def get_storypoints(request):
+    qs = StoryPoint.objects.all()
+    features = []
+
+    for point in qs:
+        if point.source_type != 'user':
+            image = point.image
+            source_user_id = None
+        else:
+            image = point.avatar()
+            source_user_id = point.source_user.id
+        feature = {
+            'id' : str(point.id),
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [
+                    point.geometry.coords[0],
+                    point.geometry.coords[1]
+                ]
+            },
+            'type': 'Feature',
+            'properties': {
+                'id': point.id,
+                'source_user_id': source_user_id,
+                'source_type': point.source_type,
+                'source_link': point.source_link,
+                'title': point.title,
+                'content': point.content,
+                'image': image,
+                'date': point.date_string(),
+                'isPerm': point.is_permanent,
+                'flagged': point.flagged,
+                'flag_reason': point.flag_reason
+            }
+        }
+        features.append(feature)
+
+    storypoints = {
+        "srid": 900913, 
+        "crs": {
+            "type": "link", 
+            "properties": {
+                "href": "http://spatialreference.org/ref/epsg/900913/", 
+                "type": "proj4"
+            }
+        },
+        "type": "FeatureCollection",
+        "features": features
+    }
+
+    response = HttpResponse()
+    response.write('%s' % simplejson.dumps(storypoints, indent=1))
+    response['Content-length'] = str(len(response.content))
+    response['Content-Type'] = 'text/plain'
+    return response
 
 def get_bioregions_by_point(request):
 
