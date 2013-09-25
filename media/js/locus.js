@@ -434,16 +434,40 @@ function getFriendsList(){
             'access_token':token
         },
         dataType: 'jsonp',
-        success: function(data){
-            if(!data.error){
+        success: processFriendsList
+    });
+}
+
+function processFriendsList(fb_result) {
+    if(!fb_result.error){
+        $.ajax({
+            url: '/get_friends/',
+            type: 'GET',
+            data: {
+                'friends': JSON.stringify(fb_result.data),
+                'user_id': app.userID()
+            },
+            dataType: 'json',
+            success: function(data){
                 frndlst = "";
-                for(var i = 0; i < data.data.length; i++) {
-                    frndlst = frndlst + "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + data.data[i].id + "/picture?type=large\">" + data.data[i].name + "</p>";
+                for(var i = 0; i < data.user_friends.length; i++) {
+                    if (data.user_friends[i].id) {
+                        frndlst = frndlst + "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + data.user_friends[i].id + "/picture?type=large\">" + data.user_friends[i].name + "</p>";
+                    }
                 }
                 app.friendsList(frndlst);
+
+                invitelst = "";
+                for(var i=0; i < data.just_friends.length; i++) {
+                    if (data.just_friends[i].id) {
+                        invitelst = invitelst + '<input type="checkbox" name="' + data.just_friends[i].name + '" value="' + data.just_friends[i].value + '">' + data.just_friends[i].name + '</input><br/>';
+                    }
+                }
+                app.inviteList(invitelst);
+
             }
-        }
-    });
+        })
+    }
 }
 
 /*---------------------------------------------------------------------

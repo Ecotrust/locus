@@ -8,6 +8,7 @@ from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.contrib.gis.geos import Polygon, GEOSGeometry
 import json
+from operator import itemgetter
 
 from django.conf import settings
 
@@ -250,6 +251,32 @@ def get_bioregions_by_point(request):
     )
 
     return bioregions
+
+def get_friends(request):
+
+
+    friends = simplejson.loads(request.GET['friends'])
+    friend_ids = [friend['id'] for friend in friends]
+    user_friends_qs = User.objects.filter(id__in=friend_ids)
+    user_ids = [user['id'] for user in user_friends_qs]
+    user_friends = []
+    just_friends = []
+    # import pdb; pdb.set_trace()
+    sorted_friends = sorted(friends, key=itemgetter('name'))
+    for friend in sorted_friends:
+        if friend['id'] in user_ids:
+            user_friends.append(friend)
+        else:
+            just_friends.append(friend)
+        # TODO create list of non-friend users in your bioregion (50ish)
+        
+
+    return HttpResponse(simplejson.dumps({
+        'just_friends': just_friends,
+        'user_friends': user_friends,
+        'message': 'Friend lists generated',
+        'status': 200
+    }))
     
 def render_to_geojson(query_set, geom_field=None, geom_attribute=None, extra_attributes=[],mimetype='text/plain', pretty_print=False, excluded_fields=[],included_fields=[],proj_transform=None):
     '''
