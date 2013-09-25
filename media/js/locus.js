@@ -628,24 +628,33 @@ function newPopup() {
 
 function postNew(event){
     event.preventDefault();
-    var date = new Date().getTime()
-    selectedFeature.attributes = {
-        'storyPoint': {
+
+    // TODO: Show spinner
+    
+    this.geom = selectedFeature.geometry.toString();
+    $.ajax({
+        url: "/set_storypoints/",
+        type: 'POST',
+        data: {
             'content': $('#post-text')[0].value,
-            'date':date,
-            'flag_reason': "",
-            'flagged': false,
-            'id': newUid(app.storyPoints()),
             'image': avatar_url,
             'isPerm': $('#post-permanent')[0].checked,
-            'source_link': "",
             'source_type': "user",
             'source_user_id': app.userID(),
             'title': app.user.name + " Says:",
-            'geometry': selectedFeature.geometry
+            'geometry': this.geom
+        },
+        dataType: 'json',
+        success: function(data){
+            if (data.status == 200) {
+                alert('Post saved.');
+                selectedFeature.attributes = data.feature;
+                cleanOldSelected();
+            } else {
+                alert('Status: ' + data.status + " - " + data.message);
+            }
         }
-    }
-    cleanOldSelected();
+    });
 }
 
 function newUid(set){

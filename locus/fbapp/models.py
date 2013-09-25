@@ -112,6 +112,9 @@ class UserSettings(models.Model):
             return 'None'
 
 class StoryPoint(models.Model):
+
+    #TODO: Use UUID
+
     source_type_choices = (
         ('user', 'user'),
         ('news', 'news'),

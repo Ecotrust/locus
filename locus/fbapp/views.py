@@ -5,6 +5,7 @@ from models import GeneratedBioregion, DrawnBioregion, UserSettings, ThiessenPol
 from models import BioregionError
 import datetime
 from django.utils import simplejson
+from django.contrib.auth.models import User
 from django.contrib.gis.geos import Polygon, GEOSGeometry
 import json
 
@@ -112,8 +113,44 @@ def set_user_settings(request):
     }))
 
 def set_storypoints(request):
-    #todo
-    pass
+    try:
+        user = User.objects.get(id=request.POST.get('source_user_id'))
+        geom = GEOSGeometry(request.POST.get('geometry'), srid=settings.GEOMETRY_DB_SRID)
+        point, created = StoryPoint.objects.get_or_create(
+            geometry=geom,
+            title=request.POST.get('title'),
+            content=request.POST.get('content'),
+            image=request.POST.get('image'),
+            source_user=user,
+            is_permanent=request.POST.get('isPerm')
+        )
+
+        feature = {
+            'storyPoint': {
+                'id': point.id,
+                'source_user_id': point.source_user.id,
+                'source_type': point.source_type,
+                'source_link': point.source_link,
+                'title': point.title,
+                'content': point.content,
+                'image': point.image,
+                'date': point.date_string(),
+                'isPerm': point.is_permanent,
+                'flagged': point.flagged,
+                'flag_reason': point.flag_reason
+            }
+        }
+
+        return HttpResponse(simplejson.dumps({
+            'message': 'groovy',
+            'feature': feature,
+            'status': 200
+        }))
+    except:
+        return HttpResponse(simplejson.dumps({
+            'message': 'story point did not save.',
+            'status': 500
+        }))
 
 def delete_user_settings(request):
     #Todo
