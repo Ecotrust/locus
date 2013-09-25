@@ -71,6 +71,8 @@ function AppViewModel() {
     
     this.users = ko.observable(users);
 
+    this.storyPoints = ko.observable();
+
     /*---------------------------------------------------------------------
             DASHBOARD AppViewModel
     ---------------------------------------------------------------------*/
@@ -81,7 +83,6 @@ function AppViewModel() {
     
     var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
     locusLayer.addFeatures([userLocusVector]);
-    addFeatures(this.features);
     
     this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, users));      //static object to be replaced with AJAX call
     // this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, this.communityUsersJSON));      //static object to be replaced with AJAX call
@@ -630,16 +631,19 @@ function postNew(event){
     var date = new Date().getTime()
     selectedFeature.attributes = {
         'storyPoint': {
+            'content': $('#post-text')[0].value,
             'date':date,
-            'geometry': selectedFeature.geometry,
-            'id': newUid(storyPoints),
-            'img': null,
+            'flag_reason': "",
+            'flagged': false,
+            'id': newUid(app.storyPoints()),
+            'image': avatar_url,
             'isPerm': $('#post-permanent')[0].checked,
-            'source': app.userID(),
-            'text': $('#post-text')[0].value,
-            'title': null,
-            'type': 'post'
-        }            
+            'source_link': "",
+            'source_type': "user",
+            'source_user_id': app.userID(),
+            'title': app.user.name + " Says:",
+            'geometry': selectedFeature.geometry
+        }
     }
     cleanOldSelected();
 }
@@ -658,11 +662,11 @@ function newUid(set){
 }
 
 function makePopup(feature) {
-    if (feature.attributes.source_type != 'user') {
+    if (feature.attributes.storyPoint.source_type != 'user') {
         var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
                                      feature.geometry.getBounds().getCenterLonLat(),
                                      new OpenLayers.Size(100,100),
-                                     newsBubble(feature.attributes),
+                                     newsBubble(feature.attributes.storyPoint),
                                      null, 
                                      true, 
                                      onPopupClose);
@@ -670,7 +674,7 @@ function makePopup(feature) {
         var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
                                      selectedFeature.geometry.getBounds().getCenterLonLat(),
                                      new OpenLayers.Size(100,100),
-                                     postBubble(feature.attributes),
+                                     postBubble(feature.attributes.storyPoint),
                                      null, true, onPopupClose);
     }
     popup.updateSize();

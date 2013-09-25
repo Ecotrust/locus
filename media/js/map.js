@@ -282,6 +282,7 @@ function getStoryPoints() {
           'internalProjection': new OpenLayers.Projection("EPSG:900913"),
           'externalProjection': new OpenLayers.Projection("EPSG:900913")
         });
+        app.storyPoints(geojson_format.read(result));
         storyPointLayer.addFeatures(geojson_format.read(result));
     });
 };

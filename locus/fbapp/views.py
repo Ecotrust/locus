@@ -154,17 +154,19 @@ def get_storypoints(request):
             },
             'type': 'Feature',
             'properties': {
-                'id': point.id,
-                'source_user_id': source_user_id,
-                'source_type': point.source_type,
-                'source_link': point.source_link,
-                'title': point.title,
-                'content': point.content,
-                'image': image,
-                'date': point.date_string(),
-                'isPerm': point.is_permanent,
-                'flagged': point.flagged,
-                'flag_reason': point.flag_reason
+                'storyPoint': {
+                    'id': point.id,
+                    'source_user_id': source_user_id,
+                    'source_type': point.source_type,
+                    'source_link': point.source_link,
+                    'title': point.title,
+                    'content': point.content,
+                    'image': image,
+                    'date': point.date_string(),
+                    'isPerm': point.is_permanent,
+                    'flagged': point.flagged,
+                    'flag_reason': point.flag_reason
+                }
             }
         }
         features.append(feature)
