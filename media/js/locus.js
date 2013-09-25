@@ -156,7 +156,7 @@ function AppViewModel() {
 
     this.clearReports();
 
-    this.detailsSummaryDefinition = ko.observable();
+    this.detailsSummaryDefinition = ko.observable(this.reportDetailsJSON['summary']['definition']);
 
     this.getSummaryOverview = function() {
         url = "/reports/overview/" + this.userID();
