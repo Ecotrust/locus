@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.gis.geos import Polygon, GEOSGeometry
 import json
 from operator import itemgetter
+from allauth.socialaccount.models import SocialToken, SocialAccount
 
 from django.conf import settings
 
@@ -17,7 +18,6 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     Launch screen / Home page for application
     """
 
-    from allauth.socialaccount.models import SocialToken, SocialAccount
     from models import User
     users = {}
     for user in SocialAccount.objects.all():
@@ -257,11 +257,10 @@ def get_friends(request):
 
     friends = simplejson.loads(request.GET['friends'])
     friend_ids = [friend['id'] for friend in friends]
-    user_friends_qs = User.objects.filter(id__in=friend_ids)
-    user_ids = [user['id'] for user in user_friends_qs]
+    user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
+    user_ids = [user.uid for user in user_friends_qs]
     user_friends = []
     just_friends = []
-    # import pdb; pdb.set_trace()
     sorted_friends = sorted(friends, key=itemgetter('name'))
     for friend in sorted_friends:
         if friend['id'] in user_ids:
