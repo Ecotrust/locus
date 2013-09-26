@@ -38,6 +38,7 @@
         var locus_name = '{{locusName}}';
         var news_sources = $.parseJSON('{{newsSources}}'.replace(/&quot;/ig, '"'));
         var locusSizeClass = 'medium';
+        var appID = '{{appID}}'
 
         
     </script>
@@ -56,6 +57,9 @@
         
 </head>
 <body class="home page page-id-14 page-template page-template-page-homepage-php"  onload="init()">
+    <div id="fb-root"></div>
+    <!-- <script src="/media/js/facebook-config.js"></script> -->
+
     {% block header %}
     <header role="banner">
         <div class="navbar navbar-fixed-top">
@@ -118,18 +122,19 @@
             <footer>
               <div class="row footer">
                 <div class="span9 social">
-                  <h5>Contact Us</h5>
+                    <h5>Contact Us</h5>
                     <a href="" data-toggle="modal" data-target="#feedback-modal">rhodges@ecotrust.org</a><br/>
-                    503-467-0800
-                  </p>
+                    503-467-0800<br/>
                 </div>
                 <div class="span3 social">
                     <div class="pull-right">
                         <h5>connect with us</h5>              
+                        <div class="fb-like" data-href="https://locus.labs.ecotrust.org" data-width="450" data-show-faces="true" data-send="true"></div>
                         <p class="pull-right">
                             <a href="http://portal.midatlanticocean.org/portal/feed/"><i class="icon-rss icon-large"></i></a>
                             <a href="https://twitter.com/PortalMARCO"><i class="icon-twitter icon-large"></i></a>
                         </p>
+                        <!-- <div class="fb-like" data-send="true" data-width="450" data-show-faces="true">Like!</div> -->
                         <a href=""><i class="icon-linkedin icon-large"></i></a>
                         <a href=""><i class="icon-google-plus icon-large"></i></a>
 

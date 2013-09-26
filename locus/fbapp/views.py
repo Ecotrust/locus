@@ -69,6 +69,7 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
             "avatar": avatar_url,
             "genId": gen_id,
             "userID": request.user.id,
+            "appID": settings.APP_ID,
             "locusName": locus_name,
             "newsSources": json.dumps(newsSources, ensure_ascii=False)
         }
