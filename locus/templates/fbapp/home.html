@@ -434,25 +434,25 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row-fluid friend-select">         <!-- Right column friend selection -->
-                                                        <div class="scrollable span12">
-                                                            <form>
-                                                                <fieldset>
-                                                                    <div data-bind="html: inviteList"></div>
-                                                                </fieldset>
-                                                            </form>
+                                                    <form id="invite-form" name="invite" data-bind="submit: inviteFriends">
+                                                        <div class="row-fluid friend-select">         <!-- Right column friend selection -->
+                                                            <div class="scrollable span12">
+                                                                    <fieldset>
+                                                                        <div data-bind="html: inviteList"></div>
+                                                                    </fieldset>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row-fluid">         <!-- Right column Message box -->
-                                                        <div class="span12">
-                                                            <textarea rows="4" class="friend-textarea">Please share you Locus with me!</textarea>
+                                                        <div class="row-fluid">         <!-- Right column Message box -->
+                                                            <div class="span12">
+                                                                <textarea rows="4" class="friend-textarea">Please share you Locus with me!</textarea>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row-fluid">         <!-- Right column button -->
-                                                        <div class="span12">
-                                                            <button class="btn invite">Invite</button>
+                                                        <div class="row-fluid">         <!-- Right column button -->
+                                                            <div class="span12">
+                                                                <button class="btn invite" type="submit">Invite</button>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

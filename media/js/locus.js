@@ -424,52 +424,6 @@ function AppViewModel() {
         ACCOUNT
 ---------------------------------------------------------------------*/
 
-function getFriendsList(){
-    url = 'https://graph.facebook.com/me/friends';
-    $.ajax({
-        url: url,
-        data: {
-            'method': 'GET',
-            'format': 'json',
-            'access_token':token
-        },
-        dataType: 'jsonp',
-        success: processFriendsList
-    });
-}
-
-function processFriendsList(fb_result) {
-    if(!fb_result.error){
-        $.ajax({
-            url: '/get_friends/',
-            type: 'GET',
-            data: {
-                'friends': JSON.stringify(fb_result.data),
-                'user_id': app.userID()
-            },
-            dataType: 'json',
-            success: function(data){
-                frndlst = "";
-                for(var i = 0; i < data.user_friends.length; i++) {
-                    if (data.user_friends[i].id) {
-                        frndlst = frndlst + "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + data.user_friends[i].id + "/picture?type=large\">" + data.user_friends[i].name + "</p>";
-                    }
-                }
-                app.friendsList(frndlst);
-
-                invitelst = "";
-                for(var i=0; i < data.just_friends.length; i++) {
-                    if (data.just_friends[i].id) {
-                        invitelst = invitelst + '<input type="checkbox" name="' + data.just_friends[i].name + '" value="' + data.just_friends[i].value + '">' + data.just_friends[i].name + '</input><br/>';
-                    }
-                }
-                app.inviteList(invitelst);
-
-            }
-        })
-    }
-}
-
 /*---------------------------------------------------------------------
         DASHBOARD
 ---------------------------------------------------------------------*/
@@ -778,6 +732,73 @@ function onSelectedLocusUnselect(event) {
 /*---------------------------------------------------------------------
         FRIENDS
 ---------------------------------------------------------------------*/
+
+function getFriendsList(){
+    url = 'https://graph.facebook.com/me/friends';
+    $.ajax({
+        url: url,
+        data: {
+            'method': 'GET',
+            'format': 'json',
+            'access_token':token
+        },
+        dataType: 'jsonp',
+        success: processFriendsList
+    });
+}
+
+function processFriendsList(fb_result) {
+    if(!fb_result.error){
+        $.ajax({
+            url: '/get_friends/',
+            type: 'GET',
+            data: {
+                'friends': JSON.stringify(fb_result.data),
+                'user_id': app.userID()
+            },
+            dataType: 'json',
+            success: function(data){
+                frndlst = "";
+                for(var i = 0; i < data.user_friends.length; i++) {
+                    if (data.user_friends[i].id) {
+                        frndlst = frndlst + "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + data.user_friends[i].id + "/picture?type=large\">" + data.user_friends[i].name + "</p>";
+                    }
+                }
+                app.friendsList(frndlst);
+
+                invitelst = "";
+                for(var i=0; i < data.just_friends.length; i++) {
+                    if (data.just_friends[i].id) {
+                        invitelst = invitelst + '<input class="invite-chk" type="checkbox" name="' + data.just_friends[i].name + '" value="' + data.just_friends[i].id + '">' + data.just_friends[i].name + '</input><br/>';
+                    }
+                }
+                app.inviteList(invitelst);
+            }
+        })
+    }
+}
+
+function inviteFriends(formElement) {
+    var inviteList = []
+    var message = "";
+    for (var i=0; i < formElement.elements.length; i++){
+        if (formElement.elements[i].className == "invite-chk" && formElement.elements[i].checked){
+            inviteList.push(formElement.elements[i].value);
+        } else if (formElement.elements[i].className == "friend-textarea"){
+            message = formElement.elements[i].value;
+        }
+    }
+    if (inviteList.length > 0) {
+        FB.ui({method: 'apprequests',
+            message: message,
+            to: inviteList
+        }, function() {
+            alert('Friends invited!');
+        });
+    } else {
+        alert('Please select some friends to invite!');
+    }
+}
 
 /*---------------------------------------------------------------------
         OTHER LOCI
