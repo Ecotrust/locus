@@ -1,4 +1,4 @@
-var map, storyPointLayer, locusLayer, selectedLocusLayer, lociLayer, selectStoryPointControl, selectedFeature, selectLocusControl, selectOtherLocusControl, drawPointControls, drawLocusControls;
+var map, storyPointLayer, locusLayer, selectedLocusLayer, lociLayer, friendLayer, selectStoryPointControl, selectedFeature, selectLocusControl, selectOtherLocusControl, drawPointControls, drawLocusControls;
 
 function mapInit() {
         
@@ -59,6 +59,8 @@ function mapInit() {
     });
     
     lociLayer = new OpenLayers.Layer.Vector("Loci Layer");
+
+    friendLayer = new OpenLayers.Layer.Vector("Friend Layer");
     
     locusLayer.events.on({
         "featureadded": this.onLocusAdd,
@@ -78,7 +80,13 @@ function mapInit() {
         "featureunselected": this.onOtherLocusUnselect
     });
     
-    map.addLayers([aerial, hybrid, esriOcean, storyPointLayer, locusLayer, selectedLocusLayer, lociLayer]);
+    friendLayer.events.on({
+        // "featureadded": this.onLocusAdd,
+        "featureselected": this.onFriendLocusSelect,        //TODO
+        "featureunselected": this.onFriendLocusUnselect     //TODO
+    });
+    
+    map.addLayers([aerial, hybrid, esriOcean, storyPointLayer, locusLayer, selectedLocusLayer, lociLayer, friendLayer]);
     
     getLoci();
     getStoryPoints();
@@ -90,6 +98,7 @@ function mapInit() {
     selectOtherLocusControl = new OpenLayers.Control.SelectFeature(lociLayer
         // {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect}
     );
+    selectFriendLocusControl = new OpenLayers.Control.SelectFeature(friendLayer);
     selectStoryPointControl = new OpenLayers.Control.SelectFeature(storyPointLayer
         // {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect}
     );
@@ -208,6 +217,7 @@ function mapInit() {
             locusLayer.setVisibility(true);
             selectedLocusLayer.setVisibility(false);
             lociLayer.setVisibility(false);
+            friendLayer.setVisibility(false);
             mapShown = true;
         } else if (e.target.id == "settings-tab" ) {
             selectLocusControl.activate();
@@ -219,18 +229,20 @@ function mapInit() {
             locusLayer.setVisibility(true);
             selectedLocusLayer.setVisibility(true);
             lociLayer.setVisibility(false);
+            friendLayer.setVisibility(false);
             mapShown = true;
-        } else if (e.target.id == "world-tab" ) {
-            selectLocusControl.deactivate();
-            selectStoryPointControl.deactivate();
-            $('#loci-map').show();
-            map.render("loci-map");
-            updateCenter(other_map_status);
-            storyPointLayer.setVisibility(true);
-            locusLayer.setVisibility(false);
-            selectedLocusLayer.setVisibility(false);
-            lociLayer.setVisibility(true);
-            mapShown = true;
+        // } else if (e.target.id == "world-tab" ) {
+        //     selectLocusControl.deactivate();
+        //     selectStoryPointControl.deactivate();
+        //     $('#loci-map').show();
+        //     map.render("loci-map");
+        //     updateCenter(other_map_status);
+        //     storyPointLayer.setVisibility(true);
+        //     locusLayer.setVisibility(false);
+        //     selectedLocusLayer.setVisibility(false);
+        //     lociLayer.setVisibility(true);
+        //     friendLayer.setVisibility(false);
+        //     mapShown = true;
         }
         
     });
@@ -270,6 +282,21 @@ function getLoci() {
         lociLayer.addFeatures(geojson_format.read(result));
     });
 };
+
+function getFriendLoci(frndlst) {
+    $.ajax({
+        url: "/get_friends_bioregions/",
+        type: 'GET',
+        data: {'friends': JSON.stringify(frndlst)},
+        dataType: 'json'
+    }).done(function(result) { 
+        var geojson_format = new OpenLayers.Format.GeoJSON({
+          'internalProjection': new OpenLayers.Projection("EPSG:900913"),
+          'externalProjection': new OpenLayers.Projection("EPSG:900913")
+        });
+        friendLayer.addFeatures(geojson_format.read(result));
+    });
+}
 
 function getStoryPoints() {
     $.ajax({

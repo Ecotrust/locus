@@ -171,6 +171,71 @@ def get_bioregions(request):
 
     return bioregions
 
+def get_friends_bioregions(request):
+    friends = simplejson.loads(request.GET['friends'])
+    user_ids = []
+    user_bioregion_mapping = {}
+    draw_bioregion_ids = []
+    gen_bioregion_ids = []
+    
+    friend_ids = [friend['id'] for friend in friends]
+    friend_accounts = SocialAccount.objects.filter(uid__in=friend_ids)
+    for friend in friend_accounts:
+        uid = friend.user.id
+        user_ids.append(uid)
+        user_bioregion_mapping[friend.uid] = {'user_id': uid}
+    u_settings_qs = UserSettings.objects.filter(user__id__in=user_ids)
+
+    for setting in u_settings_qs:
+        if setting.has_bioregion():
+            for mapping in user_bioregion_mapping:
+                if user_bioregion_mapping[mapping]['user_id'] == setting.user.id:
+                    break       # get mapping without knowing the fb user id
+            user_bioregion_mapping[mapping]['type'] = setting.bioregion_type()
+            user_bioregion_mapping[mapping]['br_id'] = setting.get_bioregion().id
+            if user_bioregion_mapping[mapping]['type'] == "Drawn":
+                draw_bioregion_ids.append(user_bioregion_mapping[mapping]['br_id'])
+            else:
+                gen_bioregion_ids.append(user_bioregion_mapping[mapping]['br_id'])
+
+    gen_qs = GeneratedBioregion.objects.filter(id__in=gen_bioregion_ids)
+    draw_qs = DrawnBioregion.objects.filter(id__in=draw_bioregion_ids)
+
+    if gen_qs.count() > 0 :
+        gen_bioregions_collection = render_to_geojson(
+            gen_qs,
+            geom_attribute='geometry_final',
+            mimetype = 'text/plain',
+            pretty_print=True,
+            excluded_fields=['date_created', 'date_modified'],
+            return_response=False
+        )
+
+        collection = gen_bioregions_collection
+
+    if draw_qs.count() > 0:
+        draw_bioregions_collection = render_to_geojson(
+            draw_qs,
+            geom_attribute='geometry_final',
+            mimetype = 'text/plain',
+            pretty_print=True,
+            excluded_fields=['date_created', 'date_modified'],
+            return_response=False
+        )
+
+        collection = draw_bioregions_collection
+
+    if draw_qs.count() > 0 and gen_qs.count() > 0:
+        collection['features'] = draw_bioregions_collection['features'] + gen_bioregions_collection['features']
+
+    collection['user_feature_mapping'] = user_bioregion_mapping
+
+    response = HttpResponse()
+    response.write('%s' % simplejson.dumps(collection, indent=1))
+    response['Content-length'] = str(len(response.content))
+    response['Content-Type'] = 'text/plain'
+    return response
+
 def get_storypoints(request):
     qs = StoryPoint.objects.all()
     features = []
@@ -254,8 +319,6 @@ def get_bioregions_by_point(request):
     return bioregions
 
 def get_friends(request):
-
-
     friends = simplejson.loads(request.GET['friends'])
     friend_ids = [friend['id'] for friend in friends]
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
@@ -278,7 +341,7 @@ def get_friends(request):
         'status': 200
     }))
     
-def render_to_geojson(query_set, geom_field=None, geom_attribute=None, extra_attributes=[],mimetype='text/plain', pretty_print=False, excluded_fields=[],included_fields=[],proj_transform=None):
+def render_to_geojson(query_set, geom_field=None, geom_attribute=None, extra_attributes=[],mimetype='text/plain', pretty_print=False, excluded_fields=[],included_fields=[],proj_transform=None, return_response=True):
     '''
     
     Shortcut to render a GeoJson FeatureCollection from a Django QuerySet.
@@ -318,7 +381,6 @@ def render_to_geojson(query_set, geom_field=None, geom_attribute=None, extra_att
         
         #attempt to assign geom_field that was passed in
         if geom_field:
-            #import pdb;pdb.set_trace()
             geo_fieldnames = [x.name for x in geo_fields]
             try:
                 geo_field = geo_fields[geo_fieldnames.index(geom_field)]
@@ -429,12 +491,15 @@ def render_to_geojson(query_set, geom_field=None, geom_attribute=None, extra_att
     #             ex = poly.extent
     #     collection['bbox'] = ex
     
-    # Return response
-    response = HttpResponse()
-    if pretty_print:
-        response.write('%s' % simplejson.dumps(collection, indent=1))
+    if return_response:
+        # Return response
+        response = HttpResponse()
+        if pretty_print:
+            response.write('%s' % simplejson.dumps(collection, indent=1))
+        else:
+            response.write('%s' % simplejson.dumps(collection))    
+        response['Content-length'] = str(len(response.content))
+        response['Content-Type'] = mimetype
+        return response
     else:
-        response.write('%s' % simplejson.dumps(collection))    
-    response['Content-length'] = str(len(response.content))
-    response['Content-Type'] = mimetype
-    return response
+        return collection

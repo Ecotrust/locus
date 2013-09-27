@@ -25,9 +25,9 @@
                 <li>
                     <a id="friends-tab" href="#friends-tab-content" data-toggle="tab">Friends</a>
                 </li>
-                <li>
+                <!--<li>
                     <a id="world-tab" href="#world-tab-content" data-toggle="tab">Other Loci</a>
-                </li>
+                </li>-->
             </ul>
             <div class="row-fluid">
                 <div class="span11">
@@ -121,6 +121,29 @@
                             <div class="row-fluid">
                                 <div class="span12">
                                     <h2>Dashboard</h2>
+                                    <div class="row-fluid">
+                                        <div class="span3">
+                                            Loci: <select>
+                                                <option value="My Loci" selected>My Locus</option>
+                                                <option value="Friends' Loci">Friends' Loci</option>
+                                                <option value="All Loci">All Loci</option>
+                                            </select>
+                                        </div>
+                                        <div class="span3">
+                                            Stories: <select>
+                                                <option value="All" selected>All Stories in My Loci</option>
+                                                <option value="Friends">Friends' Stories</option>
+                                                <option value="Mine">My Stories</option>
+                                            </select>
+                                        </div>
+                                        <div class="span3">
+                                            Map: <select>
+                                                <option value="Arial" selected>Arial</option>
+                                                <option value="Hybrid">Hybrid</option>
+                                                <option value="ESRI">ESRI Ocean</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="row-fluid">
                                         <div id="dash-map" class="span12 map-holder">
                                             <div class="legend pull-left">

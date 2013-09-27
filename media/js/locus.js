@@ -773,6 +773,7 @@ function processFriendsList(fb_result) {
                     }
                 }
                 app.inviteList(invitelst);
+                getFriendLoci(data.user_friends);
             }
         })
     }
