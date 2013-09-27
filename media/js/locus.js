@@ -77,6 +77,12 @@ function AppViewModel() {
             DASHBOARD AppViewModel
     ---------------------------------------------------------------------*/
     
+    availableLayers = ko.observableArray(['Mine','Friends\'', 'All']);
+    // TODO: http://knockoutjs.com/documentation/options-binding.html
+        //That is how to populate the drop-downs and some hints about how to fire code off on selection
+        //Use 'subscribe' to watch the selection and show the correct features when selected
+
+
     this.communityJSON = [];
     this.communityUsersJSON = {};
     this.newsJSON = [];
@@ -751,7 +757,7 @@ function processFriendsList(fb_result) {
     if(!fb_result.error){
         $.ajax({
             url: '/get_friends/',
-            type: 'GET',
+            type: 'POST',
             data: {
                 'friends': JSON.stringify(fb_result.data),
                 'user_id': app.userID()

@@ -201,6 +201,8 @@ def get_friends_bioregions(request):
     gen_qs = GeneratedBioregion.objects.filter(id__in=gen_bioregion_ids)
     draw_qs = DrawnBioregion.objects.filter(id__in=draw_bioregion_ids)
 
+    collection = {}
+
     if gen_qs.count() > 0 :
         gen_bioregions_collection = render_to_geojson(
             gen_qs,
@@ -319,7 +321,7 @@ def get_bioregions_by_point(request):
     return bioregions
 
 def get_friends(request):
-    friends = simplejson.loads(request.GET['friends'])
+    friends = simplejson.loads(request.POST.get('friends'))
     friend_ids = [friend['id'] for friend in friends]
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
     user_ids = [user.uid for user in user_friends_qs]

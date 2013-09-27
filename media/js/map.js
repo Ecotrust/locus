@@ -294,7 +294,9 @@ function getFriendLoci(frndlst) {
           'internalProjection': new OpenLayers.Projection("EPSG:900913"),
           'externalProjection': new OpenLayers.Projection("EPSG:900913")
         });
-        friendLayer.addFeatures(geojson_format.read(result));
+        if (geojson_format.read(result) != null){
+            friendLayer.addFeatures(geojson_format.read(result));
+        }
     });
 }
 
