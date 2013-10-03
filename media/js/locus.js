@@ -272,6 +272,11 @@ function AppViewModel() {
         this.drawing(false);
     };
 
+    this.clearStoryPoints = function() {
+        storyPointLayer.removeAllFeatures();
+        getStoryPoints();
+    };
+
     this.drawing.subscribe(function(bool) {
         if (bool) {
             $('#settings-map').toggleClass('span8', true);
@@ -327,6 +332,7 @@ function AppViewModel() {
             success: function(data){
                 app.clearLocus();
                 app.clearReports();
+                app.clearStoryPoints();
                 app.userHasLocus(true);
                 locusLayer.addFeatures([selectedLocusLayer.features[0]]);
                 app.showSpinner(false);

@@ -18,7 +18,6 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     Launch screen / Home page for application
     """
 
-    from models import User
     users = {}
     for user in SocialAccount.objects.all():
         users[str(user.user.id)] = {"name": user.user.get_full_name(), "id": user.user.id}
@@ -239,7 +238,12 @@ def get_friends_bioregions(request):
     return response
 
 def get_storypoints(request):
-    qs = StoryPoint.objects.all()
+    usetting = UserSettings.objects.get(user=request.user)
+    my_story_points = StoryPoint.objects.filter(geometry__within=usetting.get_bioregion().geometry_final)
+
+    # qs = StoryPoint.objects.all()
+    qs = my_story_points
+
     features = []
 
     for point in qs:
