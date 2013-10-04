@@ -246,7 +246,7 @@ def get_storypoints(request):
 
     features = []
 
-    for point in qs:
+    for point in qs.order_by('-created'):
         if point.source_type != 'user':
             image = point.image
             source_user_id = None

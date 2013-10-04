@@ -101,8 +101,8 @@ function AppViewModel() {
     this.communityJSON = ko.observable([]);
     // this.communityUsersJSON = {};
     this.newsJSON = ko.observable([]);
-    this.communityFeed = ko.observable();      //static object to be replaced with AJAX call
-    this.newsFeed = ko.observable();      //static object to be replaced with AJAX call
+    this.communityFeed = ko.observable();
+    this.newsFeed = ko.observable();
     
     var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
     map.locusLayer.addFeatures([userLocusVector]);
@@ -118,8 +118,8 @@ function AppViewModel() {
                 app.newsJSON(app.newsJSON().concat(spoint));
             }
         }
-        this.communityFeed(JSON2ComFeedHTML(this.communityJSON(), app.users));      //static object to be replaced with AJAX call
-        this.newsFeed(JSON2NewsFeedHTML(this.newsJSON()));      //static object to be replaced with AJAX call
+        this.communityFeed(JSON2ComFeedHTML(this.communityJSON(), app.users));
+        this.newsFeed(JSON2NewsFeedHTML(this.newsJSON()));
         
     }
 
@@ -554,7 +554,7 @@ function JSON2ComFeedHTML(json, users){
         html += "                        <h4>" + users()[json[i].data.storyPoint.source_user_id].name + "</h4>";
         html += mid_div_2;
         html += "                        <p>" + json[i].data.storyPoint.content + "</p>";
-        //TODO: Add time
+        html += "                        <p class='feed-date'>" + json[i].data.storyPoint.date + "</p>";
         html += end_div;
     }
     return html;
@@ -577,6 +577,7 @@ function JSON2NewsFeedHTML(json){
         html += "                        <div class=\"news-img\"><img src=\"" + json[i].data.storyPoint.image + "\"/></div>\
                                         <h4>" + json[i].data.storyPoint.title + "</h4>\
                                         <p>" + json[i].data.storyPoint.content + "</p>";
+        html += "                       <p class='feed-date'>" + json[i].data.storyPoint.date + "</p>";
         html += end_well_div;
         html += "                        </a>";
         html += end_div;

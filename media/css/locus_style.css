@@ -334,6 +334,11 @@ button.new-storypoint{
     min-width: 250px;
 }
 
+.feed-date {
+    float: right;
+    color: #777777
+}
+
 div.legend{
     float: left;
     z-index: 755;
