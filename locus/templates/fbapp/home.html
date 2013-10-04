@@ -122,10 +122,11 @@
                                 <div class="span12">
                                     <h2>Dashboard</h2>
                                     <div class="row-fluid">
-                                        <div class="span3">
+                                        <div class="span4">
                                             Loci: <select data-bind="options: availableLayers, optionsText: 'name', value: selectedLayer, event: {change: layerChanged}">
                                             </select>
                                         </div>
+                                        <!--
                                         <div class="span3">
                                             Stories: <select>
                                                 <option value="All" selected>All Stories in My Loci</option>
@@ -133,11 +134,14 @@
                                                 <option value="Mine">My Stories</option>
                                             </select>
                                         </div>
-                                        <div class="span3">
-                                            Map: <select>
+                                        -->
+                                        <div class="span4">
+                                            Map: <select data-bind="options: baseLayers, optionsText: 'name', value: selectedBaseLayer, event: {change: baseLayerChanged}">
+                                            <!--
                                                 <option value="Arial" selected>Arial</option>
                                                 <option value="Hybrid">Hybrid</option>
                                                 <option value="ESRI">ESRI Ocean</option>
+                                            -->
                                             </select>
                                         </div>
                                     </div>

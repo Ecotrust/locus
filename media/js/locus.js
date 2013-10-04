@@ -88,47 +88,62 @@ function AppViewModel() {
         new OptionDef('Friends\' Loci', 'Friend'),
         new OptionDef('All Loci', 'All')
     ]);
+
+    baseLayers = ko.observableArray([
+        new OptionDef('Aerial', 'Aerial'),
+        new OptionDef('Hybrid', 'Hybrid'),
+        new OptionDef('ESRI Ocean', 'Ocean')
+    ]);
     // TODO: http://knockoutjs.com/documentation/options-binding.html
         //That is how to populate the drop-downs and some hints about how to fire code off on selection
         //Use 'subscribe' to watch the selection and show the correct features when selected
     self.selectedLayer = ko.observable(self.availableLayers()[0]);
+    self.selectedBaseLayer = ko.observable(self.baseLayers()[0]);
 
     this.communityJSON = [];
     this.communityUsersJSON = {};
     this.newsJSON = [];
     
     var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
-    locusLayer.addFeatures([userLocusVector]);
+    map.locusLayer.addFeatures([userLocusVector]);
     
     this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, users));      //static object to be replaced with AJAX call
     // this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, this.communityUsersJSON));      //static object to be replaced with AJAX call
     
     this.newsFeed = ko.observable(JSON2NewsFeedHTML(this.newsJSON));      //static object to be replaced with AJAX call
-    
-
 
     self.layerChanged = function() {
         var opt = self.selectedLayer().value;
         if (opt == 'Mine'){
-            locusLayer.setVisibility(true);
-            storyPointLayer.setVisibility(true);
+            map.locusLayer.setVisibility(true);
+            map.storyPointLayer.setVisibility(true);
         } else {
-            locusLayer.setVisibility(false);
-            storyPointLayer.setVisibility(false);
+            map.locusLayer.setVisibility(false);
+            map.storyPointLayer.setVisibility(false);
         }
         if (opt == 'Friend'){
-            friendLayer.setVisibility(true);
+            map.friendLayer.setVisibility(true);
         } else {
-            friendLayer.setVisibility(false);
+            map.friendLayer.setVisibility(false);
         }if (opt == 'All'){
-            lociLayer.setVisibility(true);
+            map.lociLayer.setVisibility(true);
         } else {
-            lociLayer.setVisibility(false);
+            map.lociLayer.setVisibility(false);
         }
     };
 
-
-
+    self.baseLayerChanged = function() {
+        var opt = self.selectedBaseLayer().value;
+        if (opt == 'Aerial'){
+            map.setBaseLayer(map.aerial);
+        }
+        if (opt == 'Hybrid'){
+            map.setBaseLayer(map.hybrid);
+        }
+        if (opt == 'Ocean'){
+            map.setBaseLayer(map.esriOcean);
+        }
+    };
 
     /*---------------------------------------------------------------------
             DETAILS AppViewModel
@@ -292,14 +307,14 @@ function AppViewModel() {
     }
 
     this.clearLocus = function() {
-        locusLayer.removeAllFeatures();
+        map.locusLayer.removeAllFeatures();
         gen_id = null;
         userLocus = null;
         this.locus_type(null);
     };
 
     this.clearSelectedLocus = function() {
-        selectedLocusLayer.removeAllFeatures();
+        map.selectedLocusLayer.removeAllFeatures();
         selectedLocus = null;
         this.locusSelected(false);
         this.biggest(false);
@@ -308,7 +323,7 @@ function AppViewModel() {
     };
 
     this.clearStoryPoints = function() {
-        storyPointLayer.removeAllFeatures();
+        map.storyPointLayer.removeAllFeatures();
         getStoryPoints();
     };
 
@@ -341,7 +356,7 @@ function AppViewModel() {
     this.setUserLocus = function(self, event) {
         //Check if locus is selected
         app.showSpinner(true);
-        var feature = selectedLocusLayer.features[0];
+        var feature = map.selectedLocusLayer.features[0];
         if (feature) {
             var geometry = feature.geometry.toString();
         } else {
@@ -369,7 +384,7 @@ function AppViewModel() {
                 app.clearReports();
                 app.clearStoryPoints();
                 app.userHasLocus(true);
-                locusLayer.addFeatures([selectedLocusLayer.features[0]]);
+                map.locusLayer.addFeatures([map.selectedLocusLayer.features[0]]);
                 app.showSpinner(false);
                 alert('Settings saved.');
             }
@@ -581,7 +596,7 @@ function cleanOldSelected(){
             selectedFeature.popup = null;
         }
         if (removePoint) {
-            storyPointLayer.removeFeatures(selectedFeature);
+            map.storyPointLayer.removeFeatures(selectedFeature);
         }
     }
 }
@@ -593,7 +608,7 @@ function onPopupClose(evt) {
 function onNewPopupClose(evt) {
     map.removePopup(selectedFeature.popup);
     if (!selectedFeature.attributes.storyPoint) {
-        storyPointLayer.removeFeatures(selectedFeature);
+        map.storyPointLayer.removeFeatures(selectedFeature);
     }
 }
 
