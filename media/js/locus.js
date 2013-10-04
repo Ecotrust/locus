@@ -94,23 +94,34 @@ function AppViewModel() {
         new OptionDef('Hybrid', 'Hybrid'),
         new OptionDef('ESRI Ocean', 'Ocean')
     ]);
-    // TODO: http://knockoutjs.com/documentation/options-binding.html
-        //That is how to populate the drop-downs and some hints about how to fire code off on selection
-        //Use 'subscribe' to watch the selection and show the correct features when selected
+
     self.selectedLayer = ko.observable(self.availableLayers()[0]);
     self.selectedBaseLayer = ko.observable(self.baseLayers()[0]);
 
-    this.communityJSON = [];
-    this.communityUsersJSON = {};
-    this.newsJSON = [];
+    this.communityJSON = ko.observable([]);
+    // this.communityUsersJSON = {};
+    this.newsJSON = ko.observable([]);
+    this.communityFeed = ko.observable();      //static object to be replaced with AJAX call
+    this.newsFeed = ko.observable();      //static object to be replaced with AJAX call
     
     var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
     map.locusLayer.addFeatures([userLocusVector]);
-    
-    this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, users));      //static object to be replaced with AJAX call
-    // this.communityFeed = ko.observable(JSON2ComFeedHTML(this.communityJSON, this.communityUsersJSON));      //static object to be replaced with AJAX call
-    
-    this.newsFeed = ko.observable(JSON2NewsFeedHTML(this.newsJSON));      //static object to be replaced with AJAX call
+
+    this.getStoryFeeds = function() {
+        app.communityJSON([]);
+        app.newsJSON([]);
+        for (var i = 0; i < app.storyPoints().length; i++) {
+            spoint = app.storyPoints()[i];
+            if (spoint.data.storyPoint.source_type == 'user') {
+                app.communityJSON(app.communityJSON().concat(spoint));
+            } else {
+                app.newsJSON(app.newsJSON().concat(spoint));
+            }
+        }
+        this.communityFeed(JSON2ComFeedHTML(this.communityJSON(), app.users));      //static object to be replaced with AJAX call
+        this.newsFeed(JSON2NewsFeedHTML(this.newsJSON()));      //static object to be replaced with AJAX call
+        
+    }
 
     self.layerChanged = function() {
         var opt = self.selectedLayer().value;
@@ -538,13 +549,12 @@ function JSON2ComFeedHTML(json, users){
     html = "";
     for (var i=0; i<json.length; i++) {
         html += start_div;
-        html += "                        <div class=\"mug\"><img src=\"" + avatar_url + "\"/></div>";
-        // html += "                        <div class=\"mug\"><img src=\"" + users[json[i].source].img + "\"/></div>";
+        html += "                        <div class=\"mug\"><img src=\"" + json[i].data.storyPoint.image + "\"/></div>";
         html += mid_div;
-        //html += "                        <h4>" + users["2"].name + "</h4>";
-        // html += "                        <h4>" + users[json[i].source].name + "</h4>";
+        html += "                        <h4>" + users()[json[i].data.storyPoint.source_user_id].name + "</h4>";
         html += mid_div_2;
-        html += "                        <p>" + json[i].text + "</p>";
+        html += "                        <p>" + json[i].data.storyPoint.content + "</p>";
+        //TODO: Add time
         html += end_div;
     }
     return html;
@@ -562,11 +572,11 @@ function JSON2NewsFeedHTML(json){
     html = "";
     for (var i=0; i<json.length; i++) {
         html += start_div;
-        html += "                        <a href=\"" + json[i].source + "\" target=\"_blank\" class=\"news-title\">";
+        html += "                        <a href=\"" + json[i].data.storyPoint.source_link + "\" target=\"_blank\" class=\"news-title\">";
         html += well_div;
-        html += "                        <div class=\"news-img\"><img src=\"" + json[i].img + "\"/></div>\
-                                        <h4>" + json[i].title + "</h4>\
-                                        <p>" + json[i].text + "</p>";
+        html += "                        <div class=\"news-img\"><img src=\"" + json[i].data.storyPoint.image + "\"/></div>\
+                                        <h4>" + json[i].data.storyPoint.title + "</h4>\
+                                        <p>" + json[i].data.storyPoint.content + "</p>";
         html += end_well_div;
         html += "                        </a>";
         html += end_div;
@@ -687,9 +697,9 @@ function postNew(event){
         dataType: 'json',
         success: function(data){
             if (data.status == 200) {
-                alert('Post saved.');
                 selectedFeature.attributes = data.feature;
                 cleanOldSelected();
+                app.clearStoryPoints();
             } else {
                 alert('Status: ' + data.status + " - " + data.message);
             }

@@ -313,6 +313,7 @@ function getStoryPoints() {
           'externalProjection': new OpenLayers.Projection("EPSG:900913")
         });
         app.storyPoints(geojson_format.read(result));
+        app.getStoryFeeds();
         map.storyPointLayer.events.remove("featureadded");
         map.storyPointLayer.addFeatures(geojson_format.read(result));
         map.storyPointLayer.events.on({"featureadded": onPostAdd});
