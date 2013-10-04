@@ -11,6 +11,12 @@ function init() {
 
 }
 
+function OptionDef(name, value){
+    var self = this;
+    self.name = name;
+    self.value = value;
+};
+
 function AppViewModel() {
     
     app = this;
@@ -76,12 +82,16 @@ function AppViewModel() {
     /*---------------------------------------------------------------------
             DASHBOARD AppViewModel
     ---------------------------------------------------------------------*/
-    
-    availableLayers = ko.observableArray(['Mine','Friends\'', 'All']);
+
+    availableLayers = ko.observableArray([
+        new OptionDef('My Locus', 'Mine'),
+        new OptionDef('Friends\' Loci', 'Friend'),
+        new OptionDef('All Loci', 'All')
+    ]);
     // TODO: http://knockoutjs.com/documentation/options-binding.html
         //That is how to populate the drop-downs and some hints about how to fire code off on selection
         //Use 'subscribe' to watch the selection and show the correct features when selected
-
+    self.selectedLayer = ko.observable(self.availableLayers()[0]);
 
     this.communityJSON = [];
     this.communityUsersJSON = {};
@@ -95,6 +105,31 @@ function AppViewModel() {
     
     this.newsFeed = ko.observable(JSON2NewsFeedHTML(this.newsJSON));      //static object to be replaced with AJAX call
     
+
+
+    self.layerChanged = function() {
+        var opt = self.selectedLayer().value;
+        if (opt == 'Mine'){
+            locusLayer.setVisibility(true);
+            storyPointLayer.setVisibility(true);
+        } else {
+            locusLayer.setVisibility(false);
+            storyPointLayer.setVisibility(false);
+        }
+        if (opt == 'Friend'){
+            friendLayer.setVisibility(true);
+        } else {
+            friendLayer.setVisibility(false);
+        }if (opt == 'All'){
+            lociLayer.setVisibility(true);
+        } else {
+            lociLayer.setVisibility(false);
+        }
+    };
+
+
+
+
     /*---------------------------------------------------------------------
             DETAILS AppViewModel
     ---------------------------------------------------------------------*/

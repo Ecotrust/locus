@@ -123,10 +123,7 @@
                                     <h2>Dashboard</h2>
                                     <div class="row-fluid">
                                         <div class="span3">
-                                            Loci: <select>
-                                                <option value="My Loci" selected>My Locus</option>
-                                                <option value="Friends' Loci">Friends' Loci</option>
-                                                <option value="All Loci">All Loci</option>
+                                            Loci: <select data-bind="options: availableLayers, optionsText: 'name', value: selectedLayer, event: {change: layerChanged}">
                                             </select>
                                         </div>
                                         <div class="span3">
