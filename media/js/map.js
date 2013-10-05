@@ -317,8 +317,57 @@ function getStoryPoints() {
         map.storyPointLayer.events.remove("featureadded");
         map.storyPointLayer.addFeatures(geojson_format.read(result));
         map.storyPointLayer.events.on({"featureadded": onPostAdd});
+        getMaptiaStoryPoints();
     });
 };
+
+function getWikipediaPoints() {
+    // 'legoktm' says: 'you can also use Special:Version to find the API endpoint'
+    url = 'https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=37.786971|-122.399677&format=json';
+}
+
+function getMaptiaStoryPoints() {
+    features = [];
+    for (var i = 0; i < maptia.length; i++) {
+        var lon = maptia[i].location.coordinates.long;
+        var lat = maptia[i].location.coordinates.lat;
+        var new_point = new OpenLayers.Geometry.Point(lon, lat)
+        new_point.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+
+        feature = new OpenLayers.Feature.Vector(
+            new_point,
+            {
+                'storyPoint': {
+                    'content': maptia[i].description,
+                    'date': maptia[i].created_at,
+                    'flag_reason': null,
+                    'flagged': false,
+                    'id': 'maptia-'+ maptia[i].id.toString(),
+                    'image': maptia[i].cover_post.photo.thumb,
+                    'isPerm': true,
+                    'source_link': 'https://maptia.com/' + maptia[i].user_username + '/stories/' + maptia[i].slug,
+                    'source_type': 'maptia',
+                    'source_user_id': null,
+                    'title': maptia[i].name
+                }
+            }
+        );
+        features.push(feature);
+    }
+
+    map.storyPointLayer.events.remove("featureadded");
+    map.storyPointLayer.addFeatures(features);
+    map.storyPointLayer.events.on({"featureadded": onPostAdd});
+
+    // $.ajax({
+    //     url: "https://maptia.com/stories/featured.json?offset=0&limit=10",
+    //     type: 'GET',
+    //     data: {},
+    //     datType: 'json'
+    // }).done(function(result)){
+    //     var x = ???;
+    // }
+}
 
 function getLocusByPoint(lonlat) {
     locusPointLatitude = lonlat.lat;
