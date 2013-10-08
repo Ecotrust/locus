@@ -8,6 +8,7 @@ function init() {
 
     // Activates knockout.js
     ko.applyBindings(new AppViewModel());
+    // getMaptiaStoryPoints();
 
 }
 
@@ -82,6 +83,8 @@ function AppViewModel() {
     /*---------------------------------------------------------------------
             DASHBOARD AppViewModel
     ---------------------------------------------------------------------*/
+
+    this.focusLocus = ko.observable(userLocus);
 
     availableLayers = ko.observableArray([
         new OptionDef('My Locus', 'Mine'),

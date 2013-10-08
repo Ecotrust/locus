@@ -299,7 +299,7 @@ function getFriendLoci(frndlst) {
             map.friendLayer.addFeatures(geojson_format.read(result));
         }
     });
-}
+};
 
 function getStoryPoints() {
     $.ajax({
@@ -313,11 +313,11 @@ function getStoryPoints() {
           'externalProjection': new OpenLayers.Projection("EPSG:900913")
         });
         app.storyPoints(geojson_format.read(result));
-        app.getStoryFeeds();
         map.storyPointLayer.events.remove("featureadded");
         map.storyPointLayer.addFeatures(geojson_format.read(result));
-        map.storyPointLayer.events.on({"featureadded": onPostAdd});
         getMaptiaStoryPoints();
+        app.getStoryFeeds();
+        map.storyPointLayer.events.on({"featureadded": onPostAdd});
     });
 };
 
@@ -328,45 +328,60 @@ function getWikipediaPoints() {
 
 function getMaptiaStoryPoints() {
     features = [];
+    var geojson_format = new OpenLayers.Format.GeoJSON({
+      'internalProjection': new OpenLayers.Projection("EPSG:900913"),
+      'externalProjection': new OpenLayers.Projection("EPSG:900913")
+    });
+
     for (var i = 0; i < maptia.length; i++) {
         var lon = maptia[i].location.coordinates.long;
         var lat = maptia[i].location.coordinates.lat;
         var new_point = new OpenLayers.Geometry.Point(lon, lat)
         new_point.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
 
-        feature = new OpenLayers.Feature.Vector(
-            new_point,
-            {
-                'storyPoint': {
-                    'content': maptia[i].description,
-                    'date': maptia[i].created_at,
-                    'flag_reason': null,
-                    'flagged': false,
-                    'id': 'maptia-'+ maptia[i].id.toString(),
-                    'image': maptia[i].cover_post.photo.thumb,
-                    'isPerm': true,
-                    'source_link': 'https://maptia.com/' + maptia[i].user_username + '/stories/' + maptia[i].slug,
-                    'source_type': 'maptia',
-                    'source_user_id': null,
-                    'title': maptia[i].name
+        //TODO: When this goes AJAX, some work will have to be done with getStoryPoints() to sort out
+            // who does what when.
+
+        // $.ajax({
+        //     url: "https://maptia.com/stories/featured.json?offset=0&limit=10",
+        //     type: 'GET',
+        //     data: {},
+        //     datType: 'json'
+        // }).done(function(result)){
+        //     var x = ???;
+        // }
+
+        if (app.focusLocus()) {
+            current_locus = app.focusLocus();
+        } else {
+            current_locus = userLocus;
+        }
+
+        if (current_locus && current_locus.containsPoint(new_point)) {
+
+            feature = new OpenLayers.Feature.Vector(
+                new_point,
+                {
+                    'storyPoint': {
+                        'content': maptia[i].description,
+                        'date': maptia[i].created_at,
+                        'flag_reason': null,
+                        'flagged': false,
+                        'id': 'maptia-'+ maptia[i].id.toString(),
+                        'image': maptia[i].cover_post.photo.thumb,
+                        'isPerm': true,
+                        'source_link': 'https://maptia.com/' + maptia[i].user_username + '/stories/' + maptia[i].slug,
+                        'source_type': 'maptia',
+                        'source_user_id': null,
+                        'title': maptia[i].name
+                    }
                 }
-            }
-        );
-        features.push(feature);
+            );
+            features.push(feature);
+            app.storyPoints(app.storyPoints().concat(feature));
+        }
     }
-
-    map.storyPointLayer.events.remove("featureadded");
     map.storyPointLayer.addFeatures(features);
-    map.storyPointLayer.events.on({"featureadded": onPostAdd});
-
-    // $.ajax({
-    //     url: "https://maptia.com/stories/featured.json?offset=0&limit=10",
-    //     type: 'GET',
-    //     data: {},
-    //     datType: 'json'
-    // }).done(function(result)){
-    //     var x = ???;
-    // }
 }
 
 function getLocusByPoint(lonlat) {
