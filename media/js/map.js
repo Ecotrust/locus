@@ -358,13 +358,16 @@ function getMaptiaStoryPoints() {
         }
 
         if (current_locus && current_locus.containsPoint(new_point)) {
+            var date = Date.parse(maptia[i].created_at).toString("HH:mm tt MMM dd, yyyy");
+
+                //03:53 PM Mar 25, 2013
 
             feature = new OpenLayers.Feature.Vector(
                 new_point,
                 {
                     'storyPoint': {
                         'content': maptia[i].description,
-                        'date': maptia[i].created_at,
+                        'date': date,
                         'flag_reason': null,
                         'flagged': false,
                         'id': 'maptia-'+ maptia[i].id.toString(),

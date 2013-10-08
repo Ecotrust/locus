@@ -8,7 +8,6 @@ function init() {
 
     // Activates knockout.js
     ko.applyBindings(new AppViewModel());
-    // getMaptiaStoryPoints();
 
 }
 
@@ -110,9 +109,23 @@ function AppViewModel() {
     var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
     map.locusLayer.addFeatures([userLocusVector]);
 
+    function sortStoryFeed(a,b) {
+        var a_date = Date.parse(a.data.storyPoint.date);
+        var b_date = Date.parse(b.data.storyPoint.date);
+
+        if (a_date < b_date) {
+            return 1;
+        }
+        if (a_date > b_date) {
+            return -1;
+        }
+        return 0;
+    };
+
     this.getStoryFeeds = function() {
         app.communityJSON([]);
         app.newsJSON([]);
+        app.storyPoints().sort(sortStoryFeed);
         for (var i = 0; i < app.storyPoints().length; i++) {
             spoint = app.storyPoints()[i];
             if (spoint.data.storyPoint.source_type == 'user') {
