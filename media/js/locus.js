@@ -630,6 +630,7 @@ function cleanOldSelected(){
 
 function onPopupClose(evt) {
     map.removePopup(selectedFeature.popup);
+    unselectSelectedFeature(selectedFeature);
 }
 
 function onNewPopupClose(evt) {

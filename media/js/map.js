@@ -1,6 +1,11 @@
 var map;
 // var map.storyPointLayer, map.locusLayer, map.selectedLocusLayer, map.lociLayer, map.friendLayer, selectStoryPointControl, selectedFeature, selectLocusControl, selectOtherLocusControl, drawPointControls, drawLocusControls;
 
+var icon_size = new OpenLayers.Size(21,25);
+var icon_offset = new OpenLayers.Pixel(-(icon_size.w/2), -icon_size.h);
+var news_icon = new OpenLayers.Icon('/media/img/news_icon.png', icon_size, icon_offset);
+var post_icon = new OpenLayers.Icon('/media/img/post_icon.png', icon_size, icon_offset);
+
 function mapInit() {
         
         
@@ -40,9 +45,44 @@ function mapInit() {
         attribution: "Sources: Esri, GEBCO, NOAA, National Geographic, DeLorme, NAVTEQ, Geonames.org, and others"
     });
     
-    
-    map.storyPointLayer = new OpenLayers.Layer.Vector("Story Point Layer");
-    
+    var storyPointStyleMap = new OpenLayers.StyleMap({
+        "select": new OpenLayers.Style({
+            fillOpacity: 1,
+            pointRadius: 10,
+            fillColor: "#FFFFFF"
+        })
+    });
+
+    var storyPointStyleMapLookup = {
+        'user': {
+            externalGraphic: "/media/img/post_icon.png",
+            fillOpacity: 1,
+            pointRadius: 10,
+            fillColor: "#00FF00"
+        },
+        'news': {
+            externalGraphic: "/media/img/news_icon.png",
+            fillOpacity: 1,
+            pointRadius: 10,
+            fillColor: "#0000FF"
+        },
+        'maptia': {
+            externalGraphic: "/media/img/news_icon.png",
+            fillOpacity: 1,
+            pointRadius: 10,
+            fillColor: "#FF0000"
+        }
+    };
+
+    storyPointStyleMap.addUniqueValueRules("default", "source_type", storyPointStyleMapLookup);
+
+    map.storyPointLayer = new OpenLayers.Layer.Vector(
+        "Story Point Layer", 
+        {
+            styleMap: storyPointStyleMap
+        }
+    );
+
     map.storyPointLayer.events.on({
         "featureadded": this.onPostAdd,
         "featureselected": this.onPointSelect,
@@ -58,7 +98,7 @@ function mapInit() {
             strokeColor: "#00ee00"
         })
     });
-    
+
     map.lociLayer = new OpenLayers.Layer.Vector("Loci Layer");
 
     map.friendLayer = new OpenLayers.Layer.Vector("Friend Layer");
@@ -314,7 +354,8 @@ function getStoryPoints() {
         });
         app.storyPoints(geojson_format.read(result));
         map.storyPointLayer.events.remove("featureadded");
-        map.storyPointLayer.addFeatures(geojson_format.read(result));
+        map.result_features = geojson_format.read(result);
+        map.storyPointLayer.addFeatures(map.result_features);
         getMaptiaStoryPoints();
         app.getStoryFeeds();
         map.storyPointLayer.events.on({"featureadded": onPostAdd});
@@ -360,8 +401,6 @@ function getMaptiaStoryPoints() {
         if (current_locus && current_locus.containsPoint(new_point)) {
             var date = Date.parse(maptia[i].created_at).toString("HH:mm tt MMM dd, yyyy");
 
-                //03:53 PM Mar 25, 2013
-
             feature = new OpenLayers.Feature.Vector(
                 new_point,
                 {
@@ -377,7 +416,8 @@ function getMaptiaStoryPoints() {
                         'source_type': 'maptia',
                         'source_user_id': null,
                         'title': maptia[i].name
-                    }
+                    },
+                    'source_type': 'maptia'
                 }
             );
             features.push(feature);
@@ -438,4 +478,8 @@ function defaultCallback(result) {
         app.locus_type(null);
         gen_id = null;
     }
+};
+
+function unselectSelectedFeature(selectedFeature) {
+    selectStoryPointControl.unselect(selectedFeature);
 };

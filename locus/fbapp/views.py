@@ -139,7 +139,8 @@ def set_storypoints(request):
                 'isPerm': point.is_permanent,
                 'flagged': point.flagged,
                 'flag_reason': point.flag_reason
-            }
+            },
+            'source': point.source_type
         }
 
         return HttpResponse(simplejson.dumps({
@@ -276,7 +277,8 @@ def get_storypoints(request):
                     'isPerm': point.is_permanent,
                     'flagged': point.flagged,
                     'flag_reason': point.flag_reason
-                }
+                },
+                'source_type': point.source_type
             }
         }
         features.append(feature)
