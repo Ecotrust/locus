@@ -386,6 +386,7 @@ function AppViewModel() {
         var feature = map.selectedLocusLayer.features[0];
         if (feature) {
             var geometry = feature.geometry.toString();
+            app.focusLocus(feature.geometry);
         } else {
             var geometry = "";
         }
