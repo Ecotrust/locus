@@ -144,16 +144,19 @@ function AppViewModel() {
         if (opt == 'Mine'){
             map.locusLayer.setVisibility(true);
             map.storyPointLayer.setVisibility(true);
+            map.zoomToExtent(map.locusLayer.getDataExtent());
         } else {
             map.locusLayer.setVisibility(false);
             map.storyPointLayer.setVisibility(false);
         }
         if (opt == 'Friend'){
             map.friendLayer.setVisibility(true);
+            map.zoomToExtent(map.friendLayer.getDataExtent());
         } else {
             map.friendLayer.setVisibility(false);
         }if (opt == 'All'){
             map.lociLayer.setVisibility(true);
+            map.zoomToExtent(map.lociLayer.getDataExtent());
         } else {
             map.lociLayer.setVisibility(false);
         }
