@@ -354,7 +354,9 @@ function AppViewModel() {
 
     this.clearStoryPoints = function() {
         map.storyPointLayer.removeAllFeatures();
-        getStoryPoints();
+        if (this.userID() != 'None') {
+            getStoryPoints();
+        }
     };
 
     this.drawing.subscribe(function(bool) {
@@ -483,7 +485,9 @@ function AppViewModel() {
     }
 
     this.friendsList = ko.observable();
-    getFriendsList();
+    if (this.userID() != 'None') {
+        getFriendsList();
+    }
   
     this.usersList = ko.observable();
 
@@ -870,6 +874,18 @@ function processFriendsList(fb_result) {
                 getFriendLoci(data.user_friends);
             }
         })
+    } else {
+        if (fb_result.error.type == "OAuthException" && fb_result.error.code == 190) {
+            $.ajax({
+                url: '/accounts/logout/',
+                type: 'POST',
+                data: {},
+                success: function(data){
+                    window.location.href = "/";
+                    alert('Your Facebook session has timed out. Please log in again.');
+                }
+            })
+        }
     }
 }
 
