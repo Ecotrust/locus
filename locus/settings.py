@@ -82,4 +82,14 @@ SERVER_SRID = 900913
 
 STARSPAN_REMOVE_TMP = False
 
+APP_ID = 551234671609174
+
+SOCIALACCOUNT_PROVIDERS = {
+     'facebook':
+     { 'SCOPE': ['email', 'publish_stream'],
+       'AUTH_PARAMS': { 'auth_type': 'reauthenticate' },
+       'METHOD': 'js_sdk'
+     }
+ }
+
 from settings_local import *
