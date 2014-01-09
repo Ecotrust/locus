@@ -132,19 +132,7 @@ class install {
     }
 
     postgresql::database { $dbname:
-      owner => "${appuser}",
-    }
-
-    exec { "load postgis":
-      command => "/usr/bin/psql -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql -d ${dbname}",
-      user => "${appuser}",
-      require => Postgresql::Database[$dbname]
-    }
-
-    exec { "load spatialrefs":
-      command => "/usr/bin/psql -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql -d ${dbname}",
-      user => "${appuser}",
-      require => Postgresql::Database[$dbname]
+      owner => "${appuser}"
     }
         
     python::venv::isolate { "/usr/local/venv/${projectname}":
@@ -154,7 +142,6 @@ class install {
     file { "settings_local.py":
       path => "${sourcepath}/${projectname}/settings_local.py",
       content => template("settings_vagrant.py")
-    #  require => Exec['load spatialrefs template1']
     }
 
     file { "go":
@@ -169,12 +156,13 @@ class install {
       path => "/etc/supervisor/conf.d/celeryd.conf",
       content => template("celeryd.conf")
     }
-    
-    file { "fabfile.py":
-      path => "${sourcepath}/fabfile.py",
-      content => template("fabfile.py")
-    }
 
+    file { "epsg":
+      path => "/usr/share/proj/epsg",
+      content => template("epsg"),
+      require => Package['libgdal1-dev']
+    }
+    
 }
 
 include install

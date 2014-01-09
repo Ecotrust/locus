@@ -4,13 +4,6 @@
 * VirtualBox
 * Fabric
 
-# Initial setup
-
-```
-Edit files/vagrant_settings.py to fit your needs
-
-```
-
 # Running 
 
 ```
