@@ -76,8 +76,10 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-
 VECTOR_DATA_LOCATION = '/usr/local/apps/locus/data/shapefiles/'
+
+THIESSEN_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/bioreg_2_polygon.shp'
+BIOREGION_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/generated_bioregions_2.shp'
 
 # SERVER_SRID = 4326
 # SERVER_SRID = 3857

@@ -42,7 +42,14 @@ run /usr/local/apps/locus/scripts/map_report_vectors.py (this will take some tim
 
 Loading Bioregions
 ```
-
+Get the bioregion and thiessen data
+	Ecotrusters: gis/projects/projects2013/Locus/DEMO.tar.gz
+unzip to /usr/local/apps/locus/media
+	result: /usr/local/apps/locus/media/DEMO/...
+Set your local settings to include [this should be done by default]:
+	THIESSEN_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/bioreg_2_polygon.shp'
+	BIOREGION_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/generated_bioregions_2.shp'
+run python /usr/local/apps/locus/scripts/map_thiessen.py [untested]
 ```
 
 # Running production/stage server

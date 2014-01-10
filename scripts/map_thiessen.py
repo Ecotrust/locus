@@ -1,5 +1,3 @@
-THIESSEN_LOCATION = '../media/DEMO/geo/bioreg_2_polygon.shp'
-BIOREGION_LOCATION = '../media/DEMO/geo/generated_bioregions_2.shp'
 BR_LAYER_SRID = 4326
 APP_SRID = 3857
 BIOREGION_US_ID = 2
@@ -21,13 +19,13 @@ from fbapp.models import ThiessenPolygon
 ThiessenPolygon.objects.all().delete()
 
 tp_mapping = {'base_id': 'BIOREG_2_','geometry': 'MULTIPOLYGON'}
-tp_lm = LayerMapping(ThiessenPolygon, THIESSEN_LOCATION, tp_mapping)
+tp_lm = LayerMapping(ThiessenPolygon, settings.THIESSEN_LOCATION, tp_mapping)
 tp_lm.save(verbose=True)
 tp_count = ThiessenPolygon.objects.all().count()
 print "Thiessen Polygon Count = %s" % tp_count
 
 from django.contrib.gis.gdal import DataSource
-ds = DataSource(BIOREGION_LOCATION)   
+ds = DataSource(setting.BIOREGION_LOCATION)   
 layer = ds[0]
 
 for feature in layer:
