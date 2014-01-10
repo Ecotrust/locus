@@ -63,8 +63,14 @@ def init():
     """ Initialize the forest planner application """
     _install_requirements()
     _install_django()
+    _install_starspan()
 
 def runserver():
     """ Run the django dev server on port 8000 """
     run('cd %(app_dir)s && %(venv)s/bin/python manage.py runserver 0.0.0.0:8000' % vars)
 
+def _install_starspan():
+    run('mkdir -p ~/src && cd ~/src && \
+        if [ ! -d "starspan" ]; then git clone git://github.com/Ecotrust/starspan.git; fi && \
+        cd starspan && \
+        if [ ! `which starspan` ]; then ./configure && make && sudo make install; fi')
