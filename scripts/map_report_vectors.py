@@ -11,7 +11,7 @@ from django.contrib.gis.utils import LayerMapping
 # Summary
 from analysis.models import Language, EcoRegions, LastWild, MarineRegions, Watersheds, WorldMask, UrbanExtent
 
-layers = '//terra/gis/projects/projects2011/BigIdea/BioregionTool/data/Reports/'
+layers = settings.VECTOR_DATA_LOCATION
 
 print "Importing Language Layer"
 Language.objects.all().delete()
@@ -33,7 +33,7 @@ lang_mapping = {
 }
 lang_lm = LayerMapping(
     Language, 
-    layers + 'summary/language/final/lang_multi.shp', 
+    layers + 'language/final/lang_multi.shp', 
     lang_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -55,7 +55,7 @@ ecoreg_mapping = {
 }
 ecoreg_lm = LayerMapping(
     EcoRegions, 
-    layers + 'summary/Terr_eco_mw.shp', 
+    layers + 'ecoregion/Terr_eco_mw.shp', 
     ecoreg_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -76,7 +76,7 @@ lw_mapping = {
 }
 lw_lm = LayerMapping(
     LastWild, 
-    layers + 'summary/lstwild/final/lstwild_multi.shp', 
+    layers + 'lstwild/final/lstwild_multi.shp', 
     lw_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -95,7 +95,7 @@ mr_mapping = {
 }
 mr_lm = LayerMapping(
     MarineRegions, 
-    layers + 'summary/mar_eco_mw2.shp', 
+    layers + 'marineregion/mar_eco_mw2.shp', 
     mr_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -113,7 +113,7 @@ ws_mapping = {
 }
 ws_lm = LayerMapping(
     Watersheds, 
-    layers + 'summary/MJR_Basins.shp', 
+    layers + 'watershed/MJR_Basins.shp', 
     ws_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -129,7 +129,7 @@ wm_mapping = {
 }
 wm_lm = LayerMapping(
     WorldMask, 
-    layers + 'summary/worldMask_mw.shp', 
+    layers + 'worldmask/worldMask_mw.shp', 
     wm_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -145,7 +145,7 @@ ue_mapping = {
 }
 ue_lm = LayerMapping(
     UrbanExtent, 
-    layers + 'summary/urb_extnt_mw.shp', 
+    layers + 'urbanextent/urb_extnt_mw.shp', 
     ue_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -176,7 +176,7 @@ el_mapping = {
 }
 el_lm = LayerMapping(
     ExtinctLanguages, 
-    layers + 'vulnerability/lang_ext_mw.shp', 
+    layers + 'extinctlang/lang_ext_mw.shp', 
     el_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -192,7 +192,7 @@ sr1_mapping = {
 }
 sr1_lm = LayerMapping(
     SeaRise1m, 
-    layers + 'vulnerability/resample_1m_nn_no_simp.shp', 
+    layers + 'searise1/resample_1m_nn_no_simp.shp', 
     sr1_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -208,7 +208,7 @@ sr3_mapping = {
 }
 sr3_lm = LayerMapping(
     SeaRise3m, 
-    layers + 'vulnerability/resample_3m_nn_no_simp.shp', 
+    layers + 'searise3/resample_3m_nn_no_simp.shp', 
     sr3_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -224,7 +224,7 @@ sr6_mapping = {
 }
 sr6_lm = LayerMapping(
     SeaRise6m, 
-    layers + 'vulnerability/resample_6m_nn_no_simp.shp', 
+    layers + 'searise6/resample_6m_nn_no_simp.shp', 
     sr6_mapping, 
     transform=False, 
     source_srs=54009, 
@@ -240,7 +240,7 @@ pov_mapping = {
 }
 pov_lm = LayerMapping(
     PovertyNoData, 
-    layers + 'vulnerability/uw5_nodata_mask/uw5_nodata.shp', 
+    layers + 'poverty/uw5_nodata.shp', 
     pov_mapping, 
     transform=False, 
     source_srs=54009, 

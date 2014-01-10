@@ -45,10 +45,10 @@ class ReportCache(models.Model):
         super(ReportCache, self).save(*args, **kwargs)
  
 class Language(models.Model):
-    nam_label = models.CharField(max_length=40)
-    name_prop = models.CharField(max_length=40, null=True, blank=True)
-    name2 = models.CharField(max_length=40, null=True, blank=True)
-    nam_ansi = models.CharField(max_length=40, null=True, blank=True)
+    nam_label = models.CharField(max_length=225)
+    name_prop = models.CharField(max_length=225, null=True, blank=True)
+    name2 = models.CharField(max_length=225, null=True, blank=True)
+    nam_ansi = models.CharField(max_length=225, null=True, blank=True)
     cnt = models.CharField(max_length=8, null=True, blank=True)
     c1 = models.CharField(max_length=33, null=True, blank=True)
     pop = models.CharField(max_length=86, null=True, blank=True)
@@ -103,10 +103,10 @@ class WorldMask(models.Model):
     objects = models.GeoManager()    
     
 class ExtinctLanguages(models.Model):
-    nam_label = models.CharField(max_length=40)
-    name_prop = models.CharField(max_length=40)
-    name2 = models.CharField(max_length=40)
-    nam_ansi = models.CharField(max_length=40)
+    nam_label = models.CharField(max_length=225)
+    name_prop = models.CharField(max_length=225)
+    name2 = models.CharField(max_length=225)
+    nam_ansi = models.CharField(max_length=225)
     cnt = models.CharField(max_length=8)
     c1 = models.CharField(max_length=33)
     pop = models.CharField(max_length=86, null=True, blank=True)
