@@ -76,6 +76,9 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+
+VECTOR_DATA_LOCATION = '/usr/local/apps/locus/data/shapefiles/'
+
 # SERVER_SRID = 4326
 # SERVER_SRID = 3857
 SERVER_SRID = 900913
