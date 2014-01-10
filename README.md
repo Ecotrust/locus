@@ -31,7 +31,7 @@ Get the vector data
 	Ecotrusters: gis/projects/projects2013/Locus/vector_data.tar.gz
 put it in locus/data [or where VECTOR_DATA_LOCATION points in settings_local.py]
 	result: apps/locus/data/shapefiles...
-run 
+run locus/scripts/map_report_vectors.py (this will take some time).
 
 ```
 
