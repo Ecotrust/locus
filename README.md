@@ -49,7 +49,9 @@ unzip to /usr/local/apps/locus/media
 Set your local settings to include [this should be done by default]:
 	THIESSEN_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/bioreg_2_polygon.shp'
 	BIOREGION_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/generated_bioregions_2.shp'
-run python /usr/local/apps/locus/scripts/map_thiessen.py [untested]
+Load the user and some initial bioregions:
+	python manage.py loaddata fbapp/fixtures/gen_bioreg.json
+run python /usr/local/apps/locus/scripts/map_thiessen.py
 ```
 
 # Running production/stage server

@@ -1,6 +1,5 @@
 BR_LAYER_SRID = 4326
 APP_SRID = 3857
-BIOREGION_US_ID = 2
 
 from django.core.management import setup_environ
 import os
@@ -11,6 +10,9 @@ import settings
 setup_environ(settings)
 
 from django.contrib.gis.utils import LayerMapping
+
+from fbapp.models import User
+user_id = User.objects.get(username='generatedBioregion').id
 
 from fbapp.models import GeneratedBioregion
 GeneratedBioregion.objects.all().delete()
@@ -25,7 +27,7 @@ tp_count = ThiessenPolygon.objects.all().count()
 print "Thiessen Polygon Count = %s" % tp_count
 
 from django.contrib.gis.gdal import DataSource
-ds = DataSource(setting.BIOREGION_LOCATION)   
+ds = DataSource(settings.BIOREGION_LOCATION)   
 layer = ds[0]
 
 for feature in layer:
@@ -41,7 +43,6 @@ for feature in layer:
     name = feature['BIOREG_2_'].as_string()    
     base_id = feature['BIOREG_2_'].as_int()
     size_class = feature['SIZE_CLASS'].as_string()
-    user_id = BIOREGION_US_ID
     final_geom.srid = BR_LAYER_SRID
     final_geom.transform(APP_SRID)
     try:
