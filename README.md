@@ -34,7 +34,7 @@ Loading vector data for bioregion reports
 ```
 Get the vector data
 	Ecotrusters: gis/projects/projects2013/Locus/vector_data.tar.gz
-put it in /usr/local/apps/locus/data [or where VECTOR_DATA_LOCATION points in settings_local.py]
+unzip to /usr/local/apps/locus/data [or where VECTOR_DATA_LOCATION points in settings_local.py]
 	result: /usr/local/apps/locus/data/shapefiles/...
 run /usr/local/apps/locus/scripts/map_report_vectors.py (this will take some time).
 
