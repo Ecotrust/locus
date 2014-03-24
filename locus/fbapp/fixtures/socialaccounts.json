@@ -1,0 +1,39 @@
+[
+  {
+    "pk": 1, 
+    "model": "socialaccount.socialapp", 
+    "fields": {
+      "name": "Facebook", 
+      "sites": [
+        1
+      ], 
+      "secret": "c6f596a69dfa6c0ff6b108e334720681", 
+      "client_id": "551234671609174", 
+      "key": "", 
+      "provider": "facebook"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "socialaccount.socialaccount", 
+    "fields": {
+      "uid": "19709699", 
+      "last_login": "2014-03-18T10:22:22.204", 
+      "user": 1, 
+      "provider": "facebook", 
+      "extra_data": "{\"username\": \"ryan.hodges.336\", \"bio\": \"Ryan: n. One who wastes too much time doing stuff, rather than getting stuff done.\\r\\n      2) n. A self-proclaimed \\\"Doctor of Whateverism.\\\"\\r\\n      3) n. A turnip, contrary to popular belief.\\r\\n      4) n. A discoverer of words.\", \"first_name\": \"Ryan\", \"last_name\": \"Hodges\", \"verified\": true, \"name\": \"Ryan Hodges\", \"locale\": \"en_US\", \"hometown\": {\"id\": \"107946615892412\", \"name\": \"Glide, Oregon\"}, \"work\": [{\"position\": {\"id\": \"307529069393411\", \"name\": \"Applications developer\"}, \"start_date\": \"2009-11-16\", \"employer\": {\"id\": \"129982267334\", \"name\": \"Ecotrust\"}}, {\"position\": {\"id\": \"109542932398298\", \"name\": \"Software Engineer\"}, \"start_date\": \"2008-08-06\", \"end_date\": \"2009-11-01\", \"employer\": {\"id\": \"436826960480\", \"name\": \"Infosys\"}}, {\"position\": {\"id\": \"108703555821060\", \"name\": \"Intern\"}, \"with\": [{\"id\": \"582472042\", \"name\": \"Braden Kelley\"}], \"start_date\": \"2007-04-01\", \"end_date\": \"2007-09-01\", \"employer\": {\"id\": \"168597536563870\", \"name\": \"IBM\"}}], \"sports\": [{\"id\": \"103095839731323\", \"name\": \"Roller derby\"}], \"quotes\": \"\\\"We are not an endangered species ourselves yet, but this is not for lack of trying.\\\"\\r\\n--Douglas Adams (Last Chance to See...)\\r\\n\\r\\n\\\"This is my timey-wimey detector. It goes ding when there's stuff. Also, it can boil an egg at 30 paces, whether you want it to or not, actually, so I've learned to stay away from hens. It's not pretty when they blow.\\\"\\r\\n--Just \\\"The Doctor\\\"\\r\\n\\r\\n\\\"Today's weirdness is tomorrow's reason why.\\\"\\r\\n-- Hunter S. Thompson\\r\\n\\r\\n\\\"I'd rather have a bottle in front of me than a frontal lobotomy.\\\"\\r\\n-Tom Waits\\r\\n\\r\\n\\\"...and girls can't do cool stuff\\r\\nlike gay man sex\\r\\nplease quote me on that\\\"\\r\\n-Rice J.\\r\\n\\r\\n\\\"He who knows others is wise.  He who knows himself is enlightened.\\\"\\r\\n~Lao Tzu\\r\\n\\r\\n\\\"How many nuns would a nunchuck chuck if a nunchuck could chuck nuns?\\\"\\r\\n~Jen\\r\\n\\r\\n\\\"Whatever happens, happens.\\\"\\r\\n-Spike Spiegle (my personal mantra)\", \"link\": \"https://www.facebook.com/ryan.hodges.336\", \"location\": {\"id\": \"112548152092705\", \"name\": \"Portland, Oregon\"}, \"favorite_athletes\": [{\"id\": \"108987985844919\", \"name\": \"Jamaican Bobsled Team\"}], \"gender\": \"male\", \"id\": \"19709699\", \"timezone\": -8, \"education\": [{\"school\": {\"id\": \"113124318701465\", \"name\": \"Glide High School\"}, \"type\": \"High School\"}, {\"school\": {\"id\": \"38992348286\", \"name\": \"Oregon State University\"}, \"type\": \"College\", \"concentration\": [{\"id\": \"104076956295773\", \"name\": \"Computer Science\"}], \"year\": {\"id\": \"141778012509913\", \"name\": \"2008\"}}], \"updated_time\": \"2013-11-12T21:31:52+0000\", \"email\": \"joyrun@gmail.com\", \"favorite_teams\": [{\"id\": \"34196174440\", \"name\": \"Rat City Roller Girls\"}, {\"id\": \"182844932235\", \"name\": \"Portland Timbers\"}, {\"id\": \"25495618126\", \"name\": \"Oregon State Beavers\"}, {\"id\": \"24173561963\", \"name\": \"Rose City Rollers\"}]}", 
+      "date_joined": "2014-01-09T14:13:11.743"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "socialaccount.socialtoken", 
+    "fields": {
+      "app": 1, 
+      "token_secret": "", 
+      "expires_at": null, 
+      "account": 1, 
+      "token": "CAAH1WFLKBVYBAAhjr9TYuesnO8UqRXZA9BZAmePZBXFUUsNOvbntZAL3VxQEZBJr8ZAbyYQ8JuyveZBVo3ZA85MMiMA7dMuVZBYEfZAOto1qUG7L88RZCeznZC4WwigX8yZBQXEw67CQacD1MkpMZBkyKSer2s4SfoylgLu0YtolQnTiDzleLKvZAlwRvyK5NeFCgnnQGw8WmlkXGvZCgbjOkeZA7N5tJrocMEaZBX8jAIHxPHF6RGegZDZD"
+    }
+  }
+]
