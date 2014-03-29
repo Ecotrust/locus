@@ -97,4 +97,4 @@ SOCIALACCOUNT_PROVIDERS = {
      }
  }
 
-from settings_local import *
+from local_settings import *

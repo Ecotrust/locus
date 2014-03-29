@@ -3,33 +3,38 @@
 
 Vagrant::Config.run do |config|
 
-  # config.vm.define "dev" do |dev|
-  #   dev.vm.box = "precise64"
-  #   dev.vm.box_url = "http://files.vagrantup.com/precise64.box"
-  #   dev.vm"virtualbox" do |v|
-  #       v.customize[
-  #           'modifyvm', :id,
-  #           '--name', node[:hostname],
-  #           "--memory", 768,
-  #           "--cpus", 2
-  #         ]
-  #   end
-  #   # ssh defaults to 2222
-  #   dev.vm.forward_port 80, 8080
-  #   dev.vm.forward_port 8000, 8000
-  #   dev.vm.share_folder "v-app", "/usr/local/apps/locus", "./"
-  # end
+  config.vm.define "dev" do |dev|
+    # dev.vm.box = "precise64"
+    # dev.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+    ### Get custom box with most updates already installed ###
+    dev.vm.box = "precise64-custom"
+    dev.vm.box_url = "http://labs.ecotrust.org/vagrant_boxes/precise64-custom.box"
+
+    dev.vm"virtualbox" do |v|
+        v.customize[
+            'modifyvm', :id,
+            '--name', node[:hostname],
+            "--memory", 768,
+            "--cpus", 2
+          ]
+    end
+    # ssh defaults to 2222
+    dev.vm.forward_port 80, 8080
+    dev.vm.forward_port 8000, 8000
+    dev.vm.share_folder "v-app", "/usr/local/apps/locus", "./"
+  end
   
-  config.vm.box = "precise64"
+  # config.vm.box = "precise64"
 
-  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  # config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  config.vm.forward_port 22, 2224
-  config.vm.forward_port 80, 8084
-  config.vm.forward_port 8000, 8004
-  config.vm.forward_port 5432, 5434
+  # config.vm.forward_port 22, 2224
+  # config.vm.forward_port 80, 8084
+  # config.vm.forward_port 8000, 8004
+  # config.vm.forward_port 5432, 5434
 
-  config.vm.share_folder "v-app", "/usr/local/apps/locus", "./"
+  # config.vm.share_folder "v-app", "/usr/local/apps/locus", "./"
 
   # config.vm.provision :puppet do |puppet|
   #   puppet.manifests_path = "scripts/puppet/manifests"
@@ -60,6 +65,4 @@ Vagrant::Config.run do |config|
   #end
 
   # deployment done directly with ansible, see deploy/*.sh
-end
-
 end

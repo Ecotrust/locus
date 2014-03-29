@@ -9,7 +9,7 @@
     
   vars_files:
     - locus_vars.yml
-    - social_vars.yml
+    - local_vars.yml
 
   tasks:
 
@@ -50,8 +50,12 @@
         - liblapack-dev
         - libmapnik
         - libopenblas-dev
+        - libpq-dev
         - mapnik-utils
         - mercurial
+        - nginx-full
+        - postgresql
+        - postgresql-9.1-postgis
         - python-dev
         - python-gdal
         - python-mapnik
@@ -63,6 +67,7 @@
         - redis-server
         - subversion
         - supervisor
+        - sysstat
         - vim
 
     - name: create celery config for supervisor
@@ -87,11 +92,13 @@
         - uwsgi>=1.2.6
         - 'git+https://github.com/Ecotrust/madrona.git@master#egg=madrona'
         - 'git+git://github.com/perrygeo/TileStache.git@master#egg=TileStache'
+        - django-allauth
+        # - pyproj
 
     - name: git checkout
       when: manage_with_git
       git: repo=https://github.com/Ecotrust/locus.git
-           dest={{ project_path }}
+           dest={{ project_path }}/{{ app_name }}
            version=master
       tags: 
         - deploy
@@ -109,7 +116,7 @@
       template: src=templates/fix_perms.sql dest=/tmp/fix_perms.sql mode=0755
 
     - name: copy cleangeometry
-      copy: src=files/cleangeometry.sql dest=/tmp/cleangeometry.sql mode=0755
+      copy: src=templates/cleangeometry.sql dest=/tmp/cleangeometry.sql mode=0755
 
     - name: create db user  
       sudo_user: postgres
@@ -145,6 +152,11 @@
       sudo_user: postgres
       command: /usr/bin/psql -d {{ dbname }} -f /tmp/fix_perms.sql 
       when: postgres_create_returncode['changed']
+
+    - name: add srids
+      command: /usr/local/venv/locus/bin/python {{ project_path }}/{{ app_name }}/add_srid.py
+
+    # Peer authentication failed for user "vagrant" in next step. Hrm...
 
     - name: syncdb
       tags:
