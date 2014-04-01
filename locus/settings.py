@@ -37,14 +37,15 @@ AUTHENTICATION_BACKENDS = (
 )
 
 INSTALLED_APPS += (
-	'fbapp',
+    'fbapp',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'madrona.raster_stats',
     'analysis',
-    'django.contrib.humanize'
+    'django.contrib.humanize',
+    'django.contrib.staticfiles'
 )
 
 ACCOUNT_EMAIL_VERIFICATION = "none"

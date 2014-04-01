@@ -1,0 +1,16 @@
+[
+  {
+    "pk": 1, 
+    "model": "socialaccount.socialapp", 
+    "fields": {
+      "name": "Facebook", 
+      "sites": [
+        1
+      ], 
+      "secret": "{{facebook_app_secret}}", 
+      "client_id": "{{facebook_app_id}}", 
+      "key": "", 
+      "provider": "facebook"
+    }
+  }
+]

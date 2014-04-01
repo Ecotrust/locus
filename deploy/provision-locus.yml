@@ -171,7 +171,12 @@
     - name: install media
       tags:
         - deploy
-      command: "{{ manage }} install_media"
+      command: "{{ manage }} install_media -a"
+
+    - name: compress media
+      tags:
+        - deploy
+      command: "{{ manage }} synccompress"
 
     - name: site
       tags:
@@ -241,6 +246,12 @@
     - name: clear django cache
       when: newdata is defined and newdata
       command: "{{manage}} clear_cache"
+
+    - name: create social account fixture
+      template: src=templates/socialaccounts_template.json dest={{ project_path }}//{{ app_name }}/{{ module_name }}/fixtures/socialaccounts.json  owner={{ remote_user }} group={{ remote_user }} mode=0775
+
+    - name: load social account data
+      command: "{{manage}} loaddata {{ project_path }}//{{ app_name }}/{{ module_name }}/fixtures/socialaccounts.json"
 
     # handler to restart services (common include to provision.yml)
     # - name: supervisor

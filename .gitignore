@@ -1,6 +1,10 @@
 *.pyc
 locus/settings_local.py
+locus/local_settings.py
+locus/fbapp/local_settings.py
 locus/fbapp/fixtures/social.json
+locus/fbapp/fixtures/socialaccounts.json
+locus/fbapp/fixtures/socialaccounts_old.json
 settings_local.py
 *.log
 *.orig
