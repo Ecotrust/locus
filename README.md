@@ -9,16 +9,11 @@
 Initial setup
 
 	vagrant up 
-	vagrant provision
-	fab dev init
-
-Social app stuff
-
-	vagrant ssh
-	source /usr/local/venv/locus/bin/activate
-	cd /usr/local/apps/locus/locus
-	## From gis/projects/projects2013/Locus/keys
-	python manage.py loaddata fbapp/fixtures/social.json 
+	[Loading raster data for bioregion reports]
+	[Loading vector data for bioregion reports]
+	[Loading Bioregions]
+	ansible-playbook provision-locus.yml -i hosts
+	[create superuser]
 
 Loading raster data for bioregion reports
 ```
@@ -27,7 +22,6 @@ Get the raster data
 unzip to /usr/local/apps/locus/data 
 	result: /usr/local/apps/locus/data/reports/...
 	NOTE: This location is absolute. A different location will require many changes to the fixture.
-run python manage.py loaddata analysis/fixtures/rasters.json
 ```
 
 Loading vector data for bioregion reports
@@ -36,8 +30,6 @@ Get the vector data
 	Ecotrusters: gis/projects/projects2013/Locus/vector_data.tar.gz
 unzip to /usr/local/apps/locus/data [or where VECTOR_DATA_LOCATION points in settings_local.py]
 	result: /usr/local/apps/locus/data/shapefiles/...
-run /usr/local/apps/locus/scripts/map_report_vectors.py (this will take some time).
-
 ```
 
 Loading Bioregions
@@ -51,7 +43,13 @@ Set your local settings to include [this should be done by default]:
 	BIOREGION_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/generated_bioregions_2.shp'
 Load the user and some initial bioregions:
 	python manage.py loaddata fbapp/fixtures/gen_bioreg.json
-run python /usr/local/apps/locus/scripts/map_thiessen.py
+```
+Create Superuser
+```
+This is a django app - simply: 
+- ssh into the machine (`vagrant ssh`)
+- get into your virtual environment (`source go`)
+- `python manage.py createsuperuser` and follow the prompts.
 ```
 
 # Running production/stage server

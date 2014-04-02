@@ -92,8 +92,7 @@
         - uwsgi>=1.2.6
         - 'git+https://github.com/Ecotrust/madrona.git@master#egg=madrona'
         - 'git+git://github.com/perrygeo/TileStache.git@master#egg=TileStache'
-        - django-allauth
-        # - pyproj
+        - django-allauth==0.10.1
 
     - name: git checkout
       when: manage_with_git
@@ -203,9 +202,6 @@
     - name: stupid uwsgi hack
       file: path=/usr/lib/uwsgi/plugins state=directory
 
-    #- name: template dir writable
-    #  file: path={{ project_path }}/marxan_output/template owner={{ remote_user }} state=directory mode=755
-
     - name: uwsgi init script to use venv version of uwsgi
       notify: restart uwsgi
       template: src=templates/uwsgi.init.j2 dest=/etc/init.d/uwsgi owner=root group=root mode=0755
@@ -252,6 +248,52 @@
 
     - name: load social account data
       command: "{{manage}} loaddata {{ project_path }}//{{ app_name }}/{{ module_name }}/fixtures/socialaccounts.json"
+
+    ###
+    #     Get the raster data
+    #         Ecotrusters: gis/projects/projects2013/Locus/raster_data.tar.gz
+    #     unzip to /usr/local/apps/locus/data 
+    #         result: /usr/local/apps/locus/data/reports/...
+    #         NOTE: This location is absolute. A different location will require many changes to the fixture.
+    #     run python manage.py loaddata analysis/fixtures/rasters.json
+
+    #     Get the vector data
+    #         Ecotrusters: gis/projects/projects2013/Locus/vector_data.tar.gz
+    #     unzip to /usr/local/apps/locus/data [or where VECTOR_DATA_LOCATION points in settings_local.py]
+    #         result: /usr/local/apps/locus/data/shapefiles/...
+    #     run /usr/local/apps/locus/scripts/map_report_vectors.py (this will take some time).
+    ###
+
+    - name: copy report data
+      copy: src={{ data_src }} dest={{ project_path }}/data
+
+    - name: install raster report data
+      command: "{{ manage }} loaddata {{project_path}}/{{ app_name }}/analysis/fixtures/rasters.json"
+
+    - name: install vector report data
+      command: "/usr/local/venv/locus/bin/python {{ project_path }}/scripts/map_report_vectors.py"
+
+    ###
+    # Get the bioregion and thiessen data
+    #     Ecotrusters: gis/projects/projects2013/Locus/DEMO.tar.gz
+    # unzip to /usr/local/apps/locus/media
+    #     result: /usr/local/apps/locus/media/DEMO/...
+    # Set your local settings to include [this should be done by default]:
+    #     THIESSEN_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/bioreg_2_polygon.shp'
+    #     BIOREGION_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/generated_bioregions_2.shp'
+    # Load the user and some initial bioregions:
+    #     python manage.py loaddata fbapp/fixtures/gen_bioreg.json
+    # run python /usr/local/apps/locus/scripts/map_thiessen.py
+    ###
+
+    - name: copy bioregion shapes
+      copy: src={{ region_src }} dest={{ project_path }}/media
+
+    - name: load bioregion shapes
+      command: "{{ manage }} loaddata {{ project_path }}/{{ app_name }}/{{ module_name }}/fixtures/gen_bioreg.json"
+
+    - name: map thiessen polygons
+      command: "/usr/local/venv/locus/bin/python {{ project_path }}/scripts/map_thiessen.py"
 
     # handler to restart services (common include to provision.yml)
     # - name: supervisor
