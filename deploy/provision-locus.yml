@@ -249,6 +249,12 @@
     - name: load social account data
       command: "{{manage}} loaddata {{ project_path }}//{{ app_name }}/{{ module_name }}/fixtures/socialaccounts.json"
 
+    - name: get starspan
+      command: 'git clone git://github.com/Ecotrust/starspan.git /tmp/starspan creates=/tmp/starspan'
+
+    - name: build starspan
+      shell: "cd /tmp/starspan && if [ ! `which starspan` ]; then ./configure && make && sudo make install; fi"
+
     ###
     #     Get the raster data
     #         Ecotrusters: gis/projects/projects2013/Locus/raster_data.tar.gz
@@ -294,6 +300,8 @@
 
     - name: map thiessen polygons
       command: "/usr/local/venv/locus/bin/python {{ project_path }}/scripts/map_thiessen.py"
+
+
 
     # handler to restart services (common include to provision.yml)
     # - name: supervisor
