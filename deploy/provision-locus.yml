@@ -70,10 +70,9 @@
         - sysstat
         - vim
 
-    - name: create celery config for supervisor
-      notify: restart supervisor
-      template: src=templates/celeryd.cfg dest=/etc/supervisor/conf.d/celeryd-{{ app_name }}.conf owner=root group={{ remote_user }} mode=0644
-      #copy: src=files/foo.conf dest=/etc/file.conf owner=bin group=wheel mode=0644
+    # - name: create celery config for supervisor
+    #   notify: restart supervisor
+    #   template: src=templates/celeryd.cfg dest=/etc/supervisor/conf.d/celeryd-{{ app_name }}.conf owner=root group={{ remote_user }} mode=0644
 
     - name: Install python requirements
       pip: name={{item}} state=present virtualenv={{ venv_path }} virtualenv_site_packages=yes
@@ -97,7 +96,7 @@
     - name: git checkout
       when: manage_with_git
       git: repo=https://github.com/Ecotrust/locus.git
-           dest={{ project_path }}/{{ app_name }}
+           dest={{ project_path }}
            version=master
       tags: 
         - deploy
@@ -271,12 +270,15 @@
     ###
 
     - name: copy report data
+      when: data_not_loaded
       copy: src={{ data_src }} dest={{ project_path }}/data
 
     - name: install raster report data
+      when: data_not_loaded
       command: "{{ manage }} loaddata {{project_path}}/{{ app_name }}/analysis/fixtures/rasters.json"
 
     - name: install vector report data
+      when: data_not_loaded
       command: "/usr/local/venv/locus/bin/python {{ project_path }}/scripts/map_report_vectors.py"
 
     ###
@@ -293,15 +295,20 @@
     ###
 
     - name: copy bioregion shapes
+      when: data_not_loaded
       copy: src={{ region_src }} dest={{ project_path }}/media
 
     - name: load bioregion shapes
+      when: data_not_loaded
       command: "{{ manage }} loaddata {{ project_path }}/{{ app_name }}/{{ module_name }}/fixtures/gen_bioreg.json"
 
     - name: map thiessen polygons
+      when: data_not_loaded
       command: "/usr/local/venv/locus/bin/python {{ project_path }}/scripts/map_thiessen.py"
 
-
+    - name: load storypoints
+      when: load_demo_data
+      command: "{{ manage }} loaddata {{ project_path }}/media/js/demo_data.js"
 
     # handler to restart services (common include to provision.yml)
     # - name: supervisor
@@ -329,8 +336,6 @@
     #     - restart uwsgi
 
   handlers: 
-    - name: restart supervisor
-      action: service name=supervisor state=restarted
 
     # - name: restart celery
     #   action: supervisorctl name=celeryd-{{ app_name }} state=restarted
@@ -341,5 +346,7 @@
     - name: restart uwsgi
       action: service name=uwsgi state=restarted
 
+    - name: restart supervisor
+      action: service name=supervisor state=restarted
 
     #https://github.com/Ecotrust/cogs-priorities/blob/master/deploy/provision.yml

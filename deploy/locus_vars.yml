@@ -12,6 +12,7 @@ mapkey: "map_key"
 appadmin: "Madrona"
 adminemail: "madrona@ecotrust.org"
 venv_path: "/usr/local/venv/locus"
-project_path: "/usr/local/apps/locus"
+apps_path: "/usr/local/apps/"
+project_path: "{{ apps_path }}locus"
 domain: 'localhost'
 manage: "{{ venv_path }}/bin/python {{ project_path }}/{{ app_name }}/manage.py"
