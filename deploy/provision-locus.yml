@@ -1,6 +1,6 @@
 ---
 - name: initial setup of Locus tool
-  hosts: all
+  hosts: dev
   connection: ssh
   remote_user: "{{ remote_user }}"
   sudo: yes
@@ -68,6 +68,7 @@
         - subversion
         - supervisor
         - sysstat
+        - uwsgi
         - vim
 
     # - name: create celery config for supervisor
