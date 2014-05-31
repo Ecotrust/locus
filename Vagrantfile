@@ -37,10 +37,10 @@ Vagrant::Config.run do |config|
   # config.vm.share_folder "v-app", "/usr/local/apps/locus", "./"
 
   # config.vm.provision :puppet do |puppet|
-  #   puppet.manifests_path = "scripts/puppet/manifests"
-  #   puppet.manifest_file  = "locus.pp"
-  #   puppet.module_path = "scripts/puppet/modules"
-  #   puppet.options = ["--templatedir","/vagrant/scripts/puppet/manifests/files"]
+  #  puppet.manifests_path = "scripts/puppet/manifests"
+  #  puppet.manifest_file  = "locus.pp"
+  #  puppet.module_path = "scripts/puppet/modules"
+  #  puppet.options = ["--templatedir","/vagrant/scripts/puppet/manifests/files"]
   # end
 
 

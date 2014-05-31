@@ -90,6 +90,7 @@
         - redis
         - kombu
         - uwsgi>=1.2.6
+        - 'git+https://github.com/springmeyer/djmapnik.git@8d736a73470b#egg=djmapnik-0.1.3'
         - 'git+https://github.com/Ecotrust/madrona.git@master#egg=madrona'
         - 'git+git://github.com/perrygeo/TileStache.git@master#egg=TileStache'
         - django-allauth==0.10.1
@@ -120,13 +121,13 @@
     - name: create db user  
       sudo_user: postgres
       # same as dbname
-      postgresql_user: name={{ dbname }} password={{ dbname }} role_attr_flags=CREATEDB,NOSUPERUSER
+      postgresql_user: name={{ dbuser }} password={{ dbpwd }} role_attr_flags=CREATEDB,NOSUPERUSER
 
     - name: create postgres db
       sudo_user: postgres
       register: postgres_create_returncode
       postgresql_db: name={{ dbname }}
-                     owner={{ dbname }}
+                     owner={{ dbuser }}
                      encoding='UTF-8'
                      lc_collate='en_US.UTF-8'
                      lc_ctype='en_US.UTF-8'
@@ -153,7 +154,7 @@
       when: postgres_create_returncode['changed']
 
     - name: add srids
-      command: /usr/local/venv/locus/bin/python {{ project_path }}/{{ app_name }}/add_srid.py
+      command: /usr/local/venv/locus/bin/python {{ project_path }}/{{ app_name }}/manage.py add_srid
 
     # Peer authentication failed for user "vagrant" in next step. Hrm...
 

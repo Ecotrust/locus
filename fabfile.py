@@ -11,7 +11,7 @@ env.key_filename = '~/.vagrant.d/insecure_private_key'
 
 def dev():
     """ Use development server settings """
-    servers = ['vagrant@127.0.0.1:2224']
+    servers = ['vagrant@127.0.0.1:2222']
     env.hosts = servers
     return servers
 
