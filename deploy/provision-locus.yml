@@ -154,7 +154,7 @@
       when: postgres_create_returncode['changed']
 
     - name: add srids
-      command: /usr/local/venv/locus/bin/python {{ project_path }}/{{ app_name }}/manage.py add_srid
+      command: "{{ manage }} add_srid"
 
     # Peer authentication failed for user "vagrant" in next step. Hrm...
 
@@ -281,7 +281,7 @@
 
     - name: install vector report data
       when: data_not_loaded
-      command: "/usr/local/venv/locus/bin/python {{ project_path }}/scripts/map_report_vectors.py"
+      command: "{{ manage }} map_report_vectors"
 
     ###
     # Get the bioregion and thiessen data
@@ -311,6 +311,9 @@
     - name: load storypoints
       when: load_demo_data
       command: "{{ manage }} loaddata {{ project_path }}/media/js/demo_data.js"
+
+    - name: set tmp madrona raster_stats permissions
+      command: "chmod -R 777 /tmp/madrona.raster_stats"
 
     # handler to restart services (common include to provision.yml)
     # - name: supervisor

@@ -11,14 +11,8 @@ Vagrant::Config.run do |config|
     dev.vm.box = "precise64-custom"
     dev.vm.box_url = "http://labs.ecotrust.org/vagrant_boxes/precise64-custom.box"
 
-    dev.vm"virtualbox" do |v|
-        v.customize[
-            'modifyvm', :id,
-            '--name', node[:hostname],
-            "--memory", 768,
-            "--cpus", 2
-          ]
-    end
+    dev.vm.customize ["modifyvm", :id, "--memory", 1024, "--cpus", 2]
+
     # ssh defaults to 2222
     dev.vm.forward_port 80, 8080
     dev.vm.forward_port 8000, 8000
