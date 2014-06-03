@@ -545,7 +545,7 @@ function JSON2UserFeedHTML(json, locations){
         html += start_div;
         html += "                        <div class=\"mug\"><img src=\"" + json[i].img + "\"/></div>";
         html += mid_div;
-        html += "                        <h4>" + json[i].name + "</h4>";
+        html += "                        <h4><a href=\"/get_storypoints/" + json[i].id + "/\">" + json[i].name + "</a></h4>";
         html += mid_div_2;
         html += "                        <p>" + locations[json[i].location].city +
                                         ", " + locations[json[i].location].district +
@@ -575,7 +575,7 @@ function JSON2ComFeedHTML(json, users){
         html += start_div;
         html += "                        <div class=\"mug\"><img src=\"" + json[i].data.storyPoint.image + "\"/></div>";
         html += mid_div;
-        html += "                        <h4>" + users()[json[i].data.storyPoint.source_user_id].name + "</h4>";
+        html += "                        <h4><a href=\"/get_storypoints/" + json[i].data.storyPoint.source_user_id + "/\">" +users()[json[i].data.storyPoint.source_user_id].name + "</a></h4>";
         html += mid_div_2;
         html += "                        <p>" + json[i].data.storyPoint.content + "</p>";
         html += "                        <p class='feed-date'>" + json[i].data.storyPoint.date + "</p>";

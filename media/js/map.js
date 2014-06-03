@@ -341,9 +341,14 @@ function getFriendLoci(frndlst) {
     });
 };
 
-function getStoryPoints() {
+function getStoryPoints(user) {
+    if (user){
+        url = "/get_storypoints/" + user + "/";
+    } else {
+        url = "/get_storypoints/json/";
+    }
     $.ajax({
-        url: "/get_storypoints/json/",
+        url: url,
         type: 'GET',
         data: {},
         dataType: 'json'

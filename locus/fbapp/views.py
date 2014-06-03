@@ -238,12 +238,16 @@ def get_friends_bioregions(request):
     response['Content-Type'] = 'text/plain'
     return response
 
-def get_storypoints(request):
+def get_storypoints(request, user):
     usetting = UserSettings.objects.get(user=request.user)
-    my_story_points = StoryPoint.objects.filter(geometry__within=usetting.get_bioregion().geometry_final)
 
-    # qs = StoryPoint.objects.all()
-    qs = my_story_points
+    if user == 'json':
+        my_story_points = StoryPoint.objects.filter(geometry__within=usetting.get_bioregion().geometry_final)
+
+        # qs = StoryPoint.objects.all()
+        qs = my_story_points
+    else:
+        qs = StoryPoint.objects.filter(source_type='user', source_user=user)
 
     features = []
 
