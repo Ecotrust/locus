@@ -239,10 +239,11 @@ def get_friends_bioregions(request):
     return response
 
 def get_storypoints(request, user):
+    from django.db.models import Q
     usetting = UserSettings.objects.get(user=request.user)
 
     if user == 'json':
-        my_story_points = StoryPoint.objects.filter(geometry__within=usetting.get_bioregion().geometry_final)
+        my_story_points = StoryPoint.objects.filter(Q(geometry__within=usetting.get_bioregion().geometry_final) | Q(source_user=usetting.user))
 
         # qs = StoryPoint.objects.all()
         qs = my_story_points
