@@ -9,6 +9,8 @@ urlpatterns = patterns(
     (r'^get_friends_bioregions/$', get_friends_bioregions),
     (r'^get_bioregions/point/$', get_bioregions_by_point),
     (r'^get_storypoints/([A-Za-z0-9_-]+)/$', get_storypoints),
+    (r'^delete_storypoint/([A-Za-z0-9_-]+)/$', delete_storypoint),
+    (r'^edit_storypoint/([A-Za-z0-9_-]+)/$', edit_storypoint),
     (r'^get_friends/$', get_friends),
     (r'^set_storypoints/$', set_storypoints),
     (r'^set_user_settings/$', set_user_settings),

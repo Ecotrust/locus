@@ -775,11 +775,17 @@ function newsBubble(storyPoint) {
 }
 
 function postBubble(storyPoint) {
+    if (storyPoint.source_user_id == userID){
+        var actionContent = "<a href=\"/edit_storypoint/" + storyPoint.id + "/\"><i class=\"icon-pencil\"></i>edit</a><a class=\"pull-right\" href=\"/delete_storypoint/" + storyPoint.id + "/\"><i class=\"icon-remove\"></i>delete</a>";
+    } else {
+        var actionContent = "";
+    }
     var html = "<div class=\"post-bubble\">\
                         <div class=\"post-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
                         <h4>" + storyPoint.title + "</h4>\
-                        <p>" + storyPoint.content + "</p>\
-                </div>";
+                        <p>" + storyPoint.content + "</p>" +
+                        actionContent +
+                "</div>";
     return html;
 }
 

@@ -10,6 +10,7 @@ from django.contrib.gis.geos import Polygon, GEOSGeometry
 import json
 from operator import itemgetter
 from allauth.socialaccount.models import SocialToken, SocialAccount
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.conf import settings
 
@@ -306,6 +307,68 @@ def get_storypoints(request, user):
     response['Content-length'] = str(len(response.content))
     response['Content-Type'] = 'text/plain'
     return response
+
+def edit_storypoint(request, storypoint_id):
+    try:
+        storypoint = StoryPoint.objects.get(id=storypoint_id)
+    except ValueError:
+        return HttpResponse(simplejson.dumps({
+            'message': 'Invalid post id: ID must be an integer',
+            'status': 400
+            })
+        )
+    except ObjectDoesNotExist:
+        return HttpResponse(simplejson.dumps({
+            'message': 'Post with given ID does not exist.',
+            'status': 404
+            })
+        )
+
+    if request.user.is_authenticated() and request.user.id == storypoint.source_user_id:
+        new_content = request.POST.get('content')
+        storypoint.content = new_content
+        storypoint.save()
+        return HttpResponse(simplejson.dumps({
+            'message': 'Post updated.',
+            'status': 200
+            })
+        )
+    else:
+        return HttpResponse(simplejson.dumps({
+            'message': 'You do not have permission to edit this post.',
+            'status': 401
+            }))
+
+def delete_storypoint(request, storypoint_id):
+    try:
+        storypoint = StoryPoint.objects.get(id=storypoint_id)
+    except ValueError:
+        return HttpResponse(simplejson.dumps({
+            'message': 'Invalid post id: ID must be an integer',
+            'status': 400
+            })
+        )
+    except DoesNotExist:
+        return HttpResponse(simplejson.dumps({
+            'message': 'Post with given ID does not exist.',
+            'status': 404
+            })
+        )
+
+    if request.user.is_authenticated() and request.user.id == storypoint.source_user_id:
+        storypoint.delete()
+        response=HttpResponse(simplejson.dumps({
+            'message': 'Post deleted.',
+            'status': 200
+        }))
+    else:
+        response=HttpResponse(simplejson.dumps({
+            'message': 'You do not have permission to delete this post.',
+            'status': 401
+        }))
+    return response
+
+    
 
 def get_bioregions_by_point(request):
 
