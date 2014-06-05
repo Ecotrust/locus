@@ -11,6 +11,10 @@ body {
 Begin Map
 ----------------------------------------------------------------------- */
 
+.olControlAttribution {
+    bottom: 1.5em !important;
+}
+
 img.olTileImage {
     /*max-width: 256px !important;*/
     max-width: none !important;
