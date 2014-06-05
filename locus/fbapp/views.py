@@ -348,7 +348,7 @@ def delete_storypoint(request, storypoint_id):
             'status': 400
             })
         )
-    except DoesNotExist:
+    except ObjectDoesNotExist:
         return HttpResponse(simplejson.dumps({
             'message': 'Post with given ID does not exist.',
             'status': 404
