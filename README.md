@@ -1,8 +1,8 @@
-# Requirements
+# Setting up with ansible
 
 * Vagrant
 * VirtualBox
-* Fabric
+* Ansible
 
 # Running dev server
 
@@ -12,6 +12,7 @@ Initial setup
 	[Loading raster data for bioregion reports]
 	[Loading vector data for bioregion reports]
 	[Loading Bioregions]
+	[Create local_vars.yml]
 	ansible-playbook provision-locus.yml -i hosts
 	[create superuser]
 
@@ -44,6 +45,14 @@ Set your local settings to include [this should be done by default]:
 Load the user and some initial bioregions:
 	python manage.py loaddata fbapp/fixtures/gen_bioreg.json
 ```
+
+Create local_vars.yml
+```
+copy deploy/local_vars.yml.template to deploy/local_vars.yml
+get your facebook app id and app secret id from your facebook developer settings
+set a database password
+```
+
 Create Superuser
 ```
 This is a django app - simply: 

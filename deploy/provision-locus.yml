@@ -207,6 +207,9 @@
       notify: restart uwsgi
       template: src=templates/uwsgi.init.j2 dest=/etc/init.d/uwsgi owner=root group=root mode=0755
 
+    - name: set tmp madrona raster_stats permissions
+      command: "chmod -R 777 {{ venv_path }}/src/madrona/madrona/raster_stats"
+
     #- name: install wsgi script for TileStache
     #  template: src=templates/tilestache_wsgi.py dest={{ project_path }}/tilestache_wsgi.py owner={{ remote_user }} group={{ remote_user }} mode=0755
 
@@ -311,9 +314,6 @@
     - name: load storypoints
       when: load_demo_data
       command: "{{ manage }} loaddata {{ project_path }}/media/js/demo_data.js"
-
-    - name: set tmp madrona raster_stats permissions
-      command: "chmod -R 777 /tmp/madrona.raster_stats"
 
     # handler to restart services (common include to provision.yml)
     # - name: supervisor
