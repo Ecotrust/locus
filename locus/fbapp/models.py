@@ -86,6 +86,7 @@ class UserSettings(models.Model):
     ns_public_story_points = models.BooleanField(default=True, verbose_name='Public Points')
     ns_friend_story_points = models.BooleanField(default=True, verbose_name='Friend Points')
     ns_tweets = models.BooleanField(default=True, verbose_name='Tweets')
+    friends = models.ManyToManyField("self", blank=True, null=True)
 
     def get_bioregion(self):
         if self.bioregion_drawn:
@@ -110,6 +111,20 @@ class UserSettings(models.Model):
             return 'Generated'
         else:
             return 'None'
+
+class FriendRequest(models.Model):
+
+    statuses = (
+        ('new', 'new'),
+        ('accepted', 'accepted'),
+        ('rejected', 'rejected'),
+        ('ignored', 'ignored')
+    )
+
+    requester = models.ForeignKey(User, related_name='requesting_user')
+    requestee = models.ForeignKey(User, related_name='requested_user')
+    created = models.DateTimeField(default=datetime.datetime.now)
+    status = models.CharField( max_length=30, choices = statuses, default = 'user' )
 
 class StoryPoint(models.Model):
 

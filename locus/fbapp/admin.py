@@ -26,8 +26,14 @@ class StoryPointAdmin(admin.ModelAdmin):
     list_filter = ('title', 'source_type', 'source_user', 'is_permanent', 'flagged', 'created')
     search_fields = ('title', 'source_type', 'source_user', 'is_permanent', 'flagged', 'created', 'content', 'flag_reason')
 
+class FriendRequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'requester', 'requestee', 'status', 'created')    
+    list_filter = ('id', 'requester', 'requestee', 'status', 'created')
+    search_fields = ('id', 'requester', 'requestee', 'status', 'created')
+
 admin.site.register(Locus, LocusAdmin)
 admin.site.register(GeneratedBioregion, GeneratedBioregionAdmin)
 admin.site.register(DrawnBioregion, DrawnBioregionAdmin)
 admin.site.register(UserSettings, UserSettingsAdmin)
 admin.site.register(StoryPoint, StoryPointAdmin)
+admin.site.register(FriendRequest, FriendRequestAdmin)
