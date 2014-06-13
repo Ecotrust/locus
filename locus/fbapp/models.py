@@ -86,7 +86,6 @@ class UserSettings(models.Model):
     ns_public_story_points = models.BooleanField(default=True, verbose_name='Public Points')
     ns_friend_story_points = models.BooleanField(default=True, verbose_name='Friend Points')
     ns_tweets = models.BooleanField(default=True, verbose_name='Tweets')
-    friends = models.ManyToManyField("self", blank=True, null=True)
 
     def get_bioregion(self):
         if self.bioregion_drawn:
