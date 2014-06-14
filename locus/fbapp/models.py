@@ -112,7 +112,6 @@ class UserSettings(models.Model):
             return 'None'
 
 class FriendRequest(models.Model):
-
     statuses = (
         ('new', 'new'),
         ('accepted', 'accepted'),

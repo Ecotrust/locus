@@ -14,6 +14,12 @@ urlpatterns = patterns(
     (r'^get_friends/$', get_friends),
     (r'^set_storypoints/$', set_storypoints),
     (r'^set_user_settings/$', set_user_settings),
+    (r'^get_friend_requests/$', get_friend_requests),
+    (r'^create_friend_request/$', create_friend_request),
+    (r'^generate_friend_requests/$', generate_friend_requests),
+    (r'^accept_friend_request/$', accept_friend_request),
+    (r'^decline_friend_request/$', decline_friend_request),
+    (r'^delete_friendship/$', delete_friendship),
     (r'', include('madrona.common.urls')),
 )
 

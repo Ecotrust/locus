@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError, HttpResponseForbidden
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
-from models import GeneratedBioregion, DrawnBioregion, UserSettings, ThiessenPolygon, StoryPoint
+from models import GeneratedBioregion, DrawnBioregion, UserSettings, ThiessenPolygon, StoryPoint, FriendRequest
 from models import BioregionError
 import datetime
 from django.utils import simplejson
@@ -11,7 +11,7 @@ import json
 from operator import itemgetter
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.db.models import Q
 from django.conf import settings
 
 def home(request, template_name='fbapp/home.html', extra_context={}):
@@ -240,7 +240,6 @@ def get_friends_bioregions(request):
     return response
 
 def get_storypoints(request, user):
-    from django.db.models import Q
     usetting = UserSettings.objects.get(user=request.user)
 
     if user == 'json':
@@ -394,12 +393,96 @@ def get_bioregions_by_point(request):
 
     return bioregions
 
+def get_friend_requests(request):
+    if request.user.is_authenticated():
+        friend_requests = FriendRequest.objects.filter(Q(requester=request.user)|Q(requestee=request.user))
+        return HttpResponse(simplejson.dumps({
+            'status': 200,
+            'friend_requests': friend_requests
+            })
+        )
+
+def create_friend_request(request):
+    if request.user.is_authenticated():
+        requestee_id = simplejson.loads(request.POST.get('requestee_id'))
+        requestee = User.objects.get(id=requestee_id)
+        requester=request.user
+        query_status = FriendRequest.objects.filter(Q(requester=requester, requestee=requestee)|Q(requester=requestee, requestee=requester))
+        if query_status.count() == 0:
+            FriendRequest.objects.create(requester=requester, requestee=requestee, status='new')
+            return HttpResponse(simplejson.dumps({
+                'status':200,
+                'message': 'Friend request sent'
+                })
+            )
+        else:
+            return HttpResponse(simplejson.dumps({
+                'status':200,
+                'message': 'Friendship request already exists'
+                })
+            )
+    
+# TODO: This method is for testing only - delete when done with friend work!
+def generate_friend_requests(request):
+    existing_friendships = get_locus_friendships(request.user)
+    unfriended_users = User.objects.filter(~Q(id__in=existing_friendships))
+    for stranger in unfriended_users:
+        FriendRequest.objects.create(requester=request.user, requestee=stranger, status='accepted')
+    return HttpResponse(simplejson.dumps({
+        'status': 200,
+        'message': 'Refresh to see your new friends!'
+        })
+    )
+
+def accept_friend_request(request):
+    if request.user.is_authenticated():
+        request_id = simplejson.loads(request.POST.get('request_id'))
+        friend_request = FriendRequest.get(id=request_id)
+        friend_request['status'] = 'accepted'
+        friend_request.save()
+        return HttpResponse(simplejson.dumps({
+            'status': 200,
+            'message': 'Friend request accepted'
+            })
+        )
+
+def decline_friend_request(request):
+    if request.user.is_authenticated():
+        request_id = simplejson.loads(request.POST.get('request_id'))
+        friend_request = FriendRequest.get(id=request_id)
+        friend_request['status'] = 'rejected'
+        friend_request.save()
+        return HttpResponse(simplejson.dumps({
+            'status': 200,
+            'message': 'Friend request declined'
+            })
+        )
+
+def delete_friendship(request):
+    if request.user.is_authenticated():
+        request_id = simplejson.loads(request.POST.get('request_id'))
+        friend_request = FriendRequest.get(id=request_id)
+        friend_request.delete()
+        return HttpResponse(simplejson.dumps({
+            'status': 200,
+            'message': 'Friend removed'
+            })
+        )
+
+def get_locus_friendships(user):
+    requested_friendships = FriendRequest.objects.filter(requester=user, status='accepted')
+    friend_ids = [x.requestee.id for x in requested_friendships]
+    accepted_friendships = FriendRequest.objects.filter(requestee=user, status='accepted')
+    friend_ids += [x.requester.id for x in accepted_friendships]
+
+    return friend_ids
+
 def get_friends(request):
     friends = simplejson.loads(request.POST.get('friends'))
     friend_ids = [friend['id'] for friend in friends]
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
     user_ids = [user.uid for user in user_friends_qs]
-    user_friends = []
+    user_friends = get_locus_friendships(request.user)
     just_friends = []
     sorted_friends = sorted(friends, key=itemgetter('name'))
     for friend in sorted_friends:
