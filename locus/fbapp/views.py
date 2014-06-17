@@ -178,7 +178,7 @@ def get_friends_bioregions(request):
     user_bioregion_mapping = {}
     draw_bioregion_ids = []
     gen_bioregion_ids = []
-    
+
     friend_ids = [friend['id'] for friend in friends]
     friend_accounts = SocialAccount.objects.filter(uid__in=friend_ids)
     for friend in friend_accounts:
@@ -425,7 +425,8 @@ def create_friend_request(request):
 # TODO: This method is for testing only - delete when done with friend work!
 def generate_friend_requests(request):
     existing_friendships = get_locus_friendships(request.user)
-    unfriended_users = User.objects.filter(~Q(id__in=existing_friendships))
+    existing_frienship_ids = [x.id for x in existing_friendships]
+    unfriended_users = User.objects.filter(~Q(id__in=existing_frienship_ids))
     for stranger in unfriended_users:
         FriendRequest.objects.create(requester=request.user, requestee=stranger, status='accepted')
     return HttpResponse(simplejson.dumps({
@@ -471,13 +472,14 @@ def delete_friendship(request):
 
 def get_locus_friendships(user):
     requested_friendships = FriendRequest.objects.filter(requester=user, status='accepted')
-    friend_ids = [x.requestee.id for x in requested_friendships]
+    friend_ids = [{'id': x.requestee.id, 'name': x.requestee.get_full_name()} for x in requested_friendships]
     accepted_friendships = FriendRequest.objects.filter(requestee=user, status='accepted')
-    friend_ids += [x.requester.id for x in accepted_friendships]
+    friend_ids += [{'id': x.requester.id, 'name': x.requester.get_full_name()} for x in accepted_friendships]
 
     return friend_ids
 
 def get_friends(request):
+
     friends = simplejson.loads(request.POST.get('friends'))
     friend_ids = [friend['id'] for friend in friends]
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
