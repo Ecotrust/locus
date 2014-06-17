@@ -865,13 +865,22 @@ function processFriendsList(fb_result) {
                 frndlst = "";
                 for(var i = 0; i < data.user_friends.length; i++) {
                     if (data.user_friends[i].id) {
-                        frndlst = frndlst + 
-                            "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + 
-                            data.user_friends[i].id +
-                            "/picture?type=large\">" +
-                            data.user_friends[i].name +
-                            "<i data-bind='click: delete_friendship') class='category-icon icon-minus'></i>" +
-                            "</p>";
+                        facebook_index = data.user_friends[i].providers.indexOf('facebook')
+                        if (facebook_index > -1) {
+                            frndlst = frndlst + 
+                                "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + 
+                                data.user_friends[i].uids[facebook_index] +
+                                "/picture?type=large\">" +
+                                data.user_friends[i].name +
+                                "<i data-bind='click: delete_friendship') class='category-icon icon-minus'></i>" +
+                                "</p>";
+                        } else {
+                            frndlst = frndlst +
+                                "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
+                                data.user_friends[i].name +
+                                "<i data-bind='click: delete_friendship') class='category-icon icon-minus'></i>" +
+                                "</p>";
+                        }
                     }
                 }
                 app.friendsList(frndlst);

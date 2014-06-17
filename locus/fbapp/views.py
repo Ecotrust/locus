@@ -475,11 +475,23 @@ def get_locus_friendships(user):
     friend_ids = [{'id': x.requestee.id, 'name': x.requestee.get_full_name()} for x in requested_friendships]
     accepted_friendships = FriendRequest.objects.filter(requestee=user, status='accepted')
     friend_ids += [{'id': x.requester.id, 'name': x.requester.get_full_name()} for x in accepted_friendships]
-
-    return friend_ids
+    friends = []
+    for friend in friend_ids:
+        providers = []
+        uids = []
+        account_qs = SocialAccount.objects.filter(user__id=friend['id'])
+        for account in account_qs:
+            providers.append(account.provider)
+            uids.append(account.uid)
+        if len(providers) == 0:
+            providers = ['none']
+        friend['providers'] = providers
+        friend['uids'] = uids
+        print friend
+        friends.append(friend)
+    return friends
 
 def get_friends(request):
-
     friends = simplejson.loads(request.POST.get('friends'))
     friend_ids = [friend['id'] for friend in friends]
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
@@ -489,7 +501,9 @@ def get_friends(request):
     sorted_friends = sorted(friends, key=itemgetter('name'))
     for friend in sorted_friends:
         if friend['id'] in user_ids:
-            user_friends.append(friend)
+            if not any(x['uids'].__contains__(friend['id']) for x in user_friends):
+                friend['providers']=['facebook']
+                user_friends.append(friend)
         else:
             just_friends.append(friend)
         # TODO create list of non-friend users in your bioregion (50ish)
