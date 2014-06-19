@@ -482,26 +482,35 @@ def delete_friendship(request):
         })
     )
 
-def get_locus_friendships(user):
-    requested_friendships = FriendRequest.objects.filter(requester=user, status='accepted')
-    friend_ids = [{'id': x.requestee.id, 'name': x.requestee.get_full_name()} for x in requested_friendships]
-    accepted_friendships = FriendRequest.objects.filter(requestee=user, status='accepted')
-    friend_ids += [{'id': x.requester.id, 'name': x.requester.get_full_name()} for x in accepted_friendships]
-    friends = []
-    for friend in friend_ids:
+def get_formatted_user_list(user_ids):
+    users = []
+    for user in user_ids:
         providers = []
         uids = []
-        account_qs = SocialAccount.objects.filter(user__id=friend['id'])
+        account_qs = SocialAccount.objects.filter(user__id=user['id'])
         for account in account_qs:
             providers.append(account.provider)
             uids.append(account.uid)
         if len(providers) == 0:
             providers = ['none']
-        friend['providers'] = providers
-        friend['uids'] = uids
-        print friend
-        friends.append(friend)
+        user['providers'] = providers
+        user['uids'] = uids
+        users.append(user)
+    return users
+
+def get_locus_friendships(user):
+    requested_friendships = FriendRequest.objects.filter(requester=user, status='accepted')
+    friend_ids = [{'id': x.requestee.id, 'name': x.requestee.get_full_name()} for x in requested_friendships]
+    accepted_friendships = FriendRequest.objects.filter(requestee=user, status='accepted')
+    friend_ids += [{'id': x.requester.id, 'name': x.requester.get_full_name()} for x in accepted_friendships]
+    friends = get_formatted_user_list(friend_ids)
     return friends
+
+def get_user_strangers(friend_ids):
+    strangers = User.objects.filter(~Q(id__in=friend_ids))[:4]
+    stranger_ids = [{'id':x.id, 'name': x.get_full_name()} for x in strangers]
+    user_strangers = get_formatted_user_list(stranger_ids)
+    return user_strangers
 
 def get_friends(request):
     friends = simplejson.loads(request.POST.get('friends'))
@@ -509,6 +518,7 @@ def get_friends(request):
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
     user_ids = [user.uid for user in user_friends_qs]
     user_friends = get_locus_friendships(request.user)
+    user_strangers = get_user_strangers([x['id'] for x in user_friends])
     just_friends = []
     sorted_friends = sorted(friends, key=itemgetter('name'))
     for friend in sorted_friends:
@@ -519,11 +529,11 @@ def get_friends(request):
         else:
             just_friends.append(friend)
         # TODO create list of non-friend users in your bioregion (50ish)
-        
 
     return HttpResponse(simplejson.dumps({
         'just_friends': just_friends,
         'user_friends': user_friends,
+        'user_strangers': user_strangers,
         'message': 'Friend lists generated',
         'status': 200
     }))

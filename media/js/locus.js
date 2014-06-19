@@ -485,11 +485,11 @@ function AppViewModel() {
     }
 
     this.friendsList = ko.observable();
+    this.usersList = ko.observable();
     if (this.userID() != 'None') {
         getFriendsList();
     }
   
-    this.usersList = ko.observable();
 
     this.inviteList = ko.observable();
 
@@ -885,6 +885,29 @@ function processFriendsList(fb_result) {
                     }
                 }
                 app.friendsList(frndlst);
+
+                strngrlst = "";
+                for(var i = 0; i < data.user_strangers.length; i++){
+                    if (data.user_strangers[i].id) {
+                        facebook_index = data.user_strangers[i].providers.indexOf('facebook');
+                        if (facebook_index > -1) {
+                            strngrlst = strngrlst + 
+                                "<p><img class=\"mug\" src=\"http://graph.facebook.com/" +
+                                data.user_strangers[i].uids[facebook_index] +
+                                "/picture?type=large\">" +
+                                data.user_strangers[i].name +
+                                "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
+                                "</p>";
+                        } else {
+                            frndlst = frndlst +
+                                "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
+                                data.user_strangers[i].name +
+                                "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
+                                "</p>";
+                        }
+                    }
+                }
+                app.usersList(strngrlst);
 
                 invitelst = "";
                 for(var i=0; i < data.just_friends.length; i++) {
