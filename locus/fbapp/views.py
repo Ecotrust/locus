@@ -460,15 +460,27 @@ def decline_friend_request(request):
         )
 
 def delete_friendship(request):
+    message = "An error occurred. Friendship unchanged."
+    status = 500
+
     if request.user.is_authenticated():
-        request_id = simplejson.loads(request.POST.get('request_id'))
-        friend_request = FriendRequest.get(id=request_id)
-        friend_request.delete()
-        return HttpResponse(simplejson.dumps({
-            'status': 200,
-            'message': 'Friend removed'
-            })
-        )
+        unfriend_id = simplejson.loads(request.POST.get('unfriend_id'))
+        friend_request = FriendRequest.objects.filter(Q(requester=request.user, requestee__id=unfriend_id)|Q(requester__id=unfriend_id, requestee=request.user))
+        if friend_request.count() == 1:
+            friend_request[0].delete()
+            status= 200
+            message= 'Friend removed'
+        elif friend_request.count() == 0:
+            status=409
+            message="No friendship to remove."
+        else:
+            message="More than one friendship returned. Contact an administrator."
+
+    return HttpResponse(simplejson.dumps({
+        'status': status,
+        'message': message
+        })
+    )
 
 def get_locus_friendships(user):
     requested_friendships = FriendRequest.objects.filter(requester=user, status='accepted')

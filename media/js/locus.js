@@ -492,6 +492,7 @@ function AppViewModel() {
     this.usersList = ko.observable();
 
     this.inviteList = ko.observable();
+
     
     /*---------------------------------------------------------------------
             OTHER LOCI AppViewModel
@@ -872,13 +873,13 @@ function processFriendsList(fb_result) {
                                 data.user_friends[i].uids[facebook_index] +
                                 "/picture?type=large\">" +
                                 data.user_friends[i].name +
-                                "<i data-bind='click: delete_friendship') class='category-icon icon-minus'></i>" +
+                                "<button class='btn' onclick='deleteFriendship(" + data.user_friends[i].id + ")'><i class='category-icon icon-minus'></i></button>" +
                                 "</p>";
                         } else {
                             frndlst = frndlst +
                                 "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
                                 data.user_friends[i].name +
-                                "<i data-bind='click: delete_friendship') class='category-icon icon-minus'></i>" +
+                                "<button class='btn' onclick='deleteFriendship(" + data.user_friends[i].id + ")'><i class='category-icon icon-minus'></i></button>" +
                                 "</p>";
                         }
                     }
@@ -908,6 +909,20 @@ function processFriendsList(fb_result) {
             })
         }
     }
+}
+
+function deleteFriendship(unfriend_id) {
+    $.ajax({
+        url: '/delete_friendship/',
+        type: 'POST',
+        data: {
+            'unfriend_id': unfriend_id
+        },
+        success: function(data){
+            alert(data.message);
+            // window.location.href="/";
+        }
+    })
 }
 
 function inviteFriends(formElement) {
