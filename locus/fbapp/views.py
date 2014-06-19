@@ -367,8 +367,6 @@ def delete_storypoint(request, storypoint_id):
         }))
     return response
 
-    
-
 def get_bioregions_by_point(request):
 
     pnt_wkt = 'POINT(' + request.GET['lon'] + ' ' + request.GET['lat'] + ')'
@@ -507,9 +505,13 @@ def get_locus_friendships(user):
     return friends
 
 def get_user_strangers(friend_ids):
-    strangers = User.objects.filter(~Q(id__in=friend_ids))[:4]
-    stranger_ids = [{'id':x.id, 'name': x.get_full_name()} for x in strangers]
-    user_strangers = get_formatted_user_list(stranger_ids)
+    strangers = User.objects.filter(~Q(id__in=friend_ids))
+    real_strangers = []
+    for stranger in strangers:
+        if stranger.get_full_name() != '':
+            real_strangers.append(stranger)
+    stranger_ids = [{'id':x.id, 'name': x.get_full_name()} for x in real_strangers[:4]]
+    user_strangers = get_formatted_user_list(stranger_ids + [])
     return user_strangers
 
 def get_friends(request):
@@ -518,12 +520,16 @@ def get_friends(request):
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
     user_ids = [user.uid for user in user_friends_qs]
     user_friends = get_locus_friendships(request.user)
-    user_strangers = get_user_strangers([x['id'] for x in user_friends])
+    user_strangers = get_user_strangers([x['id'] for x in user_friends + [{'id':request.user.id}]])
     just_friends = []
     sorted_friends = sorted(friends, key=itemgetter('name'))
     for friend in sorted_friends:
         if friend['id'] in user_ids:
             if not any(x['uids'].__contains__(friend['id']) for x in user_friends):
+                if not hasattr(friend, 'uids'):
+                    soc_acc = SocialAccount.objects.get(uid=friend['id'])
+                    user_obj_id = soc_acc.user.id
+                    friend['uids']=[UserSettings.objects.get(user__id=user_obj_id).id]
                 friend['providers']=['facebook']
                 user_friends.append(friend)
         else:
