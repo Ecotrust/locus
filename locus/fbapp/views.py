@@ -408,7 +408,7 @@ def create_friend_request(request):
         requestee_id = simplejson.loads(request.POST.get('requestee_id'))
         requestee = User.objects.get(id=requestee_id)
         requester=request.user
-        query_status = FriendRequest.objects.filter(Q(requester=requester, requestee=requestee)|Q(requester=requestee, requestee=requester))
+        query_status = FriendRequest.objects.filter((Q(requester=requester, requestee=requestee)|Q(requester=requestee, requestee=requester))&Q(status='new'))
         if query_status.count() == 0:
             FriendRequest.objects.create(requester=requester, requestee=requestee, status='new')
             return HttpResponse(simplejson.dumps({
@@ -440,7 +440,7 @@ def accept_friend_request(request):
     if request.user.is_authenticated():
         request_id = simplejson.loads(request.POST.get('request_id'))
         friend_request = FriendRequest.objects.get(id=request_id)
-        friend_request['status'] = 'accepted'
+        friend_request.__setattr__('status', 'accepted')
         friend_request.save()
         return HttpResponse(simplejson.dumps({
             'status': 200,
@@ -452,7 +452,7 @@ def decline_friend_request(request):
     if request.user.is_authenticated():
         request_id = simplejson.loads(request.POST.get('request_id'))
         friend_request = FriendRequest.objects.get(id=request_id)
-        friend_request['status'] = 'rejected'
+        friend_request.__setattr__('status', 'rejected')
         friend_request.save()
         return HttpResponse(simplejson.dumps({
             'status': 200,
@@ -523,8 +523,15 @@ def get_friends(request):
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
     user_ids = [user.uid for user in user_friends_qs]
     user_friends = get_locus_friendships(request.user)
-    pending_friend_requests = FriendRequest.objects.filter(requester=request.user, status='new')
-    user_strangers = get_user_strangers([x['id'] for x in user_friends + [{'id':request.user.id}] + [{'id':y.requestee.id} for y in pending_friend_requests]])
+    sent_friend_requests = FriendRequest.objects.filter(requester=request.user, status='new')
+    user_strangers = get_user_strangers([x['id'] for x in user_friends + [{'id':request.user.id}] + [{'id':y.requestee.id} for y in sent_friend_requests]])
+    pending_friend_requests = FriendRequest.objects.filter(requestee=request.user, status='new')
+    requests = []
+
+    for req in pending_friend_requests:
+        formatted_req = get_formatted_user_list([{'id':req.requester.id, 'name':req.requester.get_full_name()}])[0]
+        formatted_req['request_id'] = req.id
+        requests.append(formatted_req)
     just_friends = []
     sorted_friends = sorted(friends, key=itemgetter('name'))
     for friend in sorted_friends:
@@ -544,6 +551,7 @@ def get_friends(request):
         'just_friends': just_friends,
         'user_friends': user_friends,
         'user_strangers': user_strangers,
+        'friend_requests': requests,
         'message': 'Friend lists generated',
         'status': 200
     }))

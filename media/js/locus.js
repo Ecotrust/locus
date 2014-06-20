@@ -489,7 +489,6 @@ function AppViewModel() {
     this.friendRequests = ko.observable();
     if (this.userID() != 'None') {
         getFriendsList();
-        getFriendRequests();
     }
   
 
@@ -918,6 +917,33 @@ function processFriendsList(fb_result) {
                     }
                 }
                 app.inviteList(invitelst);
+
+                reqlst = "";
+                for(var i=0; i<data.friend_requests.length; i++){
+                    if (data.friend_requests[i].id) {
+                        facebook_index = data.friend_requests[i].providers.indexOf('facebook');
+                        if (facebook_index > -1) {
+                            reqlst = reqlst + 
+                                "<p><img class=\"mug\" src=\"http://graph.facebook.com/" +
+                                data.friend_requests[i].uids[facebook_index] +
+                                "/picture?type=large\">" +
+                                data.friend_requests[i].name +
+                                "<button class='btn' onclick='acceptFriendship(" + data.friend_requests[i].request_id + ")'>Accept</button>" +
+                                "<button class='btn' onclick='declineFriendship(" + data.friend_requests[i].request_id + ")'>Decline</button>" +
+                                "</p>";
+                        } else {
+                            reqlst = reqlst +
+                                "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
+                                data.friend_requests[i].name +
+                                "<button class='btn' onclick='acceptFriendship(" + data.friend_requests[i].request_id + ")'>Accept</button>" +
+                                "<button class='btn' onclick='declineFriendship(" + data.friend_requests[i].request_id + ")'>Decline</button>" +
+                                "</p>";
+                        }
+                    }
+                app.friendRequests(reqlst)
+
+                }
+
                 getFriendLoci(data.user_friends);
             }
         })
@@ -949,21 +975,31 @@ function requestFriendship(requestee_id) {
     })
 }
 
-function getFriendRequests() {
+function acceptFriendship(request_id){
     $.ajax({
-        url:'/get_friend_requests/',
-        type:'GET',
+        url: '/accept_friend_request/',
+        type: 'POST',
         dataType: 'json',
+        data: {
+            'request_id': request_id
+        },
         success: function(data){
-            requests = data.friend_requests;
-            requestsHTML = '<ul>';
-            for (var i = 0; i < requests.length; i++){
-                requestsHTML += '<li>' + requests[i].requestee + ', ' + requests[i].requester + ': ' + requests[i].status + '</li>';
-            }
-            requestsHTML += '</ul>';
-            app.friendRequests(requestsHTML);
+            alert(data);
         }
+    })
+}
 
+function declineFriendship(request_id){
+    $.ajax({
+        url: '/decline_friend_request/',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'request_id': request_id
+        },
+        success: function(data){
+            alert(data);
+        }
     })
 }
 
