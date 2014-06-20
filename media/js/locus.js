@@ -486,8 +486,10 @@ function AppViewModel() {
 
     this.friendsList = ko.observable();
     this.usersList = ko.observable();
+    this.friendRequests = ko.observable();
     if (this.userID() != 'None') {
         getFriendsList();
+        getFriendRequests();
     }
   
 
@@ -899,7 +901,7 @@ function processFriendsList(fb_result) {
                                 "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
                                 "</p>";
                         } else {
-                            frndlst = frndlst +
+                            strngrlst = strngrlst +
                                 "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
                                 data.user_strangers[i].name +
                                 "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
@@ -932,6 +934,37 @@ function processFriendsList(fb_result) {
             })
         }
     }
+}
+
+function requestFriendship(requestee_id) {
+    $.ajax({
+        url: '/create_friend_request/',
+        type: 'POST',
+        data: {
+            'requestee_id':requestee_id
+        },
+        success: function(data){
+            alert(data)
+        }
+    })
+}
+
+function getFriendRequests() {
+    $.ajax({
+        url:'/get_friend_requests/',
+        type:'GET',
+        dataType: 'json',
+        success: function(data){
+            requests = data.friend_requests;
+            requestsHTML = '<ul>';
+            for (var i = 0; i < requests.length; i++){
+                requestsHTML += '<li>' + requests[i].requestee + ', ' + requests[i].requester + ': ' + requests[i].status + '</li>';
+            }
+            requestsHTML += '</ul>';
+            app.friendRequests(requestsHTML);
+        }
+
+    })
 }
 
 function deleteFriendship(unfriend_id) {

@@ -393,10 +393,13 @@ def get_bioregions_by_point(request):
 
 def get_friend_requests(request):
     if request.user.is_authenticated():
-        friend_requests = FriendRequest.objects.filter(Q(requester=request.user)|Q(requestee=request.user))
+        friend_requests = FriendRequest.objects.filter((Q(requester=request.user)|Q(requestee=request.user))&Q(status='new'))
+        response_json = []
+        for req in friend_requests:
+            response_json.append({'id':req.id, 'requestee': req.requestee.get_full_name(), 'requester': req.requester.get_full_name(), 'status': req.status})
         return HttpResponse(simplejson.dumps({
             'status': 200,
-            'friend_requests': friend_requests
+            'friend_requests': response_json
             })
         )
 
@@ -436,7 +439,7 @@ def generate_friend_requests(request):
 def accept_friend_request(request):
     if request.user.is_authenticated():
         request_id = simplejson.loads(request.POST.get('request_id'))
-        friend_request = FriendRequest.get(id=request_id)
+        friend_request = FriendRequest.objects.get(id=request_id)
         friend_request['status'] = 'accepted'
         friend_request.save()
         return HttpResponse(simplejson.dumps({
@@ -448,7 +451,7 @@ def accept_friend_request(request):
 def decline_friend_request(request):
     if request.user.is_authenticated():
         request_id = simplejson.loads(request.POST.get('request_id'))
-        friend_request = FriendRequest.get(id=request_id)
+        friend_request = FriendRequest.objects.get(id=request_id)
         friend_request['status'] = 'rejected'
         friend_request.save()
         return HttpResponse(simplejson.dumps({
@@ -520,7 +523,8 @@ def get_friends(request):
     user_friends_qs = SocialAccount.objects.filter(uid__in=friend_ids, provider='facebook')
     user_ids = [user.uid for user in user_friends_qs]
     user_friends = get_locus_friendships(request.user)
-    user_strangers = get_user_strangers([x['id'] for x in user_friends + [{'id':request.user.id}]])
+    pending_friend_requests = FriendRequest.objects.filter(requester=request.user, status='new')
+    user_strangers = get_user_strangers([x['id'] for x in user_friends + [{'id':request.user.id}] + [{'id':y.requestee.id} for y in pending_friend_requests]])
     just_friends = []
     sorted_friends = sorted(friends, key=itemgetter('name'))
     for friend in sorted_friends:
