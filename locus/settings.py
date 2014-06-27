@@ -24,6 +24,7 @@ COMPRESS_JS['application']['source_filenames'] += (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     "django.core.context_processors.request",
+    "django.contrib.auth.context_processors.auth",
     "allauth.account.context_processors.account",
     "allauth.socialaccount.context_processors.socialaccount",
  )
@@ -42,6 +43,7 @@ INSTALLED_APPS += (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
     'madrona.raster_stats',
     'analysis',
     'django.contrib.humanize',
@@ -91,10 +93,15 @@ STARSPAN_REMOVE_TMP = False
 APP_ID = 551234671609174
 
 SOCIALACCOUNT_PROVIDERS = {
-     'facebook':
-     { 'SCOPE': ['email', 'publish_stream'],
+    'facebook':
+    { 'SCOPE': ['email', 'publish_stream'],
        'AUTH_PARAMS': { 'auth_type': 'reauthenticate' },
        'METHOD': 'js_sdk'
+    },
+    'twitter':
+    { 
+        'SCOPE': [],
+        'method': 'oauth2'
      }
  }
 

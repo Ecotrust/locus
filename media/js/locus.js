@@ -949,15 +949,15 @@ function processFriendsList(fb_result) {
         })
     } else {
         if (fb_result.error.type == "OAuthException" && fb_result.error.code == 190) {
-            $.ajax({
-                url: '/accounts/logout/',
-                type: 'POST',
-                data: {},
-                success: function(data){
-                    window.location.href = "/";
-                    alert('Your Facebook session has timed out. Please log in again.');
-                }
-            })
+            alert('Your Facebook session has timed out. Please log in again.');
+            // $.ajax({
+            //     url: '/accounts/logout/',
+            //     type: 'POST',
+            //     data: {},
+            //     success: function(data){
+            //         window.location.href = "/";
+            //     }
+            // })
         }
     }
 }

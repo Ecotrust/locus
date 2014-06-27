@@ -98,10 +98,11 @@
                                             </form>
                                         </div>
                                     {% else %}
-                                        <div class="span12">
-                                            <form method="POST" action="{% provider_login_url "facebook" method="js_sdk" %}">
-                                                <button type="submit" class="base-login btn">Log In With Facebook</button>
-                                            </form>
+                                        <div class="span6">
+                                            <a class="btn base-login" href="{% provider_login_url "facebook" method="js_sdk" %}">Log In With Facebook</a>
+                                        </div>
+                                        <div class="span5">
+                                            <a class="btn base-login" href="{% provider_login_url "twitter" %}">Log In With Twitter</a>
                                         </div>
                                     {% endif %}
                                     <!-- <a id="ctl00_uxSignIn" title="Login with Facebook" class="btnFacebookLogin NoWrap" href="javascript:__doPostBack('ctl00$uxSignIn','')"><span> -->

@@ -30,14 +30,16 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
 
 
     if request.user.is_authenticated():
-        tokens = SocialToken.objects.filter(account__user=request.user, account__provider='facebook')
+        tokens = SocialToken.objects.filter(account__user=request.user)
 
         if tokens.count() > 0:
             token = tokens[0]
+            provider = token.account.provider
         else :
             token = None
+            provider = None
 
-        avatar_url = SocialAccount.objects.get(user=request.user, provider='facebook').get_avatar_url()
+        avatar_url = SocialAccount.objects.get(user=request.user, provider=provider).get_avatar_url()
 
         userSettings, created = UserSettings.objects.get_or_create(user=request.user)
         try:
@@ -240,6 +242,13 @@ def get_friends_bioregions(request):
     return response
 
 def get_storypoints(request, user):
+
+    if not request.user.is_authenticated():
+        return HttpResponse(simplejson.dumps({
+            'message': 'User is not authenticated',
+            'status': 401
+        }))
+
     usetting = UserSettings.objects.get(user=request.user)
 
     if user == 'json':
