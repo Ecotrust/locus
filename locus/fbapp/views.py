@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.gis.geos import Polygon, GEOSGeometry
 import json
 from operator import itemgetter
-from allauth.socialaccount.models import SocialToken, SocialAccount
+from allauth.socialaccount.models import SocialToken, SocialAccount, SocialApp
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.conf import settings
@@ -242,7 +242,7 @@ def get_friends_bioregions(request):
     return response
 
 def get_storypoints(request, user):
-
+    from django.contrib.gis.geos import Point
     if not request.user.is_authenticated():
         return HttpResponse(simplejson.dumps({
             'message': 'User is not authenticated',
@@ -250,9 +250,37 @@ def get_storypoints(request, user):
         }))
 
     usetting = UserSettings.objects.get(user=request.user)
+    geom = usetting.get_bioregion().geometry_final
 
+    if usetting.ns_tweets:
+
+        # get centroid for twitter request
+        centroid = geom.centroid
+        max_point = geom.envelope[0][0]
+        max_pt_obj = Point(max_point[0], max_point[1])
+        # get radius for twitter request
+        radius = centroid.distance(max_pt_obj)
+        centroid.transform(4326)
+        geocode = str(centroid.y) + ',' + str(centroid.x) + ',' + str(radius/1000) + 'km'
+
+        included_tweets = []
+        geo_tweets = []
+        for term in ['climate', 'food', 'culture', 'social','economy', 'ecology']:
+            url = 'https://api.twitter.com/1.1/search/tweets.json?count=100&q=%s&geocode=%s' % (term,geocode)
+            broad_tweets = oauth_req(url, 'twitter')
+            tweets = simplejson.loads(broad_tweets)
+            geo_tweets += [x for x in tweets['statuses'] if x['geo']!=None]
+        for tweet in geo_tweets:
+            point = Point(tweet['geo']['coordinates'][1], tweet['geo']['coordinates'][0])
+            point.srid=4326
+            point.transform(3857)
+            if point.within(geom):
+                included_tweets.append(tweet)
+
+    #TODO - don't store (most) storypoints locally - only posts.
+    ### For example, if we had a 'stored' source type, we could continue to use the below
     if user == 'json':
-        my_story_points = StoryPoint.objects.filter(Q(geometry__within=usetting.get_bioregion().geometry_final) | Q(source_user=usetting.user))
+        my_story_points = StoryPoint.objects.filter(Q(geometry__within=geom) | Q(source_user=usetting.user))
 
         # qs = StoryPoint.objects.all()
         qs = my_story_points
@@ -315,6 +343,29 @@ def get_storypoints(request, user):
     response['Content-length'] = str(len(response.content))
     response['Content-Type'] = 'text/plain'
     return response
+
+#Courtesy of https://dev.twitter.com/docs/auth/oauth/single-user-with-examples
+def oauth_req(url, provider_name, http_method="GET", post_body=None,
+        http_headers=None):
+    import oauth2 as oauth
+
+    socialApp = SocialApp.objects.get(provider=provider_name)
+    key = socialApp.client_id
+    secret = socialApp.secret
+
+    #TODO: url -> provider.url, add "params{}"
+    consumer = oauth.Consumer(key=key, secret=secret)
+    token = oauth.Token(key=settings.TWITTER_ACCESS_TOKEN, secret=settings.TWITTER_ACCESS_TOKEN_SECRET)
+    client = oauth.Client(consumer, token)
+ 
+    resp, content = client.request(
+        url,
+        method=http_method,
+        body=post_body,
+        headers=http_headers,
+        force_auth_header=True
+    )
+    return content
 
 def edit_storypoint(request, storypoint_id):
     try:

@@ -1,0 +1,44 @@
+import os, sys
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': '{dbname}',
+        'USER': '{dbusername}',
+        'PASSWORD': '{password}',
+        'HOST': 'localhost',
+    }
+}
+
+# This should be a local folder created for use with the install_media command 
+MEDIA_ROOT = '/usr/local/apps/locus/mediaroot/'
+MEDIA_URL = 'http://localhost:8080/media/'
+STATIC_URL = MEDIA_URL + '/'
+#STATIC_ROOT = os.path.abspath(os.path.dirname(sys.argv[0])) + STATIC_URL
+
+POSTGIS_TEMPLATE='template1'
+
+ADMINS = (
+        ('{adminname}', '{adminemail}')
+        ) 
+
+import logging
+logging.getLogger('django.db.backends').setLevel(logging.ERROR)
+LOG_FILE = os.path.join(os.path.dirname(__file__),'..','locus.log')
+
+SECRET_KEY = '{secretkey}'
+
+
+#TO Remove
+SERVER='Dev'
+DEMO=False
+
+VECTOR_DATA_LOCATION = '/usr/local/apps/locus/data/shapefiles/'
+THIESSEN_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/bioreg_2_polygon.shp'
+BIOREGION_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/generated_bioregions_2.shp'
+
+TWITTER_ACCESS_TOKEN= '{twitteraccesstoken}'
+TWITTER_ACCESS_TOKEN_SECRET='{twitteraccesstokensecret}'

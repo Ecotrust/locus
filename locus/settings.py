@@ -47,7 +47,8 @@ INSTALLED_APPS += (
     'madrona.raster_stats',
     'analysis',
     'django.contrib.humanize',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'oauth2',
 )
 
 ACCOUNT_EMAIL_VERIFICATION = "none"

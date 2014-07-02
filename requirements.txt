@@ -1,5 +1,7 @@
 madrona>=4.1
 #-e git+https://github.com/Ecotrust/madrona.git@master#egg=madrona
+-e git+https://github.com/brosner/python-oauth2.git@master#egg=python-oauth2
 
 django>=1.4,<1.5
 django-allauth==0.10.1
+httplib2

@@ -130,7 +130,6 @@ function mapInit() {
     map.addLayers([map.aerial, map.hybrid, map.esriOcean, map.storyPointLayer, map.locusLayer, map.selectedLocusLayer, map.lociLayer, map.friendLayer]);
     
     getLoci();
-    getStoryPoints();
     
     map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.addControl(new OpenLayers.Control.MousePosition());
@@ -320,7 +319,9 @@ function getLoci() {
           'internalProjection': new OpenLayers.Projection("EPSG:900913"),
           'externalProjection': new OpenLayers.Projection("EPSG:900913")
         });
-        map.lociLayer.addFeatures(geojson_format.read(result));
+        var loci = geojson_format.read(result)
+        map.lociLayer.addFeatures(loci);
+        getStoryPoints();
     });
 };
 
@@ -342,29 +343,48 @@ function getFriendLoci(frndlst) {
 };
 
 function getStoryPoints(user) {
-    if (user){
+    if (user && user != 'json'){
         url = "/get_storypoints/" + user + "/";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {},
+            dataType: 'json'
+        }).done(function(result) {
+            var geojson_format = new OpenLayers.Format.GeoJSON({
+              'internalProjection': new OpenLayers.Projection("EPSG:900913"),
+              'externalProjection': new OpenLayers.Projection("EPSG:900913")
+            });
+            app.storyPoints(geojson_format.read(result));
+            map.storyPointLayer.events.remove("featureadded");
+            map.result_features = geojson_format.read(result);
+            map.storyPointLayer.addFeatures(map.result_features);
+            getMaptiaStoryPoints();
+            app.getStoryFeeds();
+            map.storyPointLayer.events.on({"featureadded": onPostAdd});
+        });
     } else {
         url = "/get_storypoints/json/";
-    }
-    $.ajax({
-        url: url,
-        type: 'GET',
-        data: {},
-        dataType: 'json'
-    }).done(function(result) {
-        var geojson_format = new OpenLayers.Format.GeoJSON({
-          'internalProjection': new OpenLayers.Projection("EPSG:900913"),
-          'externalProjection': new OpenLayers.Projection("EPSG:900913")
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {},
+            dataType: 'json'
+        }).done(function(result) {
+            var geojson_format = new OpenLayers.Format.GeoJSON({
+              'internalProjection': new OpenLayers.Projection("EPSG:900913"),
+              'externalProjection': new OpenLayers.Projection("EPSG:900913")
+            });
+            app.storyPoints(geojson_format.read(result));
+            map.storyPointLayer.events.remove("featureadded");
+            map.result_features = geojson_format.read(result);
+            map.storyPointLayer.addFeatures(map.result_features);
+            getMaptiaStoryPoints();
+            app.getStoryFeeds();
+            map.storyPointLayer.events.on({"featureadded": onPostAdd});
         });
-        app.storyPoints(geojson_format.read(result));
-        map.storyPointLayer.events.remove("featureadded");
-        map.result_features = geojson_format.read(result);
-        map.storyPointLayer.addFeatures(map.result_features);
-        getMaptiaStoryPoints();
-        app.getStoryFeeds();
-        map.storyPointLayer.events.on({"featureadded": onPostAdd});
-    });
+        // });
+    }
 };
 
 function getWikipediaPoints() {
