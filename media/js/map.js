@@ -71,6 +71,11 @@ function mapInit() {
             fillOpacity: 1,
             pointRadius: 10,
             fillColor: "#FF0000"
+        },'twitter': {
+            externalGraphic: "https://g.twimg.com/Twitter_logo_blue.png",
+            fillOpacity: 1,
+            pointRadius: 10,
+            fillColor: "#FF0000"
         }
     };
 

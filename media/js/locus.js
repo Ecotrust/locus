@@ -769,10 +769,19 @@ function makePopup(feature) {
 }
 
 function newsBubble(storyPoint) {
-    var html = "<div class=\"news-bubble\">\
-                <div class=\"news-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
-                <a href=\"" + storyPoint.source_link + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
-            </div>";
+    if (storyPoint.source_type == 'twitter'){
+        var html = "<div class=\"news-bubble\">\
+                    <div class=\"news-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
+                    <a href=\"" + storyPoint.source_link + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
+                    <p>" + storyPoint.content + "</p>\
+                </div>";
+
+    } else {
+        var html = "<div class=\"news-bubble\">\
+                    <div class=\"news-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
+                    <a href=\"" + storyPoint.source_link + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
+                </div>";
+    }
     return html;
 }
 

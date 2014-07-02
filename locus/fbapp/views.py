@@ -275,7 +275,9 @@ def get_storypoints(request, user):
             point.srid=4326
             point.transform(3857)
             if point.within(geom):
-                included_tweets.append(tweet)
+                tweet['point'] = point
+                if tweet.has_key('point'):  #TODO: stupid hack
+                    included_tweets.append(tweet)
 
     #TODO - don't store (most) storypoints locally - only posts.
     ### For example, if we had a 'stored' source type, we could continue to use the below
@@ -324,6 +326,42 @@ def get_storypoints(request, user):
             }
         }
         features.append(feature)
+
+    for point in geo_tweets:
+        image = point['user']['profile_image_url']
+        source_user_id = None
+        try:
+            feature = {
+                'id' : str(point['id']),
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [
+                        point['point'].x,
+                        point['point'].y
+                    ]
+                },
+                'type': 'Feature',
+                'properties': {
+                    'storyPoint': {
+                        'id': point['id'],
+                        'source_user_id': source_user_id,
+                        'source_type': 'twitter',
+                        'source_link': 'http://www.twitter.com/' + point['user']['screen_name'],
+                        'title': '@' + point['user']['screen_name'],
+                        'content': point['text'],
+                        'image': image,
+                        'date': point['created_at'],
+                        'isPerm': False,
+                        'flagged': False, #TODO
+                        'flag_reason': None #point.flag_reason
+                    },
+                    'source_type': 'twitter' #point.source_type
+                }
+            }
+        except:
+            pass
+        features.append(feature)
+
 
     storypoints = {
         "srid": 900913, 
