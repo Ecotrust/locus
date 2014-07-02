@@ -276,7 +276,7 @@ def get_storypoints(request, user):
             point.transform(3857)
             if point.within(geom):
                 tweet['point'] = point
-                if tweet.has_key('point'):  #TODO: stupid hack
+                if not any(x['id']== tweet['id'] for x in included_tweets):
                     included_tweets.append(tweet)
 
     #TODO - don't store (most) storypoints locally - only posts.
@@ -327,7 +327,7 @@ def get_storypoints(request, user):
         }
         features.append(feature)
 
-    for point in geo_tweets:
+    for point in included_tweets:
         image = point['user']['profile_image_url']
         source_user_id = None
         try:
