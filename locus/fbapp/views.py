@@ -182,24 +182,19 @@ def get_friends_bioregions(request):
     gen_bioregion_ids = []
 
     friend_ids = [friend['id'] for friend in friends]
-    friend_accounts = SocialAccount.objects.filter(uid__in=friend_ids)
-    for friend in friend_accounts:
-        uid = friend.user.id
-        user_ids.append(uid)
-        user_bioregion_mapping[friend.uid] = {'user_id': uid}
-    u_settings_qs = UserSettings.objects.filter(user__id__in=user_ids)
+
+    u_settings_qs = UserSettings.objects.filter(user__id__in=friend_ids)
 
     for setting in u_settings_qs:
         if setting.has_bioregion():
-            for mapping in user_bioregion_mapping:
-                if user_bioregion_mapping[mapping]['user_id'] == setting.user.id:
-                    break       # get mapping without knowing the fb user id
-            user_bioregion_mapping[mapping]['type'] = setting.bioregion_type()
-            user_bioregion_mapping[mapping]['br_id'] = setting.get_bioregion().id
-            if user_bioregion_mapping[mapping]['type'] == "Drawn":
-                draw_bioregion_ids.append(user_bioregion_mapping[mapping]['br_id'])
+            user_bioregion_mapping[setting.user_id] = {
+                'type': setting.bioregion_type(),
+                'br_id': setting.get_bioregion().id
+            }
+            if setting.bioregion_type() == "Drawn":
+                draw_bioregion_ids.append(setting.get_bioregion().id)
             else:
-                gen_bioregion_ids.append(user_bioregion_mapping[mapping]['br_id'])
+                gen_bioregion_ids.append(setting.get_bioregion().id)
 
     gen_qs = GeneratedBioregion.objects.filter(id__in=gen_bioregion_ids)
     draw_qs = DrawnBioregion.objects.filter(id__in=draw_bioregion_ids)
