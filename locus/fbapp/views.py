@@ -64,12 +64,15 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
             "userLocus": user_locus,
             "avatar": avatar_url,
             "genId": gen_id,
-            "userID": request.user.id,
+            "userId": request.user.id,
+            "userName": request.user.get_full_name(),
+            "userProvider": request.user.socialaccount_set.values()[0]['provider'],
             "appID": settings.APP_ID,
             "locusName": locus_name,
             "newsSources": json.dumps(newsSources, ensure_ascii=False)
         }
     )
+
     context.update(extra_context)
     return render_to_response(template_name, context_instance=context)
     
