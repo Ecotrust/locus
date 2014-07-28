@@ -75,8 +75,6 @@ function AppViewModel() {
         this.userHasLocus(false);
     }
     
-    this.users = ko.observable(users);
-
     this.storyPoints = ko.observable();
 
     /*---------------------------------------------------------------------
@@ -134,10 +132,11 @@ function AppViewModel() {
                 app.newsJSON(app.newsJSON().concat(spoint));
             }
         }
-        this.communityFeed(JSON2ComFeedHTML(this.communityJSON(), app.users));
+        app.users = [];
+        this.communityFeed(JSON2ComFeedHTML(this.communityJSON()));
         this.newsFeed(JSON2NewsFeedHTML(this.newsJSON()));
         
-    }
+    };
 
     self.layerChanged = function() {
         var opt = self.selectedLayer().value;
@@ -455,37 +454,9 @@ function AppViewModel() {
             FRIENDS AppViewModel
     ---------------------------------------------------------------------*/
     
-    this.friendsJSON = [];
-    // this.friendLocationsJSON = [];
-    
-    this.otherUsersJSON = [];
-    // this.otherLocationsJSON = [];
-    
-    this.otherFriendsJSON = [];
-    
-    if (this.userID() != 'None') {
-        this.user = this.users()[this.userID()];
-        for (var key in this.users()){
-            if (key != this.userID()) {
-                if (this.user && this.user['friends'] && this.user['friends'].indexOf(key) > -1) {   //If user is a friend
-                    if (this.users()[key].isLocusUser == true) {      //if friend is locus user
-                        this.friendsJSON.push(this.users()[key]);
-                        // this.friendLocationsJSON.push(this.locations[this.users()[key].location])
-                    } else {        //if friend is not locus user
-                        this.otherFriendsJSON.push(this.users()[key]);
-                        // this.otherLocationsJSON.push(this.locations[this.users()[key].location])
-                    }
-                } else {        //if user is not a friend
-                    if (this.users()[key].isLocusUser == true) {      //if other is locus user
-                        this.otherUsersJSON.push(this.users[key])
-                    }
-                }
-            }
-        }
-    }
-
     this.friendsList = ko.observable();
     this.usersList = ko.observable();
+    this.usersListHtml = ko.observable();
     this.friendRequests = ko.observable();
     if (this.userID() != 'None') {
         getFriendsList();
@@ -513,8 +484,8 @@ function AppViewModel() {
             }
         }
     }
-    
-    this.otherCommunityFeed = ko.observable(JSON2ComFeedHTML(this.otherCommunityJSON, users));      //static object to be replaced with AJAX call
+
+    this.otherCommunityFeed = ko.observable(JSON2ComFeedHTML(this.otherCommunityJSON));      //static object to be replaced with AJAX call
     this.otherNewsFeed = ko.observable(JSON2NewsFeedHTML(this.otherNewsJSON));      //static object to be replaced with AJAX call
     
 }
@@ -557,7 +528,7 @@ function JSON2UserFeedHTML(json, locations){
     return html;
 }
 
-function JSON2ComFeedHTML(json, users){
+function JSON2ComFeedHTML(json){
     var start_div = '<div class="row-fluid">\
             <div class="span11 well friend-card">\
                 <div class="row-fluid">\
@@ -577,7 +548,7 @@ function JSON2ComFeedHTML(json, users){
         html += start_div;
         html += "                        <div class=\"mug\"><img src=\"" + json[i].data.storyPoint.image + "\"/></div>";
         html += mid_div;
-        html += "                        <h4><a href=\"/get_storypoints/" + json[i].data.storyPoint.source_user_id + "/\">" +users()[json[i].data.storyPoint.source_user_id].name + "</a></h4>";
+        html += "                        <h4><a href=\"/get_storypoints/" + json[i].data.storyPoint.source_user_id + "/\">" + json[i].data.storyPoint.source_user_name + "</a></h4>";
         html += mid_div_2;
         html += "                        <p>" + json[i].data.storyPoint.content + "</p>";
         html += "                        <p class='feed-date'>" + json[i].data.storyPoint.date + "</p>";
@@ -864,111 +835,102 @@ function getFriendsList(){
 
 function processFriendsList(fb_result) {
     if(!fb_result.error){
-        $.ajax({
-            url: '/get_friends/',
-            type: 'POST',
-            data: {
-                'friends': JSON.stringify(fb_result.data),
-                'user_id': app.userID()
-            },
-            dataType: 'json',
-            success: function(data){
-                frndlst = "";
-                for(var i = 0; i < data.user_friends.length; i++) {
-                    if (data.user_friends[i].id) {
-                        facebook_index = data.user_friends[i].providers.indexOf('facebook')
-                        if (facebook_index > -1) {
-                            frndlst = frndlst + 
-                                "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + 
-                                data.user_friends[i].uids[facebook_index] +
-                                "/picture?type=large\">" +
-                                data.user_friends[i].name +
-                                "<button class='btn' onclick='deleteFriendship(" + data.user_friends[i].id + ")'><i class='category-icon icon-minus'></i></button>" +
-                                "</p>";
-                        } else {
-                            frndlst = frndlst +
-                                "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
-                                data.user_friends[i].name +
-                                "<button class='btn' onclick='deleteFriendship(" + data.user_friends[i].id + ")'><i class='category-icon icon-minus'></i></button>" +
-                                "</p>";
-                        }
-                    }
-                }
-                app.friendsList(frndlst);
-
-                strngrlst = "";
-                for(var i = 0; i < data.user_strangers.length; i++){
-                    if (data.user_strangers[i].id) {
-                        facebook_index = data.user_strangers[i].providers.indexOf('facebook');
-                        if (facebook_index > -1) {
-                            strngrlst = strngrlst + 
-                                "<p><img class=\"mug\" src=\"http://graph.facebook.com/" +
-                                data.user_strangers[i].uids[facebook_index] +
-                                "/picture?type=large\">" +
-                                data.user_strangers[i].name +
-                                "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
-                                "</p>";
-                        } else {
-                            strngrlst = strngrlst +
-                                "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
-                                data.user_strangers[i].name +
-                                "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
-                                "</p>";
-                        }
-                    }
-                }
-                app.usersList(strngrlst);
-
-                invitelst = "";
-                for(var i=0; i < data.just_friends.length; i++) {
-                    if (data.just_friends[i].id) {
-                        invitelst = invitelst + '<input class="invite-chk" type="checkbox" name="' + data.just_friends[i].name + '" value="' + data.just_friends[i].id + '">' + data.just_friends[i].name + '</input><br/>';
-                    }
-                }
-                app.inviteList(invitelst);
-
-                reqlst = "";
-                for(var i=0; i<data.friend_requests.length; i++){
-                    if (data.friend_requests[i].id) {
-                        facebook_index = data.friend_requests[i].providers.indexOf('facebook');
-                        if (facebook_index > -1) {
-                            reqlst = reqlst + 
-                                "<p><img class=\"mug\" src=\"http://graph.facebook.com/" +
-                                data.friend_requests[i].uids[facebook_index] +
-                                "/picture?type=large\">" +
-                                data.friend_requests[i].name +
-                                "<button class='btn' onclick='acceptFriendship(" + data.friend_requests[i].request_id + ")'>Accept</button>" +
-                                "<button class='btn' onclick='declineFriendship(" + data.friend_requests[i].request_id + ")'>Decline</button>" +
-                                "</p>";
-                        } else {
-                            reqlst = reqlst +
-                                "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
-                                data.friend_requests[i].name +
-                                "<button class='btn' onclick='acceptFriendship(" + data.friend_requests[i].request_id + ")'>Accept</button>" +
-                                "<button class='btn' onclick='declineFriendship(" + data.friend_requests[i].request_id + ")'>Decline</button>" +
-                                "</p>";
-                        }
-                    }
-                app.friendRequests(reqlst)
-
-                }
-
-                getFriendLoci(data.user_friends);
-            }
-        })
+        var friends = JSON.stringify(fb_result.data);
     } else {
-        if (fb_result.error.type == "OAuthException" && fb_result.error.code == 190) {
-            alert('Your Facebook session has timed out. Please log in again.');
-            // $.ajax({
-            //     url: '/accounts/logout/',
-            //     type: 'POST',
-            //     data: {},
-            //     success: function(data){
-            //         window.location.href = "/";
-            //     }
-            // })
-        }
+        var friends = JSON.stringify([]);
     }
+    $.ajax({
+        url: '/get_friends/',
+        type: 'POST',
+        data: {
+            'friends': friends,
+            'user_id': app.userID()
+        },
+        dataType: 'json',
+        success: function(data){
+            frndlst = "";
+            for(var i = 0; i < data.user_friends.length; i++) {
+                if (data.user_friends[i].id) {
+                    facebook_index = data.user_friends[i].providers.indexOf('facebook')
+                    if (facebook_index > -1) {
+                        frndlst = frndlst + 
+                            "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + 
+                            data.user_friends[i].uids[facebook_index] +
+                            "/picture?type=large\">" +
+                            data.user_friends[i].name +
+                            "<button class='btn' onclick='deleteFriendship(" + data.user_friends[i].id + ")'><i class='category-icon icon-minus'></i></button>" +
+                            "</p>";
+                    } else {
+                        frndlst = frndlst +
+                            "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
+                            data.user_friends[i].name +
+                            "<button class='btn' onclick='deleteFriendship(" + data.user_friends[i].id + ")'><i class='category-icon icon-minus'></i></button>" +
+                            "</p>";
+                    }
+                }
+            }
+            app.friendsList(frndlst);
+
+            strngrlst = "";
+            for(var i = 0; i < data.user_strangers.length; i++){
+                if (data.user_strangers[i].id) {
+                    facebook_index = data.user_strangers[i].providers.indexOf('facebook');
+                    if (facebook_index > -1) {
+                        strngrlst = strngrlst + 
+                            "<p><img class=\"mug\" src=\"http://graph.facebook.com/" +
+                            data.user_strangers[i].uids[facebook_index] +
+                            "/picture?type=large\">" +
+                            data.user_strangers[i].name +
+                            "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
+                            "</p>";
+                    } else {
+                        strngrlst = strngrlst +
+                            "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
+                            data.user_strangers[i].name +
+                            "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
+                            "</p>";
+                    }
+                }
+            }
+            app.usersListHtml(strngrlst);
+
+            invitelst = "";
+            for(var i=0; i < data.just_friends.length; i++) {
+                if (data.just_friends[i].id) {
+                    invitelst = invitelst + '<input class="invite-chk" type="checkbox" name="' + data.just_friends[i].name + '" value="' + data.just_friends[i].id + '">' + data.just_friends[i].name + '</input><br/>';
+                }
+            }
+            app.inviteList(invitelst);
+
+            reqlst = "";
+            for(var i=0; i<data.friend_requests.length; i++){
+                if (data.friend_requests[i].id) {
+                    facebook_index = data.friend_requests[i].providers.indexOf('facebook');
+                    if (facebook_index > -1) {
+                        reqlst = reqlst + 
+                            "<p><img class=\"mug\" src=\"http://graph.facebook.com/" +
+                            data.friend_requests[i].uids[facebook_index] +
+                            "/picture?type=large\">" +
+                            data.friend_requests[i].name +
+                            "<button class='btn' onclick='acceptFriendship(" + data.friend_requests[i].request_id + ")'>Accept</button>" +
+                            "<button class='btn' onclick='declineFriendship(" + data.friend_requests[i].request_id + ")'>Decline</button>" +
+                            "</p>";
+                    } else {
+                        reqlst = reqlst +
+                            "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
+                            data.friend_requests[i].name +
+                            "<button class='btn' onclick='acceptFriendship(" + data.friend_requests[i].request_id + ")'>Accept</button>" +
+                            "<button class='btn' onclick='declineFriendship(" + data.friend_requests[i].request_id + ")'>Decline</button>" +
+                            "</p>";
+                    }
+                }
+            app.friendRequests(reqlst)
+
+            }
+
+            getFriendLoci(data.user_friends);
+        }
+    });
 }
 
 function requestFriendship(requestee_id) {

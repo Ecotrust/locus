@@ -18,11 +18,6 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
     """
     Launch screen / Home page for application
     """
-
-    users = {}
-    for user in SocialAccount.objects.all():
-        users[str(user.user.id)] = {"name": user.user.get_full_name(), "id": user.user.id}
-
     token = ""
     avatar_url = ""
     user_locus = {}
@@ -65,7 +60,6 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
 
     context = RequestContext(
         request,{
-            "users": json.dumps(users, ensure_ascii=False), 
             "token": token, 
             "userLocus": user_locus,
             "avatar": avatar_url,
@@ -290,9 +284,11 @@ def get_storypoints(request, user):
         if point.source_type != 'user':
             image = point.image
             source_user_id = None
+            source_user_name = None
         else:
             image = point.avatar()
             source_user_id = point.source_user.id
+            source_user_name = point.source_user.get_full_name()
         feature = {
             'id' : str(point.id),
             'geometry': {
@@ -307,6 +303,7 @@ def get_storypoints(request, user):
                 'storyPoint': {
                     'id': point.id,
                     'source_user_id': source_user_id,
+                    'source_user_name': source_user_name,
                     'source_type': point.source_type,
                     'source_link': point.source_link,
                     'title': point.title,
