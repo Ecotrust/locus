@@ -260,7 +260,7 @@ def get_storypoints(request, user):
 
         included_tweets = []
         geo_tweets = []
-        for term in ['climate', 'food', 'culture', 'social','economy', 'ecology']:
+        for term in ['climate', 'ecology', 'resilience', 'agriculture']:
             url = 'https://api.twitter.com/1.1/search/tweets.json?count=100&q=%s&geocode=%s' % (term,geocode)
             broad_tweets = oauth_req(url, 'twitter')
             tweets = simplejson.loads(broad_tweets)
