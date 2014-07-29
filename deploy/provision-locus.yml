@@ -79,7 +79,7 @@
       pip: name={{item}} state=present virtualenv={{ venv_path }} virtualenv_site_packages=yes
       with_items:
         - xlrd
-        - django<1.5
+        - django==1.4.13
         - django-redis-sessions
         - python-memcached
         - modestmaps
@@ -89,7 +89,8 @@
         - celery-with-redis
         - redis
         - kombu
-        - uwsgi>=1.2.6
+        - uwsgi
+        #- uwsgi>=1.2.6
         - 'git+https://github.com/springmeyer/djmapnik.git@8d736a73470b#egg=djmapnik-0.1.3'
         - 'git+https://github.com/Ecotrust/madrona.git@master#egg=madrona'
         - 'git+git://github.com/perrygeo/TileStache.git@master#egg=TileStache'
@@ -207,8 +208,8 @@
       notify: restart uwsgi
       template: src=templates/uwsgi.init.j2 dest=/etc/init.d/uwsgi owner=root group=root mode=0755
 
-    - name: set tmp madrona raster_stats permissions
-      command: "chmod -R 777 {{ venv_path }}/src/madrona/madrona/raster_stats"
+    # - name: set tmp madrona raster_stats permissions
+     # command: "chmod -R 777 {{ venv_path }}/src/madrona/madrona/raster_stats"
 
     #- name: install wsgi script for TileStache
     #  template: src=templates/tilestache_wsgi.py dest={{ project_path }}/tilestache_wsgi.py owner={{ remote_user }} group={{ remote_user }} mode=0755
@@ -275,7 +276,7 @@
     ###
 
     - name: copy report data
-      when: data_not_loaded
+      when: data_not_loaded and copy_data==true
       copy: src={{ data_src }} dest={{ project_path }}/data
 
     - name: install raster report data
@@ -300,7 +301,7 @@
     ###
 
     - name: copy bioregion shapes
-      when: data_not_loaded
+      when: data_not_loaded and copy_data
       copy: src={{ region_src }} dest={{ project_path }}/media
 
     - name: load bioregion shapes
