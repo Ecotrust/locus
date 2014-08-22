@@ -22,14 +22,14 @@ STATIC_URL = MEDIA_URL + '/'
 POSTGIS_TEMPLATE='template1'
 
 ADMINS = (
-        ('Madrona', 'madrona@ecotrust.org')
+        ('{{ appadmin }}', '{{ adminemail }}')
         ) 
 
 import logging
 logging.getLogger('django.db.backends').setLevel(logging.ERROR)
 LOG_FILE = os.path.join(os.path.dirname(__file__),'..','locus.log')
 
-SECRET_KEY = 'secret'
+SECRET_KEY = '{{ secretkey }}'
 
 
 #TO Remove
@@ -39,3 +39,6 @@ DEMO=False
 VECTOR_DATA_LOCATION = '/usr/local/apps/locus/data/shapefiles/'
 THIESSEN_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/bioreg_2_polygon.shp'
 BIOREGION_LOCATION = '/usr/local/apps/locus/media/DEMO/geo/generated_bioregions_2.shp'
+
+TWITTER_ACCESS_TOKEN= '{{ twitteraccesstoken }}'
+TWITTER_ACCESS_TOKEN_SECRET='{{ twitteraccesstokensecret }}'
