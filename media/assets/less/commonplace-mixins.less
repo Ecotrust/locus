@@ -1,0 +1,87 @@
+.section-inner {
+	margin: 0 auto;
+	max-width: 94%;
+	position: relative;
+		@media (min-width: 768px) {
+			width: @inner-width;
+		}
+	width: 100%;
+}
+
+
+
+.rounded(@radius: 2px) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+.border-radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
+	-webkit-border-top-right-radius: @topright;
+	-webkit-border-bottom-right-radius: @bottomright;
+	-webkit-border-bottom-left-radius: @bottomleft;
+	-webkit-border-top-left-radius: @topleft;
+	-moz-border-radius-topright: @topright;
+	-moz-border-radius-bottomright: @bottomright;
+	-moz-border-radius-bottomleft: @bottomleft;
+	-moz-border-radius-topleft: @topleft;
+	border-top-right-radius: @topright;
+	border-bottom-right-radius: @bottomright;
+	border-bottom-left-radius: @bottomleft;
+	border-top-left-radius: @topleft;
+	.background-clip(padding-box);
+}
+
+
+.list-reset{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.hairline(@color: #959595, @value: 0.3) {
+	& {
+		position: relative;
+	}
+	&:after {
+		clear: both;
+		content: " ";
+		display: block;
+		border-bottom: 1px @color solid;
+		-webkit-transform: scaleY(@value);
+		-moz-transform:    scaleY(@value);
+		-ms-transform:     scaleY(@value);
+		-o-transform:      scaleY(@value);
+		transform:         scaleY(@value);
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+	}
+}
+/*.img-retina(@file-1x; @file-2x; @width-1x; @height-1x) {}*/
+
+.background-clip(@argument: padding-box) {
+	-moz-background-clip: @argument;
+	-webkit-background-clip: @argument;
+	background-clip: @argument;
+}
+.debug(@color: red, @sizeStyle: 1px solid) {
+	border: @sizeStyle @color;
+}
+.animation-delay(@duration) {
+	-webkit-animation-delay: @duration;
+	-moz-animation-delay: @duration;
+	-o-animation-delay: @duration;
+	-ms-animation-delay: @duration;
+	animation-delay: @duration;
+}
+
+.opacity (@opacity: 0.5) {
+	-webkit-opacity: 	@opacity;
+	-moz-opacity: 		@opacity;
+	opacity:			@opacity;
+}
+.retina-sprite() {
+	background-image: url(../img/sprite-icons@2x.png);
+	/*background-size: 126px 146px;*/
+	background-size: 125px 225px;
+}

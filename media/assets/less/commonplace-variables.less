@@ -1,0 +1,399 @@
+@color:					#000000;
+@yellow:				#ffc419;
+@blue:					#0099ff;
+@blueAlt:				#0095ff;
+@blueLight:				#3fa7f3;
+@black:					#000000;
+@white:					#ffffff;
+@off-white:				#e6e6e6;
+
+
+@text:					#58595b;
+@brand-primary:         #00aeef;
+@brand-success:         #5cb85c;
+@brand-warning:         #f0ad4e;
+@brand-danger:          #d9534f;
+@brand-info:            #5bc0de;
+
+@green:					#669933;
+@orange:				#c0690f;
+@gray:					#969696;
+@grey:					#969696;
+@gray-dark:				#4d4d4d;
+@gray-light:			#e0e0e0;
+@gray-lighter:			#e5e5e5;
+@red:					#cc3333;
+
+@gray-nav:				#83827C;
+@toc-bg:				@white; 
+@cplogo-text:			#231f20;
+@icon-white:			#e2e2e2;
+
+// Scaffolding
+// -------------------------
+@full-width:            994px;
+@full-width-padded:     870px;
+@inner-width:           618px;
+/*@inner-width:           40em;*/
+@body-bg:               @white;
+@text-color:            #353233;
+
+
+@item-margin:           20px;
+
+@hero-height:			375px;
+@hero-large-height:		580px;
+
+// Links
+// -------------------------
+
+@link-color:            @blue;
+@link-hover-color:      darken(@link-color, 15%);
+.hover(@color:@link-color){
+	&:hover { color: @color; }
+	.hoverTrans();
+}
+.hoverTrans (@speed: 0.2s) {
+	.transition( ~"color @{speed} ease-in-out, background-color @{speed} ease-in-out");
+}
+.hovercolor(@color:@blue;) {
+	&:hover {
+		color: @color;
+	}
+}
+// Typography
+// -------------------------
+
+
+//agenda == agenda bold
+@font-family-sans-serif:	"AvenirLT-Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+.font-family-sans-serif-full {
+	font-family: @font-family-sans-serif;
+	font-weight: 700; //safari really wants this
+}
+@font-family-sans-serif-light:	"AvenirLT-Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-sans-serif-medium:	"AvenirLT-Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-sans-serif-bold:	"AvenirLT-Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@font-family-serif:			"CenturySchoolbookBT-Roman", Georgia, "Times New Roman", Times, serif;
+@font-family-serif-bold:	"CenturySchoolbookBT-Bold", Georgia, "Times New Roman", Times, serif;
+@font-family-serif-italic:	"CenturySchoolbookBT-Italic", Georgia, "Times New Roman", Times, serif;
+@font-family-serif-bold-italic:	"CenturySchoolbookBT-BoldItalic", Georgia, "Times New Roman", Times, serif;
+@font-family-monospace:		Monaco, Menlo, Consolas, "Courier New", monospace;
+@font-family-intro:			"Intro-Black-Caps", 'Avenir Next Condensed', 'Helvetica Neue Condensed', 'Arial Narrow', sans-serif;
+@font-family-intro-inline:	"Intro-Black-Inline-Caps", 'Avenir Next Condensed', 'Helvetica Neue Condensed', 'Arial Narrow', sans-serif;
+@font-family-base:			@font-family-sans-serif;
+
+.lydia(){
+	font-family:"Lydia Bold Condensed Italic", 'Avenir Next Condensed', 'Helvetica Neue Condensed', 'Arial Narrow', sans-serif; 
+	/*font-family:"Lydia Bold Condensed Italic", "Times New Roman"; */
+	font-weight: bold; 
+	font-style: italic; 
+}
+.black-header(@font-size: 26; @letter-spacing: 0.05em){
+	font-family: @font-family-sans-serif-bold;
+	.font-size(@font-size);
+	font-weight: 300;
+	line-height: @line-height-tight;
+	letter-spacing: @letter-spacing;
+
+}
+
+.nav-link() {
+	color: @gray-nav;
+	font-family: @font-family-intro;
+	.font-size(14);
+	line-height: 21px;
+	&:hover {
+		color: @blue;
+		text-decoration: none;
+	}
+	
+}
+
+@font-size-base:			14px; 
+@font-size-large:			ceil(@font-size-base * 1.5); // ~24px
+@font-size-medium:			ceil(@font-size-base * 1.2375); // 19.8px
+@font-size-small:			ceil(@font-size-base * 0.75); // 12px
+
+@line-height-base:			1.5625; 
+@line-height-tight:			@line-height-base * 0.768; //1.2
+
+@line-height-computed:		floor(@font-size-base * @line-height-base); // ~20px
+
+@headings-font-family:		Agenda, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@headings-font-weight:		700;
+@headings-line-height:		1.1;
+@headings-color:			@black;
+
+@dek-font-size:				20px;
+@content-font-size:			24px;
+
+
+.inactive-menu-item {
+	color: @gray;
+	font-family: @headings-font-family;
+	font-size: 14px;
+	font-weight: 700; //safari
+	text-transform: uppercase;
+}
+.active-menu-item{
+	background-color: transparent;
+	color: @blue;
+}
+.number-style (){
+	color: @yellow;
+	display: block;
+	font-size: @font-size-base;
+	font-family: @font-family-serif-italic;
+	margin-bottom: 5px;
+	font-style: normal;
+	font-weight: normal;
+}
+
+//https://gist.github.com/Victa/1209370
+.font-size(@font-size: 16) {
+    @rem: (@font-size / 10);
+    font-size: @font-size * 1px;
+    font-size: ~"@{rem}rem";
+}
+
+.font-awesome() {
+	font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+.arrow(@color: @blue){ 
+	color: @color;
+	.font-awesome();
+}
+.arrow-down(@color: @blue){
+	.arrow(@color);
+	content: "\f175";
+}
+.arrow-up(@color: @blue){ //unused on commonplace. Example from ecotrust.org for reference.
+	.arrow(@color);
+	content: "\f176";
+}
+.arrow-left(@color: @blue){
+	.arrow(@color);
+	margin-right: 15px;
+	content: "\f177";
+}
+.arrow-right(@color: @blue){
+	.arrow(@color);
+	content: "\f178";
+}
+
+.cp-button{
+	.btn();
+	background-color: @black;
+	color: @white;
+	font-family: @font-family-sans-serif;
+	padding: 7px 10px 4px 10px;
+	.rounded(0);
+	text-align: center;
+	text-transform: uppercase;
+
+	&:hover,
+	&:focus {
+		background-color: @gray-dark;
+		color: @off-white;
+		text-decoration: none;
+	}
+
+}
+
+
+// Basics of a navbar
+@navbar-height:                    50px;
+@navbar-margin-bottom:             @line-height-computed;
+@navbar-default-color:             #777;
+@navbar-default-bg:                #f8f8f8;
+@navbar-default-border:            darken(@navbar-default-bg, 6.5%);
+/*@navbar-border-radius:             @border-radius-base;*/
+@navbar-padding-horizontal:        floor(@grid-gutter-width / 2);
+@navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
+
+
+// Navbar links
+@navbar-default-link-color:                @blue;
+@navbar-default-link-hover-color:          #fff;
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         @black;
+@navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
+@navbar-default-link-disabled-color:       #ccc;
+@navbar-default-link-disabled-bg:          transparent;
+
+
+// Media queries breakpoints
+// --------------------------------------------------
+
+// Extra small screen / phone
+@screen-xs:                  480px;
+@screen-phone:               @screen-xs;
+
+// Small screen / tablet
+@screen-sm:                  768px;
+@screen-tablet:              @screen-sm;
+
+// Medium screen / desktop
+@screen-md:                  994px;
+@screen-desktop:             @screen-md;
+
+// Large screen / wide desktop
+@screen-lg:                  1200px;
+@screen-lg-desktop:          @screen-lg;
+
+@screen-xl:					 1500px;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max:              (@screen-sm - 1);
+@screen-sm-max:              (@screen-md - 1);
+@screen-md-max:              (@screen-lg - 1);
+
+
+/*@retina: ~"(-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi)";*/
+/*@retina: ~"(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi)";*/
+@retina: ~"(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi)";
+
+@mobile:	  ~"(max-width: @{screen-xs-max})";
+@tablet:      ~"(min-width: @{screen-sm})";
+@tablet-only: ~"(min-width: @{screen-sm}) and (max-width: @{screen-sm-max})";
+@desktop:     ~"(min-width: @{screen-md})";
+@desktop-only:~"(min-width: @{screen-md}) and (max-width: @{screen-md-max})";
+@desktop-xl:  ~"(min-width: @{screen-lg})";
+
+
+.white-row(@tabletMargin: 0){
+	background-color: @white;
+	margin-left: -15px;
+	margin-right: -15px;
+	padding: 40px 15px;
+}
+.media-listing {
+	/*border-bottom: 1px solid @gray;*/
+	.hairline();
+	display: block;
+	padding: 25px 18px 25px 18px;
+	&:hover {
+		background-color: #DADADA;
+		text-decoration: none;
+	}
+	& > img {
+		float: left;
+		margin-right: 10px;
+		margin-left: 0;
+	}
+
+	h2, h3 {
+		color: @black;
+		font-family: @font-family-serif;
+		font-weight: normal;
+		.font-size(20);
+		margin-top: 0;
+		padding-top: 0;
+		margin-bottom: 29px;
+	}
+	p {
+		.font-size(14);
+	}
+	> img {
+		height: 49px;
+		.rounded(50%);
+		width: 49px;
+		margin-left: 0;
+		.commmunity-listing & {
+			height: 75px;
+			width: 75px;
+		}
+	}
+	> .content {
+		color: @gray-dark;
+		margin-left: 75px;
+	}
+}
+.image-caption {
+	bottom: 0;
+	font-family: @font-family-serif;
+	.font-size(14);
+	line-height: @line-height-base;
+	margin: 10px auto;
+	max-width: 80%;
+	padding: 5px;
+	position: relative;
+	text-align: center;
+	@media (min-width: @screen-sm-min) { 
+		/*height: 87px;*/
+		/*position: absolute;*/
+	}
+}
+.hairline(@color: #959595; @value: 0.3;) {
+	& {
+		position: relative;
+	}
+	&:after {
+		clear: both;
+		content: " ";
+		display: block;
+		border-bottom: 1px @color solid;
+		-webkit-transform: scaleY(@value);
+		-moz-transform:    scaleY(@value);
+		-ms-transform:     scaleY(@value);
+		-o-transform:      scaleY(@value);
+		transform:         scaleY(@value);
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+	}
+}
+.hairline-top{
+	.hairline();
+	&:after {
+		bottom: auto;
+		top: 0;
+	}
+}
+
+.gallery-arrows(){
+	&:before{
+		border: none;
+		content: "";
+		height: 1px;
+	}
+	&:after {
+		border: none;
+	}
+	height: 61px;
+	.hide-text();
+	opacity: .6;
+	transition: none;
+	top: 25%; // tall images on mobile make this weird.
+	visibility: hidden; // Swipe instead
+
+		@media @tablet {
+			top: 40%; // estimate with caption for 50% of image
+			visibility: visible;
+		}
+
+	&.flex-prev, &.mfp-arrow-left {
+		background-image: url('../img/arrow_sprite.png');
+		background-position: left top;
+		
+		@media @tablet {
+			left: -50px;
+		}
+		/*margin-left:50px;*/
+	}
+
+	&.flex-next, &.mfp-arrow-right  {
+		background-image: url('../img/arrow_sprite.png');
+		background-position: right top;
+		@media @tablet {
+			right: -50px;
+		}
+		/*margin-right:50px;*/
+	}
+}
