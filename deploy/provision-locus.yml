@@ -95,6 +95,7 @@
         - 'git+https://github.com/Ecotrust/madrona.git@master#egg=madrona'
         - 'git+git://github.com/perrygeo/TileStache.git@master#egg=TileStache'
         - django-allauth==0.10.1
+        - oauth2
 
     - name: git checkout
       when: manage_with_git

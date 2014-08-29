@@ -58,18 +58,28 @@ def home(request, template_name='fbapp/home.html', extra_context={}):
             'ns_tweets': True
         }
 
+    try:
+        userName = request.user.get_full_name()
+        userProvider = request.user.socialaccount_set.values()[0]['provider']
+    except:
+        userName = ''
+        userProvider = None
+
     context = RequestContext(
         request,{
             "token": token, 
             "userLocus": user_locus,
             "avatar": avatar_url,
             "genId": gen_id,
-            "userID": request.user.id,
+            "userId": request.user.id,
+            "userName": userName,
+            "userProvider": userProvider,
             "appID": settings.APP_ID,
             "locusName": locus_name,
             "newsSources": json.dumps(newsSources, ensure_ascii=False)
         }
     )
+
     context.update(extra_context)
     return render_to_response(template_name, context_instance=context)
     
@@ -375,8 +385,8 @@ def get_storypoints(request, user):
     return response
 
 #Courtesy of https://dev.twitter.com/docs/auth/oauth/single-user-with-examples
-def oauth_req(url, provider_name, http_method="GET", post_body=None,
-        http_headers=None):
+def oauth_req(url, provider_name, http_method="GET", post_body='',
+        http_headers=''):
     import oauth2 as oauth
 
     socialApp = SocialApp.objects.get(provider=provider_name)
@@ -392,8 +402,7 @@ def oauth_req(url, provider_name, http_method="GET", post_body=None,
         url,
         method=http_method,
         body=post_body,
-        headers=http_headers,
-        force_auth_header=True
+        headers=http_headers
     )
     return content
 
