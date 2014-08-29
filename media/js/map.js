@@ -219,39 +219,50 @@ function mapInit() {
         zoom: 1
     };
 
-    $('a[data-toggle="tab"]').on('shown',function(e) {
-    
+    //$('a[data-toggle="tab"]').on('shown',function(e) {
+    $('a[data-toggle="tab"]').on('shown.bs.tab',function(e) {
         cleanOldSelected();
-        
-        if (e.relatedTarget.id == "dashboard-tab") {
-            dash_map_status = {
-                center: map.center,
-                zoom: map.zoom
-            };
-            mapShown = false;
-            drawPointControls['point'].deactivate();
-            selectStoryPointControl.unselectAll();
-            selectStoryPointControl.deactivate();
-        } else if (e.relatedTarget.id == "settings-tab") {
-            set_map_status = {
-                center: map.center,
-                zoom: map.zoom
-            };
-            mapShown = false;
-            selectLocusControl.deactivate();
-            drawLocusControls['polygon'].deactivate();
-            drawLocusControls['select'].deactivate();
-            selectedClickControl.deactivate();
-        } else if (e.relatedTarget.id == "world-tab") {
-            other_map_status = {
-                center: map.center,
-                zoom: map.zoom
-            };
-            mapShown = false;
-            selectLocusControl.deactivate();
-            selectStoryPointControl.deactivate();
-        }
-        
+		console.log('just getting started');
+		settingsPageInit();
+
+		// e.relatedTarget == previous tab
+		// there is no previous tab on start
+		if (e.relatedTarget !== undefined) {
+			if (e.relatedTarget.id == "dashboard-tab") {
+				dash_map_status = {
+					center: map.center,
+					zoom: map.zoom
+				};
+				mapShown = false;
+				drawPointControls['point'].deactivate();
+				selectStoryPointControl.unselectAll();
+				selectStoryPointControl.deactivate();
+
+			} else if (e.relatedTarget.id == "settings-tab") {
+				set_map_status = {
+					center: map.center,
+					zoom: map.zoom
+				};
+				mapShown = false;
+				selectLocusControl.deactivate();
+				drawLocusControls['polygon'].deactivate();
+				drawLocusControls['select'].deactivate();
+				selectedClickControl.deactivate();
+
+			} else if (e.relatedTarget.id == "world-tab") {
+				other_map_status = {
+					center: map.center,
+					zoom: map.zoom
+				};
+				mapShown = false;
+				selectLocusControl.deactivate();
+				selectStoryPointControl.deactivate();
+			}
+		} //if e.relatedTarget        
+		else {
+			console.log('no related target', e);
+		}
+
         if (e.target.id == "dashboard-tab") {
             drawPointControls['point'].activate();
             selectStoryPointControl.activate();
@@ -265,17 +276,9 @@ function mapInit() {
             map.friendLayer.setVisibility(false);
             mapShown = true;
         } else if (e.target.id == "settings-tab" ) {
-            selectLocusControl.activate();
-            $('#your-locus').show();
-            selectedClickControl.activate();
-            map.render("your-locus");
-            updateCenter(set_map_status);
-            map.storyPointLayer.setVisibility(false);
-            map.locusLayer.setVisibility(true);
-            map.selectedLocusLayer.setVisibility(true);
-            map.lociLayer.setVisibility(false);
-            map.friendLayer.setVisibility(false);
-            mapShown = true;
+			settingsPageInit();
+
+			//
         // } else if (e.target.id == "world-tab" ) {
         //     selectLocusControl.deactivate();
         //     selectStoryPointControl.deactivate();
@@ -288,9 +291,22 @@ function mapInit() {
         //     map.lociLayer.setVisibility(true);
         //     map.friendLayer.setVisibility(false);
         //     mapShown = true;
-        }
-        
+        }        
     });
+
+	function settingsPageInit () {
+		selectLocusControl.activate();
+		$('#your-locus').show();
+		selectedClickControl.activate();
+		map.render("your-locus");
+		updateCenter(set_map_status);
+		map.storyPointLayer.setVisibility(false);
+		map.locusLayer.setVisibility(true);
+		map.selectedLocusLayer.setVisibility(true);
+		map.lociLayer.setVisibility(false);
+		map.friendLayer.setVisibility(false);
+		mapShown = true;
+	}
 
     function updateCenter(view) {
         if (view == null) {
@@ -326,7 +342,7 @@ function getLoci() {
         });
         var loci = geojson_format.read(result)
         map.lociLayer.addFeatures(loci);
-        getStoryPoints();
+		getStoryPoints();
     });
 };
 

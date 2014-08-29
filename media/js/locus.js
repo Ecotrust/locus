@@ -1,4 +1,5 @@
 var app;
+var CPM = CPM || {};
     
 var mapShown = false;
 
@@ -6,8 +7,18 @@ function init() {
     
     mapInit();
 
+	//table of contents
+	CPM.tocHandler();
+
+	// about overlay
+	CPM.aboutHandler();
+
     // Activates knockout.js
     ko.applyBindings(new AppViewModel());
+
+	//set settings as the active tab
+	//TODO Dashboard should be first if the user has an existing loci
+	$('#settings-tab').tab('show');	
 
 }
 
@@ -153,7 +164,8 @@ function AppViewModel() {
             map.zoomToExtent(map.friendLayer.getDataExtent());
         } else {
             map.friendLayer.setVisibility(false);
-        }if (opt == 'All'){
+        }
+		if (opt == 'All'){
             map.lociLayer.setVisibility(true);
             map.zoomToExtent(map.lociLayer.getDataExtent());
         } else {
@@ -181,6 +193,7 @@ function AppViewModel() {
 
     //TODO: on userLocus change, collapse the appropriate accordion groups.
 
+	// No longer used. Inserted into HTML 8/21/14-wm
     this.reportDetailsJSON = {
         'summary': {
             'definition': '\
@@ -528,7 +541,7 @@ function JSON2UserFeedHTML(json, locations){
     return html;
 }
 
-function JSON2ComFeedHTML(json){
+function JSON2ComFeedHTML____ORIGINAL(json){
     var start_div = '<div class="row-fluid">\
             <div class="span11 well friend-card">\
                 <div class="row-fluid">\
@@ -553,6 +566,44 @@ function JSON2ComFeedHTML(json){
         html += "                        <p>" + json[i].data.storyPoint.content + "</p>";
         html += "                        <p class='feed-date'>" + json[i].data.storyPoint.date + "</p>";
         html += end_div;
+    }
+    return html;
+}
+
+/*
+	<li><a href="#">
+		<img src="http://ecotrust.org/media/RS665_City-of-Garibaldi-aerial-125x125.jpg" alt="">
+		<div class="content">
+			<h3>Abbey Smith</h3>
+			<p>Commonplace Name</p>
+		</div>
+	</a></li>
+*/
+
+function JSON2ComFeedHTML(json){
+
+    html = "";
+    for (var i=0; i<json.length; i++) {
+
+		html += '<li><a href="/get_storypoints/"'+ json[i].data.storyPoint.source_user_id + '>';
+		html += '<img src="'+ json[i].data.storyPoint.image +'">';
+		html += '<div class="content">';
+		html += '<h3>'  + json[i].data.storyPoint.source_user_name + '</h3>';
+		html += '<p>' + json[i].data.storyPoint.content + '</p>';
+		html += '    <div class="meta">';
+		html += '      <span class="source">News Source (in comps) / </span>';
+		html += '      <time content="2014-05-13T19:00:38+00:00" datetime="2014-05-13T19:00:38+00:00" class="published" itemprop="datePublished"> ';
+		html +=			json[i].data.storyPoint.date + '</time>';
+		html += '    </div>';
+		html += '</div>';
+		html += '</a></li>';
+
+		/*
+        html += "                        <div class=\"mug\"><img src=\"" + json[i].data.storyPoint.image + "\"/></div>";
+        html += "                        <h4><a href=\"/get_storypoints/" + json[i].data.storyPoint.source_user_id + "/\">" + json[i].data.storyPoint.source_user_name + "</a></h4>";
+        html += "                        <p>" + json[i].data.storyPoint.content + "</p>";
+        html += "                        <p class='feed-date'>" + json[i].data.storyPoint.date + "</p>";
+		*/
     }
     return html;
 }
@@ -1019,3 +1070,46 @@ function onOtherLocusSelect(event) {
 
 function onOtherLocusUnselect(event) {
 }
+
+// @TODO DRY FAIL
+CPM.tocHandler = function () {
+	var $toc = $('.toc'),
+		$mask = $('<div class="mask"></div>'),
+		$body = $('body');
+
+
+	function toggleToc(evt) {
+
+		if ( $toc.is('.open') ) {
+			$('.mask').remove();
+		} else {
+			$body.append( $mask );
+		}
+
+		$toc.toggleClass('open');
+	}
+
+	$body.on('click ', '.toc-toggle, .toc a', toggleToc);
+
+};
+CPM.aboutHandler =  function() {
+	var $about = $('.cp-about'),
+		$mask = $('<div class="mask"></div>'),
+		$body = $('body');
+
+	function aboutToc(evt) {
+
+		if ( $about.is('.open') ) {
+			$('.mask').remove();
+		} else {
+			$body.append( $mask );
+		}
+
+		//$body.toggleClass('about-open');
+		$about.toggleClass('open');
+	}
+
+	//$body.on('click ','.menu-about a, .about-open .mask, .cp-about a', aboutToc);
+	$body.on('click ','.menu-about a, .cp-about a', aboutToc);
+};
+

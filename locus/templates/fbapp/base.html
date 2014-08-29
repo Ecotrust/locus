@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-{% load appname %}
-{% load account %}
-{% load socialaccount %}
-        
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	{% load appname %}
+	<!--Not quite sure what these account and socialaccount do but they're also loaded in home.html-->
+	{% load account %}
+	{% load socialaccount %}
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>{% block title %}{% appname %}{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--[if lt IE 10]> <meta name='oldie' content='true'> <![endif]-->
+	
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/media/assets/css/main.min.css?ver=c380a46a83f2bc6de1161470156e588e">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+	<script>window.jQuery || document.write('<script src="/media/assets/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
 
-    <link rel="stylesheet" href="/media/third-party/bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/media/third-party/bootstrap/css/bootstrap-responsive.css"/>
-    
     <!--<link rel="shortcut icon" href="/media/marco/ico/favicon.ico">-->
     
-    {% providers_media_js %}
 
-    <script src="/media/third-party/jquery/jquery-1.9.1.min.js"></script>
+    <!--<script src="/media/third-party/jquery/jquery-1.9.1.min.js"></script>-->
     <!-- <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script> -->
     
     <script src="/media/third-party/openlayers/2-12/OpenLayers.js"></script>
@@ -56,104 +58,189 @@
     <link rel="stylesheet" href="/media/css/locus_style.css"/>
         
 </head>
-<body class="home page page-id-14 page-template page-template-page-homepage-php"  onload="init()">
-    <div id="fb-root"></div>
+<body onload="init()">
+<!--<body class="home page page-id-14 page-template page-template-page-homepage-php"  onload="init()">-->
+
+    {% providers_media_js %}
+
+	{% comment this stuff is loaded by providers_media_js above. kept for now, commented. %}
+    <!--<div id="fb-root"></div>-->
     <!-- <script src="/media/js/facebook-config.js"></script> -->
+	{% endcomment %}
 
     {% block header %}
-    <header role="banner">
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <a href="/">
-                                <img class="header-logo" src="/media/img/locus_logo.gif"/>
-                            </a>
-                        </div>
-                        <div class="span7">
-                            <div class="nav-collapse">
-                                <div class="row-fluid right-head">
-                                    {% if user.is_authenticated %}
-                                        <div class="span9 user-name">
-                                            <p>
-                                                {% if avatar %}
-                                                    <img class="header-avatar" src="{{avatar}}"/>
-                                                {% endif %}
-                                                <b>Hello </b>
-                                                {% if user.first_name %}
-                                                    <b>{{user.first_name}}</b>
-                                                    {% if user.last_name %}
-                                                        <b>{{user.last_name}}</b>
-                                                    {% endif %}
-                                                {% else %}
-                                                    <b>{{user.username}}</b>
-                                                {% endif %}
-                                            </p>
-                                        </div>
-                                        <div class="span3">
-                                            <form method="POST" action="/accounts/logout/">
-                                                <button type="submit" class="base-logout btn">logout</button>
-                                            </form>
-                                        </div>
-                                    {% else %}
-                                        <div class="span6">
-                                            <a class="btn base-login" href="{% provider_login_url "facebook" method="js_sdk" %}">Log In With Facebook</a>
-                                        </div>
-                                        <div class="span5">
-                                            <a class="btn base-login" href="{% provider_login_url "twitter" %}">Log In With Twitter</a>
-                                        </div>
-                                    {% endif %}
-                                    <!-- <a id="ctl00_uxSignIn" title="Login with Facebook" class="btnFacebookLogin NoWrap" href="javascript:__doPostBack('ctl00$uxSignIn','')"><span> -->
-                                        <!-- Login with Facebook</span></a> -->
-                                </div><!--/.nav-collapse -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-    </header> <!-- end header -->
+		<!--[if lt IE 9]>
+	<div class="alert alert-warning">
+		You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.    
+	</div>
+	<![endif]-->
+
+	<header class="banner navbar navbar-default navbar-fixed-top" role="banner" id="banner">
+
+			<div class="navbar-header">
+
+				<button type="button" class="toc-toggle--bars toc-toggle">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bars">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</span>
+					<span class="toc-title">Menu</span>
+				</button>
+
+				<a class="navbar-brand" href="http://commonplace/">common / place</a>
+
+				<nav class="navbar-right" role="navigation">
+					<ul id="menu-top-nav" class="nav navbar-nav ">
+						<li class="menu-login">
+							{% if user.is_authenticated %}
+								<div class="user-name">
+									<p>
+										{% if avatar %}
+											<img class="header-avatar" src="{{avatar}}"/>
+										{% endif %}
+										Hello 
+										<span class="name">
+										{% if user.first_name %}
+											{{user.first_name}}
+										{% else %}
+											{{user.username}}
+										{% endif %}
+										</span>
+									</p>
+									<form method="POST" action="/accounts/logout/">
+										<button type="submit" class="btn btn-link btn-logout">logout</button>
+									</form>
+								</div>
+							{% else %}
+								<div class="dropdown">
+									<button class="btn btn-link dropdown-toggle" type="button" id="social-login-menu" data-toggle="dropdown">
+										Log in/Sign up
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="social-login-menu">
+										<li role="presentation"><a role="menuitem" tabindex="-1" href="{% provider_login_url "facebook" method="js_sdk" %}">Log In With Facebook</a></li>
+										<li role="presentation"><a role="menuitem" tabindex="-1" href="{% provider_login_url "twitter" %}">Log In With Twitter</a></li>
+									</ul>
+								</div>
+								
+								
+							{% endif %}
+						</li>
+						<li class="menu-about"><a href="#about">About</a></li>
+					</ul>			
+				</nav>
+
+			</div>
+	</header> <!-- end header -->
+
+	<nav class="toc">
+
+		<header>
+			<button type="button" class="toc-toggle--bars toc-toggle">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bars">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</span>
+				<span class="toc-title">Menu</span>
+			</button>
+
+			<button type="button" class="close toc-toggle">
+				<span aria-hidden="true">×</span>
+				<span class="sr-only">Close</span>
+			</button>
+		</header>
+
+		<ul>
+			<li class="nav-dashboard">
+				<a  id="dashboard-tab" href="#dashboard-tab-content" data-toggle="tab">
+					<span class="title toc-title">DASHBOARD</span>
+					<span>View your home and check the latest community news</span>
+				</a>
+			</li>
+			<li class="nav-network">
+				<a id="friends-tab" href="#friends-tab-content" data-toggle="tab">
+					<span class="title toc-title">Network</span>
+					<span>See who you already know and invite new people to join</span>
+				</a>
+			</li>
+			<li class="nav-stats"> 
+				<a id="details-tab" href="#details-tab-content" data-toggle="tab">
+					<span class="title toc-title">STATS</span>
+					<span>Infographics specific to your map</span>
+				</a>
+			</li>
+			<li class="nav-settings">
+				<a id="settings-tab" href="#settings-tab-content" data-toggle="tab">
+					<span class="title toc-title">MAP &amp; Settings </span>
+					<span>Make your map</span>
+				</a>
+			</li>
+		</ul>
+
+	</nav>
+
+
+
     {% endblock %}
     
     {% block body %}{% endblock %}
     
     {% block footer %}
-            <footer>
-              <div class="row footer">
-                <div class="span5 social">
-                    <h5>Contact Us</h5>
-                    <a href="" data-toggle="modal" data-target="#feedback-modal">rhodges@ecotrust.org</a><br/>
-                    503-467-0800<br/>
-                </div>
-                <div class="span4 social">
-                    <a href="https://twitter.com/signup">Sign up with Twitter!</a>
-                </div>
-                <div class="span3 social">
-                    <div class="pull-right">
-                        <h5>connect with us</h5>              
-                        <div class="fb-like" data-href="https://locus.labs.ecotrust.org" data-width="450" data-show-faces="true" data-send="true"></div>
-                        <p class="pull-right">
-                            <a href="http://portal.midatlanticocean.org/portal/feed/"><i class="icon-rss icon-large"></i></a>
-                            <a href="https://twitter.com/PortalMARCO"><i class="icon-twitter icon-large"></i></a>
-                        </p>
-                        <!-- <div class="fb-like" data-send="true" data-width="450" data-show-faces="true">Like!</div> -->
-                        <a href=""><i class="icon-linkedin icon-large"></i></a>
-                        <a href=""><i class="icon-google-plus icon-large"></i></a>
+	{% comment not in the comps but we'll need bits later %}
+            <footer class="container-fluid" id="footer">
+				<div class="row footer">
+					<div class="social col-sm-4">
+						<h5>Contact Us</h5>
+						<a href="#" data-toggle="modal" data-target="#feedback-modal">rhodges@ecotrust.org</a><br/>
+						503-467-0800<br/>
+					</div>
 
-                    </div>
+					<div class="social col-sm-4">
+						<a href="https://twitter.com/signup">Sign up with Twitter!</a>
+					</div>
 
-                </div>
-              </div>
+					<div class="social col-sm-4">
+						<h5>connect with us</h5>              
+						<div class="fb-like" data-href="https://locus.labs.ecotrust.org" data-width="450" data-show-faces="true" data-send="true"></div>
+						<p>
+							<a href="http://portal.midatlanticocean.org/portal/feed/"><i class="icon-rss icon-large"></i></a>
+							<a href="https://twitter.com/PortalMARCO"><i class="icon-twitter icon-large"></i></a>
+						</p>
+						<!-- <div class="fb-like" data-send="true" data-width="450" data-show-faces="true">Like!</div> -->
+					</div>
+				</div>
             </footer>
+	<!-- DEV ONLY -->
+	<script src="//localhost:35729/livereload.js"></script>
+	<!-- /END DEV ONLY -->
+	{% endcomment %}	
+
+
     {% endblock %}      <!-- footer -->
     
     {% block scripts %}
     {% endblock %}
     
-    <!-- % analytics % -->
-    <script src="/media/third-party/bootstrap/js/bootstrap.js" ></script>
+	<!-- % analytics % -->
+	<!-- @TODO REPLACE UA-XXXXX-Y -->
+	<script>
+	  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+	  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+	  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+	  e.src='//www.google-analytics.com/analytics.js';
+	  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+	  ga('create','UA-XXXXX-Y', 'none' );
+	  ga('send','pageview');
+	</script>
+
+    <!--<script src="/media/third-party/bootstrap/js/bootstrap.js" ></script>-->
+	<script type='text/javascript' src='/media/assets/js/vendor/bootstrap.3.2.0.min.js'></script>
+
+	<!--<script type='text/javascript' src='assets/js/scripts.min.js?ver=5178f9f95dff3af2eb89e2d71dcf6953'></script>-->
     <!-- <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script> -->
 </body>
 </html>

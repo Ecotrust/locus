@@ -1,11 +1,8 @@
 body {
-	margin-top: 90px;
-    overflow: auto !important;
+	/*margin-top: 90px;*/
+    /*overflow: auto !important;*/
 }
 
-.main-page{
-    margin-top: 80px;
-}
 
 /* -----------------------------------------------------------------------
 Begin Map
@@ -22,11 +19,11 @@ img.olTileImage {
 
 .map-holder{
     /*margin: 0 0 2% 0;*/
-    border: solid #78A22F;
+    /*border: solid #78A22F;*/
 }
 
 .olMap{
-    max-width: 1024px;
+    /*max-width: 1024px;*/
 }
 
 .olControlLayerSwitcher {
@@ -49,6 +46,7 @@ input.olButton{
     right: 0 !important;
     opacity: 0;
 }
+
 
 /* -----------------------------------------------------------------------
 End Map
@@ -79,12 +77,16 @@ header .ProfileWidget .LoginWithFacebook{
 }
 
 .header-avatar {
-    height: 35px !important;
+    height: 28px !important;
 }
 
 .user-name {
     text-align: right;
-    margin-top: 2%;
+	padding: 14px 14px 14px 0;
+    /*margin-top: 2%;*/
+}
+.user-name p {
+	margin: 0;
 }
 
 .base-login {
@@ -143,10 +145,14 @@ End Facebook Login Button
 Tabs
 ----------------------------------------------------------------------- */
 
-.tab-disabled {
-    color: #CCCCCC !important;
-    cursor: default;
-    background-color: #EEEEEE;
+
+/* hocus pocus for a 100% height map on the settings page */
+html, body, main, .tab-content, .tab-pane, #settings-tab-content>.row, .map-wrap, .map-holder {
+	height: 100%;
+}
+/* tail, this is your face. face, this is your tail. face, tail, tail, face, et cetera */
+main, .tab-content, .tab-pane, #settings-tab-content>.row, .map-wrap, .map-holder  {
+	position: relative;
 }
 
 /* -----------------------------------------------------------------------
@@ -370,13 +376,39 @@ Begin Details Page
 ----------------------------------------------------------------------- */
 
 .rename-link{
-    margin-top: 2%;
+	display: inline-block;
+    margin-left: 15px;
+	font-size: 12px;
 }
 
-.details h3{
+#details-tab-content > h2 {
+	/*LESS REPLACE*/
+    color: #000000;
+    font-family: "CenturySchoolbookBT-Roman",Georgia,"Times New Roman",Times,serif;
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-top: 40px;
+    padding-top: 0;
+
+	border-bottom: 1px solid #e0e0e0;
+}
+.details-definitions {
+	font-size: 85%;
+	padding: 0 20px;
+}
+.details-definitions .inner {
+	background-color: #fafafa;
+	-moz-border-radius:		5px;
+	-webkit-border-radius:	5px; 
+	border-radius:			5px;
+	padding: 4px 20px;
+}
+
+.details .panel > h3 {
     color: #47556C; 
     font-size: 14px; 
     margin-bottom: 0px;
+	display: none; /* Duplicating accordion title */
 }
 
 .details h3.analysis_report_container {
@@ -384,15 +416,71 @@ Begin Details Page
     margin-left: 5%;
 }
 
+
+#details-tab-content .accordion-heading > dl {
+	color: #0099ff;
+	display: block;
+    /*font-family: "CenturySchoolbookBT-Bold",Georgia,"Times New Roman",Times,serif;*/
+    font-size: 2rem;
+    margin: 0;
+    padding: 15px 10px;
+
+	/* replace with less hairline? */
+	border-bottom: 	1px solid #e2e2e2;
+}
+	#details-tab-content .accordion-heading > dl:hover{
+		background-color: #dadada;
+		cursor: pointer;
+		color: #0099ff;
+		text-decoration: none;
+	}
+	#details-tab-content .accordion-toggle dt {
+		font-family: "CenturySchoolbookBT-Roman", Georgia, "Times New Roman", Times, serif;
+		font-weight: normal;
+		display: inline-block;
+	}
+	#details-tab-content .accordion-toggle dt:before {
+		/*LESS REPLACE*/
+		content: "\f068"; /* f068 = minus */
+		color: #0099ff;
+		display: inline-block;
+		font-family: FontAwesome;
+		font-size: 11px;
+		font-style: normal;
+		font-weight: normal;
+		padding-bottom: 4px;
+		padding-right: 4px;
+		position: relative;
+		text-decoration: inherit;
+		top: -1px;
+	}
+/* Closed */
+#details-tab-content .accordion-toggle.collapsed {
+	color: #000000;
+    /*font-family: "CenturySchoolbookBT-Roman", Georgia, "Times New Roman", Times, serif;*/
+}
+	#details-tab-content .accordion-toggle.collapsed dt:before {
+		content: "\f067";
+	}
+ 
+.accordion-heading .definition {
+    color: #969696;
+    font-size: 14px;
+    margin-left: 15px;
+    /*margin-top: -27px;*/
+
+
+}
+
 .details table.analysis_report_container {
-    background: none repead scroll 0 0 #FFFFFF;
+    background: none repeat scroll 0 0 #FFFFFF;
     border-color: lightgray;
     border-spacing: 0;
     border-width: 0;
     font-size: small;
     padding: 0;
     text-align: center;
-    margin-left: 5%;
+    margin-left: 20px;
 /*    
     width: 90%;
     margin-left: auto;
@@ -400,18 +488,29 @@ Begin Details Page
 */
 }
 
-.details table.analysis_report_container tr.grey {
-    background: none repeat scroll 0 0 #ECECEC;
-}
-
-.details table.analysis_report_container td, th{
+.details .analysis_report_container td, .details .analysis_report_container th{
    border-color: gray;
    border-style: solid;
    border-width: 0;
-   padding: 2px;
+   padding: 2px 4px;
    text-align: center;
 }
+.details .analysis_report_container tr.grey td{
+    background: transparent;
+	padding: 6px;
 
+    /*font-size: 1.4rem;*/
+}
+.details .analysis_report_container tr.grey b {
+    display: inline-block;
+    font-family: "Intro-Black-Caps",'Avenir Next Condensed','Helvetica Neue Condensed','Arial Narrow',sans-serif;
+    font-size: 1.6rem;
+	text-transform: uppercase;
+}
+
+.details .analysis_report_container td {
+	text-align: left;
+}
 .details sub, .details sup {
     font-size: 100% !important;
     line-height: 14px !important;
@@ -426,20 +525,80 @@ End Details Page
 Begin Settings Page
 ----------------------------------------------------------------------- */
 
-.settings-form label{
-    margin-right: 1%;
+.draw-controls {
+	margin-top: 57px;
 }
-
-.settings-form .well{
-    margin-bottom: 0;
+#map-panel legend {
+	font-size: 19px;
+	margin-bottom: 5px;
 }
-
+#map-panel .draw-controls .btn-link, #map-panel .radio, #map-panel .checkbox {
+    color: #969696;
+    display: block;
+	font-family: "AvenirLT-Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+    font-weight: normal;
+	line-height: 21px;
+	margin-bottom: 40px;
+	padding-bottom: 0;
+	padding-top: 0;
+}
+	#map-panel .btn-link:hover {
+		color: #969696;
+	}
+#map-panel .btn.btn-link[disabled] {
+	opacity: 0.5;
+}
+#map-panel .cp-cancel {
+	background-color: transparent;
+	display: inline-block;
+	float: left;
+}
+.cp-button.cp-save {
+    float: right;
+}
 .news-select{
     margin-top: 20px;
 }
+.lead.welcome {
+    height: 400px;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -200px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 400px;
+    z-index: 999;
+}
+	.lead.welcome > h1 {
+		border: 3px solid #ffffff;
+		color: #fff;
+		font-family: "CenturySchoolbookBT-Roman",Georgia,"Times New Roman",Times,serif;
+		font-size: 60px;
+		font-weight: normal;
+		line-height: 1;
+		padding: 1.5em;
+	}
+	.lead.welcome > p {
+		color: #fff;
+		font-size: 14px;
+		text-shadow: 1px 1px 0 #000;
+	}
 
 #your-locus{
-    height: 400px;
+    /*height: 400px;*/
+	height: 100%;
+}
+
+.map-panel {
+    background-color: #fff;
+    max-width: 100%;
+    padding: 30px;
+    position: absolute;
+    right: 0;
+    width: 430px;
+    z-index: 1000;
 }
 
 #draw-instruct{
@@ -542,9 +701,6 @@ End World Page
 Begin Tabs
 ----------------------------------------------------------------------- */
 
-.pan-span{
-    margin-left: 3% !important;
-}
 
 .place-holder{
     border:solid; 
@@ -590,3 +746,40 @@ div.footer{
 /* -----------------------------------------------------------------------
 End Footer
 ----------------------------------------------------------------------- */
+
+
+
+/*
+ *
+ * TEMP CSS UNTIL LESS IS BACK IN ACTION
+ *
+ * */
+
+.nav > li > a, .nav form, .nav button, .nav p {
+	display: inline-block;
+}
+.toc > ul > li {
+	padding: 0;
+}
+.toc > ul > li:before {
+	left: 22px;
+	top: 27px;
+}
+.toc > ul > li > a {
+	padding: 14px 28px 14px 64px
+}
+.btn-logout {
+	padding: 0;
+}
+
+.hero {
+	font-size: 5em;
+	text-align: center;
+	padding: 100px 15px;
+}
+
+
+/* @TODO to be removed */
+#footer {
+	margin-top: 100px; 
+}
