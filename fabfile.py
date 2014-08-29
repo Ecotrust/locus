@@ -65,6 +65,15 @@ def init():
     _install_django()
     _install_starspan()
 
+def install_media():
+    """ Run the django install_media command """
+    run('cd %(app_dir)s && %(venv)s/bin/python manage.py install_media' % vars)
+
+
+def copy_media():
+    """ Just copy the basic front end stuff. Speed! """
+    run('rsync -rtvu /usr/local/apps/locus/media/common/ /usr/local/apps/locus/mediaroot/common' % vars)
+
 def runserver():
     """ Run the django dev server on port 8000 """
     run('cd %(app_dir)s && %(venv)s/bin/python manage.py runserver 0.0.0.0:8000' % vars)
