@@ -27,3 +27,8 @@ openlayers
 .DS_Store
 .*.swp
 deploy/local_vars.yml
+media/assets/reload.txt
+src-graphics
+vimrc
+.vimrc
+will-todo.txt
