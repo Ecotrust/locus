@@ -33,12 +33,13 @@ function mapInit() {
         type: "AerialWithLabels"
     });
     map.aerial = new OpenLayers.Layer.Bing({
-        name: "Aerial",
+        //name: "Aerial",
+        name: "Satellite",
         key: bing_apiKey,
         type: "Aerial"
     });
-
-    map.esriOcean = new OpenLayers.Layer.XYZ("ESRI Ocean", "http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/${z}/${y}/${x}", {
+	//"ESRI Ocean"
+    map.esriOcean = new OpenLayers.Layer.XYZ("Topographical", "http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/${z}/${y}/${x}", {
         sphericalMercator: true,
         isBaseLayer: true,
         numZoomLevels: 13,
@@ -82,7 +83,7 @@ function mapInit() {
     storyPointStyleMap.addUniqueValueRules("default", "source_type", storyPointStyleMapLookup);
 
     map.storyPointLayer = new OpenLayers.Layer.Vector(
-        "Story Point Layer", 
+        "Story Points", 
         {
             styleMap: storyPointStyleMap
         }
@@ -94,9 +95,9 @@ function mapInit() {
         "featureunselected": this.onPointUnselect
     });
     
-    map.locusLayer = new OpenLayers.Layer.Vector("Locus Layer");
+    map.locusLayer = new OpenLayers.Layer.Vector("Locus"); //@TODO "What's Locus?"
 
-    map.selectedLocusLayer = new OpenLayers.Layer.Vector("Selected Locus Layer", {
+    map.selectedLocusLayer = new OpenLayers.Layer.Vector("Selected Locus", {
         styleMap: new OpenLayers.StyleMap({
             fillColor: "#00ee00",
             fillOpacity: 0.4,
@@ -104,9 +105,10 @@ function mapInit() {
         })
     });
 
-    map.lociLayer = new OpenLayers.Layer.Vector("Loci Layer");
+    map.lociLayer = new OpenLayers.Layer.Vector("Loci"); //@TODO "What's Loci?"
 
-    map.friendLayer = new OpenLayers.Layer.Vector("Friend Layer");
+
+    map.friendLayer = new OpenLayers.Layer.Vector("Friends");
     
     map.locusLayer.events.on({
         "featureadded": this.onLocusAdd,
@@ -222,8 +224,6 @@ function mapInit() {
     //$('a[data-toggle="tab"]').on('shown',function(e) {
     $('a[data-toggle="tab"]').on('shown.bs.tab',function(e) {
         cleanOldSelected();
-		console.log('just getting started');
-		settingsPageInit();
 
 		// e.relatedTarget == previous tab
 		// there is no previous tab on start
@@ -260,7 +260,8 @@ function mapInit() {
 			}
 		} //if e.relatedTarget        
 		else {
-			console.log('no related target', e);
+			//console.log('no related target', e);
+			settingsPageInit();
 		}
 
         if (e.target.id == "dashboard-tab") {
@@ -295,6 +296,7 @@ function mapInit() {
     });
 
 	function settingsPageInit () {
+		//if not logged in, need to skip part of this
 		selectLocusControl.activate();
 		$('#your-locus').show();
 		selectedClickControl.activate();
@@ -359,6 +361,7 @@ function getFriendLoci(frndlst) {
         });
         if (geojson_format.read(result) != null){
             map.friendLayer.addFeatures(geojson_format.read(result));
+			height: 400px;
         }
     });
 };
@@ -531,3 +534,6 @@ function defaultCallback(result) {
 function unselectSelectedFeature(selectedFeature) {
     selectStoryPointControl.unselect(selectedFeature);
 };
+
+
+

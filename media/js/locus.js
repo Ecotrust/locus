@@ -1077,7 +1077,6 @@ CPM.tocHandler = function () {
 		$mask = $('<div class="mask"></div>'),
 		$body = $('body');
 
-
 	function toggleToc(evt) {
 
 		if ( $toc.is('.open') ) {
@@ -1113,3 +1112,12 @@ CPM.aboutHandler =  function() {
 	$body.on('click ','.menu-about a, .cp-about a', aboutToc);
 };
 
+CPM.resizeMap = function (){
+    map.updateSize();
+};
+
+CPM.resizeIt = "";
+window.onresize = function(){
+  clearTimeout(CPM.resizeIt);
+  CPM.resizeIt = setTimeout(CPM.resizeMap, 150);
+};

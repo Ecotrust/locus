@@ -25,19 +25,22 @@ module.exports = function(grunt) {
           // To enable, set sourceMap to true and update sourceMapRootpath based on your install
           sourceMap: false,
           sourceMapFilename: 'assets/css/main.min.css.map',
-          sourceMapRootpath: '/app/themes/commonplace/'
+          sourceMapRootpath: '/media/assets/media/'
         }
       }
     },
     uglify: {
       dist: {
         files: {
+            // NOTE: scripts.min.js isn't currently in use.
+			// @TODO Pull in other js files here once production is ready to concatenate and minify
+			// @TODO Gut the big bootstrap JS and replace with components below as needed
           'assets/js/scripts.min.js': [
             //'assets/js/plugins/bootstrap/transition.js',
             //'assets/js/plugins/bootstrap/alert.js',
             //'assets/js/plugins/bootstrap/button.js',
             //'assets/js/plugins/bootstrap/carousel.js',
-			'assets/js/plugins/bootstrap/collapse.js',
+			//'assets/js/plugins/bootstrap/collapse.js',
             //'assets/js/plugins/bootstrap/dropdown.js',
             //'assets/js/plugins/bootstrap/modal.js',
             //'assets/js/plugins/bootstrap/tooltip.js',
@@ -72,7 +75,7 @@ module.exports = function(grunt) {
           '<%= jshint.all %>',
           'assets/js/plugins/small-plugins.js'
         ],
-        tasks: ['jshint', 'uglify']
+        tasks: ['jshint', 'uglify', 'vagrantssh:copy_media']
       },
       livereload: {
         // Browser live reloading
@@ -82,10 +85,22 @@ module.exports = function(grunt) {
           livereload: 35729
         },
         files: [
+          'assets/reload.txt',
           'assets/css/main.min.css',
           'assets/js/scripts.min.js',
           '*.html'
         ]
+      },
+      //files that don't need preprocessing but do need to be copied to media_root
+      copy_media: {
+		files: [
+			'assets/js/*.js',
+			'!assets/js/scripts.min.js',
+			'assets/js/plugins/small-plugins.js',
+			'js/*.js',
+			'css/*.css'
+		],
+		tasks:  ['vagrantssh:copy_media']
       }
     },
     clean: {
@@ -98,13 +113,28 @@ module.exports = function(grunt) {
 		copy_media: {
 			path: './../.vagrant/',
 			commands: [
-				//'echo "testing" > /tmp/test2.txt',
-				//'cat /tmp/test2.txt'
 				'/home/vagrant/copy_media'
+				/*
+				 * copy_media is a bash script in the home dir of the VM containing the following lines.
+				 * Can probably just use these directly instead of calling the script.
+				 * Rsync is probably fast enough to simply do /media to /mediaroot with recursion actually.
+				 * -wm
+				 *
+				 * rsync -rtuv /usr/local/apps/locus/media/js/ /usr/local/apps/locus/mediaroot/js/
+				 * rsync -rtuv /usr/local/apps/locus/media/css/ /usr/local/apps/locus/mediaroot/css/
+				 * rsync -rtuv /usr/local/apps/locus/media/assets/ /usr/local/apps/locus/mediaroot/assets/
+				*/
 			],
 			flags: [ '-t', '-A' ],
 			callback: function( grunt, output ) {
-				grunt.log.writeln( '!!!!-----------!!!!! ~~~~~ VAGRANT Output: ' + output );
+
+				// Give LiveReload a local file to watch for
+				// @TODO Might be able to have it watch a file in ../mediaroot instead?
+				grunt.file.write('assets/reload.txt', output);
+
+				grunt.log.writeln( '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ VAGRANT Output: ');
+				grunt.log.writeln( output );
+				grunt.log.writeln( 'END VAGRANT Output~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' );
 			}
 		}
 	}

@@ -254,7 +254,7 @@ Whole thing visible when 'data-bind="visible: locusSelected()"'
 What about help? Only when drawing?
 -->
 
-				<section id="map-panel" class="map-panel">
+				<section id="map-panel" class="map-panel" data-bind="visible: drawing() || locusSelected()">
 
 					<header>
 						<label>Name:</label>
@@ -262,32 +262,33 @@ What about help? Only when drawing?
 					</header>
 
 
-											<div id="draw-instructions" class="container-fluid" data-bind="visible:drawing()">
-												<div id="draw-instruct" class="row">
+
+											<ol id="draw-instructions" class="container-fluid" data-bind="visible:drawing()">
+												<li class="row">
 													<div class="col-md-7">
 														Click to drop a corner on the map.
 													</div>
 													<div class="col-md-5">
 														<img class="demo" src="/media/img/draw_1.png"/>
 													</div>
-												</div>
-												<div class="row">
+												</li>
+												<li class="row">
 													<div class="col-md-7">
 														Click again to add more corners to your region.
 													</div>
 													<div class="col-md-5">
 														<img class="demo" src="/media/img/draw_2.png"/>
 													</div>
-												</div>
-												<div class="row">
+												</li>
+												<li class="row">
 													<div class="col-md-7">
 														Double-click to finish drawing your region.
 													</div>
 													<div class="col-md-5">
 														<img class="demo" src="/media/img/draw_3.png"/>
 													</div>
-												</div>
-											</div>
+												</li>
+											</ol>
 
 
 

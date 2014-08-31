@@ -6616,7 +6616,7 @@ a:hover {
   font-size: 1.5rem;
   margin: 0 auto ;
   /*opacity: 0;*/
-  padding: 14px 0 11px 0;
+  padding: 19px 0 11px 0;
   text-align: center;
   -webkit-transition:  all 0.7s ease;
   transition:  all 0.7s ease;
@@ -7617,24 +7617,85 @@ fieldset[disabled] .listing.invite-listing button {
     z-index: 40;
   }
 }
-/* small desktop */
-@media all and (max-width: 1200px) {
-  .state-indicator {
-    z-index: 2;
-  }
+/* ==========================================================================
+   MAP
+   ========================================================================== */
+.map-holder .olControlAttribution {
+  bottom: 1.5em !important;
 }
-/* tablet */
-@media all and (max-width: 1024px) {
-  .state-indicator {
-    z-index: 3;
-  }
+.map-holder img.olTileImage {
+  /*max-width: 256px !important;*/
+  max-width: none !important;
 }
-/* mobile phone */
-@media all and (max-width: 768px) {
-  .state-indicator {
-    z-index: 4;
-  }
+.map-holder .map-holder {
+  /*margin: 0 0 2% 0;*/
+  /*border: solid #78A22F;*/
 }
+.map-holder .olMap {
+  /*max-width: 1024px;*/
+}
+.map-holder .olControlLayerSwitcher {
+  background-color: #ffffff;
+  color: #969696;
+  position: absolute;
+  bottom: 40px;
+  right: auto;
+  left: 0;
+  top: auto;
+  height: 400px;
+  min-width: 95px;
+  width: 15% !important;
+}
+.map-holder .olControlLayerSwitcher .layersDiv {
+  background-color: #ffffff;
+  padding: 5px 10px;
+}
+.map-holder .olControlLayerSwitcher .maximizeDiv,
+.map-holder .olControlLayerSwitcher .minimizeDiv {
+  width: auto;
+  display: inline-block;
+}
+.map-holder .olControlLayerSwitcher .maximizeDiv > img,
+.map-holder .olControlLayerSwitcher .minimizeDiv > img {
+  display: none;
+}
+.map-holder .olControlLayerSwitcher .maximizeDiv:before,
+.map-holder .olControlLayerSwitcher .minimizeDiv:before {
+  background-color: #ffffff;
+  color: #969696;
+  font-family: "Intro-Black-Caps", 'Avenir Next Condensed', 'Helvetica Neue Condensed', 'Arial Narrow', sans-serif;
+  font-size: 11px;
+  font-size: 1.1rem;
+  font-weight: 300;
+  padding: 12px 10px;
+  text-transform: uppercase;
+}
+.map-holder .olControlLayerSwitcher .maximizeDiv {
+  right: auto;
+  left: 0;
+}
+.map-holder .olControlLayerSwitcher .maximizeDiv:before {
+  content: "Toggle Map Layers";
+}
+.map-holder .olControlLayerSwitcher .minimizeDiv:before {
+  content: "Close";
+}
+.map-holder label.olButton {
+  display: inline-table;
+}
+.map-holder input.olButton {
+  vertical-align: top;
+  margin-right: 1%;
+}
+.map-holder .olControlMousePosition {
+  background: white;
+  padding: 0 1%;
+  right: 0 !important;
+  opacity: 0;
+}
+/* -----------------------------------------------------------------------
+End Map
+----------------------------------------------------------------------- */
 /* ==========================================================================
    Media Queries
    ========================================================================== */

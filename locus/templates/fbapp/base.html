@@ -98,7 +98,7 @@
 						<li class="menu-login">
 							{% if user.is_authenticated %}
 								<div class="user-name">
-									<p>
+									<button class="btn btn-link dropdown-toggle" type="button" id="user-menu" data-toggle="dropdown">
 										{% if avatar %}
 											<img class="header-avatar" src="{{avatar}}"/>
 										{% endif %}
@@ -110,10 +110,16 @@
 											{{user.username}}
 										{% endif %}
 										</span>
-									</p>
-									<form method="POST" action="/accounts/logout/">
-										<button type="submit" class="btn btn-link btn-logout">logout</button>
-									</form>
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="user-menu">
+										<li role="presentation">
+											<form method="POST" action="/accounts/logout/">
+												<button type="submit" class="btn btn-link btn-logout">logout</button>
+											</form>	
+										</li>
+									</ul>
+
 								</div>
 							{% else %}
 								<div class="dropdown">
@@ -126,8 +132,6 @@
 										<li role="presentation"><a role="menuitem" tabindex="-1" href="{% provider_login_url "twitter" %}">Log In With Twitter</a></li>
 									</ul>
 								</div>
-								
-								
 							{% endif %}
 						</li>
 						<li class="menu-about"><a href="#about">About</a></li>
@@ -216,10 +220,10 @@
 					</div>
 				</div>
             </footer>
+	{% endcomment %}	
 	<!-- DEV ONLY -->
 	<script src="//localhost:35729/livereload.js"></script>
 	<!-- /END DEV ONLY -->
-	{% endcomment %}	
 
 
     {% endblock %}      <!-- footer -->

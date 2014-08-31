@@ -8,49 +8,10 @@ body {
 Begin Map
 ----------------------------------------------------------------------- */
 
-.olControlAttribution {
-    bottom: 1.5em !important;
-}
-
-img.olTileImage {
-    /*max-width: 256px !important;*/
-    max-width: none !important;
-}
-
-.map-holder{
-    /*margin: 0 0 2% 0;*/
-    /*border: solid #78A22F;*/
-}
-
-.olMap{
-    /*max-width: 1024px;*/
-}
-
-.olControlLayerSwitcher {
-    width: 15% !important;
-    min-width: 95px;
-}
-
-label.olButton {
-    display: inline-table;
-}
-
-input.olButton{
-    vertical-align: top;
-    margin-right: 1%;
-}
-
-.olControlMousePosition{
-    background: white;
-    padding: 0 1%;
-    right: 0 !important;
-    opacity: 0;
-}
+	/* MAP CSS MOVED TO locus_style.css */
 
 
-/* -----------------------------------------------------------------------
-End Map
------------------------------------------------------------------------ */
+
 
 /* -----------------------------------------------------------------------
 Begin Header
@@ -82,13 +43,19 @@ header .ProfileWidget .LoginWithFacebook{
 
 .user-name {
     text-align: right;
-	padding: 14px 14px 14px 0;
+	/*padding: 14px 14px 14px 0;*/
     /*margin-top: 2%;*/
 }
 .user-name p {
 	margin: 0;
 }
-
+.btn-logout {
+    display: block;
+    float: none;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
 .base-login {
     color: #FFFFFF;
     background: #4c66a4;
@@ -285,7 +252,7 @@ Begin Dasboard Page
 #new-popup_contentDiv{
     width: 100%;
     margin-right: 20px;
-    height: 145 !important;
+    height: 145px !important;
 }
 
 .news-bubble{
@@ -303,7 +270,7 @@ Begin Dasboard Page
 }
 
 .news-bubble p{
-    text-size: 70%;
+    font-size: 70%;
 }
 
 .post-bubble{
@@ -318,7 +285,7 @@ Begin Dasboard Page
     max-height: 70px;
     float: left;
     margin-right: 8px;
-    vertical-align: center;
+    vertical-align: middle;
 }
 
 div.new-storypoint{
@@ -499,7 +466,6 @@ Begin Details Page
     background: transparent;
 	padding: 6px;
 
-    /*font-size: 1.4rem;*/
 }
 .details .analysis_report_container tr.grey b {
     display: inline-block;
@@ -581,7 +547,7 @@ Begin Settings Page
 		padding: 1.5em;
 	}
 	.lead.welcome > p {
-		color: #fff;
+		color: #ffffff;
 		font-size: 14px;
 		text-shadow: 1px 1px 0 #000;
 	}
@@ -592,7 +558,7 @@ Begin Settings Page
 }
 
 .map-panel {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, .92);
     max-width: 100%;
     padding: 30px;
     position: absolute;
@@ -600,10 +566,14 @@ Begin Settings Page
     width: 430px;
     z-index: 1000;
 }
-
-#draw-instruct{
-    margin: 5% 2% 0 0;
+#draw-instructions {
+	padding: 0;
+	list-style-type: none;
 }
+	#draw-instructions > .row {
+		margin-top: 15px;
+	}
+
 
 img.demo {
     width: 70%;
@@ -755,7 +725,7 @@ End Footer
  *
  * */
 
-.nav > li > a, .nav form, .nav button, .nav p {
+.nav > li > a,  .nav p/*, .nav button*/ {
 	display: inline-block;
 }
 .toc > ul > li {
