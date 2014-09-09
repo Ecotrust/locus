@@ -8,6 +8,9 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
+		//too broken!
+        //'js/map.js',
+        //'js/locus.js',
         'assets/js/*.js',
         '!assets/js/scripts.min.js'
       ]
@@ -88,7 +91,7 @@ module.exports = function(grunt) {
           'assets/reload.txt',
           'assets/css/main.min.css',
           'assets/js/scripts.min.js',
-          '*.html'
+          '../locus/templates/fbapp/*.html'
         ]
       },
       //files that don't need preprocessing but do need to be copied to media_root
