@@ -512,6 +512,52 @@ p > .intro {
 		}
 	}
 }
+.home-page {
+	.overview-grid();
+}
+
+#home-tab-content {
+	.intro {
+		font-size: 2.3em;
+		line-height: 1.3;
+		margin: 1em auto;
+		max-width: 90%;
+	}
+	
+	> .content  a {
+		cursor: default;
+
+		em {
+			color: @black;
+		}
+
+		&:before {
+			color: #83827C;	
+		}
+		&:hover:before {
+			color: #83827C;
+		}
+	}
+	.social-login {
+		text-align: center;
+	}
+	.btn  {
+		.cp-button();
+		line-height: 2;
+		margin: 0 10px;
+		padding: 7px 30px 4px 17px;
+		&:before {
+			.font-awesome();
+			color: @white;
+			font-size: 18px;
+			padding: 5px 14px 5px 4px;
+		}
+			&.btn-facebook:before { content: "\f09a"; }
+			&.btn-twitter:before  { content: "\f099"; }
+		
+	}
+}
+
 
 
 #about-content {
@@ -602,7 +648,9 @@ input[type="text"], input[type="email"] {
 				margin-bottom: 14px;
 				padding: 14px 28px;
 			}
-
+			&.nav-home {
+				display: none;
+			}
 			&:before {
 				.font-awesome();
 				position: absolute;
@@ -654,53 +702,14 @@ input[type="text"], input[type="email"] {
 		left: 0;
 	}
 
-	> .intro {
+	> .content > .intro {
 		max-width: 650px;
 		margin: 49px auto 100px auto;
 		font-family: @font-family-serif-italic;
 		text-align: center;
 	}
 
-	> .overview {
-		> ul {
-			.list-reset();
-			.make-row();
-			margin-bottom: 56px;
-			> li {
-				.make-sm-column(3);
-				text-align: center;
-				> a {
-					color: @black;
-					display: block;
-					font-family: @font-family-sans-serif-medium;
-					.font-size(14);
-					line-height: @line-height-tight;
-					margin: 0 auto;
-					width: 80%;
-					> em {
-						color: @blue;
-						font-style: normal;
-					}
-					// Icons above
-					&:before {
-						color: @icon-white;
-						.font-awesome();
-						font-size: 52px;
-						display: block;
-						margin: 0 auto 40px auto;
-					}
-						&.about-draw:before		{ content: "\f040"; }
-						&.about-read:before		{ content: "\f0ea"; }
-						&.about-network:before	{ content: "\f0e5"; }
-						&.about-stats:before	{ content: "\f080"; }
-
-					&:hover:before {
-						color: @blue;
-					}
-				}
-			}
-		}
-	}
+	.overview-grid();
 	> footer {
 		
 		@media @tablet { 	
@@ -872,7 +881,11 @@ input[type="text"], input[type="email"] {
 
 .map-holder {
 	.olControlAttribution {
-		bottom: 1.5em !important;
+		bottom: 1px !important;
+		line-height: 1;
+		div {
+			display: inline;
+		}
 	}
 
 	img.olTileImage {
@@ -892,13 +905,15 @@ input[type="text"], input[type="email"] {
 	.olControlLayerSwitcher {
 		background-color: @white;
 		color: @gray;
+		min-width: 14em;
 		position: absolute;
 		bottom: 40px;
+		bottom: 0;
 		right: auto;
 		left: 0;
 		top: auto;
 
-		height: 400px;
+		/*height: 400px;*/
 		min-width: 95px;
 		width: 15% !important;
 
@@ -907,9 +922,10 @@ input[type="text"], input[type="email"] {
 			padding: 5px 10px;
 		}
 		.maximizeDiv, .minimizeDiv {
-			width: auto;
 			display: inline-block;
-
+			top: 7px;
+			width: auto;
+			.transition( ~" all .45s ease-in-out");
 			> img {
 				display: none;
 			}
@@ -926,6 +942,7 @@ input[type="text"], input[type="email"] {
 		.maximizeDiv{
 			right: auto;
 			left: 0;
+			top: -30px;
 			
 			&:before {
 				content: "Toggle Map Layers";
@@ -936,14 +953,19 @@ input[type="text"], input[type="email"] {
 				content: "Close";
 			}
 		}
+		.baseLbl, .dataLbl {
+			color: @black;
+			.font-size(13);
+		}
 	}
 	label.olButton {
 		display: inline-table;
+		font-weight: normal;
 	}
 
 	input.olButton{
 		vertical-align: top;
-		margin-right: 1%;
+		margin-right: 7px;
 	}
 
 	.olControlMousePosition{
@@ -958,6 +980,84 @@ input[type="text"], input[type="email"] {
 /* -----------------------------------------------------------------------
 End Map
 ----------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------
+Begin Settings Page
+----------------------------------------------------------------------- */
+
+.map-panel {
+    background-color: rgba(255, 255, 255, .92);
+    max-width: 100%;
+    padding: 30px;
+    position: absolute;
+    right: 0;
+    width: 430px;
+    z-index: 1000;
+
+	legend, h3 {
+		border-bottom: 1px solid @gray-lighter;
+		color:  @gray-dark;
+		font-family: @font-family-sans-serif-light;
+		font-size: 19px;
+		font-weight: 300;
+		line-height: 1.1;
+		margin-bottom: 5px;
+		margin-top: 0;
+	}
+	.draw-controls {
+		margin-top: 20px;
+	}
+	.draw-controls .btn-link, 
+	.radio, 
+	.checkbox {
+		color: #969696;
+		display: block;
+		font-family: "AvenirLT-Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		font-weight: normal;
+		line-height: 21px;
+		margin-bottom: 40px;
+		padding-bottom: 0;
+		padding-top: 0;
+	}
+		.draw-controls .btn-link {
+			margin-top: 14px;
+			padding-left: 0;
+			margin-bottom: 33px;
+		}
+		.btn-link:hover {
+			color: #969696;
+		}
+	.btn.btn-link[disabled] {
+		opacity: 0.5;
+	}
+	.cp-cancel {
+		background-color: transparent;
+		display: inline-block;
+		float: left;
+	}
+	.cp-button.cp-save {
+		float: right;
+	}
+	.news-select{
+		margin-top: 20px;
+	}
+
+
+	#draw-instructions {
+		padding: 0;
+		list-style-type: none;
+	}
+		#draw-instructions > .row {
+			margin-top: 15px;
+		}
+}
+
+img.demo {
+    width: 70%;
+    margin: 2% auto;
+    text-align: center;
+}
 
 /* ==========================================================================
    Media Queries

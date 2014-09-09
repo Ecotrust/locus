@@ -356,44 +356,49 @@
 		top: 0;
 	}
 }
+.overview-grid () {
+	> .content {
+		> .overview {
+			> ul {
+				.list-reset();
+				.make-row();
+				margin-bottom: 56px;
+				> li {
+					.make-sm-column(3);
+					text-align: center;
+					> a {
+						color: @black;
+						display: block;
+						font-family: @font-family-sans-serif-medium;
+						.font-size(14);
+						line-height: @line-height-tight;
+						margin: 0 auto;
+						width: 80%;
+						> em {
+							color: @blue;
+							font-style: normal;
+						}
+						// Icons above
+						&:before {
+							color: @icon-white;
+							.font-awesome();
+							font-size: 52px;
+							display: block;
+							margin: 0 auto 40px auto;
+						}
+							&.about-draw:before		{ content: "\f040"; }
+							&.about-read:before		{ content: "\f0ea"; }
+							&.about-network:before	{ content: "\f0e5"; }
+							&.about-stats:before	{ content: "\f080"; }
 
-.gallery-arrows(){
-	&:before{
-		border: none;
-		content: "";
-		height: 1px;
-	}
-	&:after {
-		border: none;
-	}
-	height: 61px;
-	.hide-text();
-	opacity: .6;
-	transition: none;
-	top: 25%; // tall images on mobile make this weird.
-	visibility: hidden; // Swipe instead
-
-		@media @tablet {
-			top: 40%; // estimate with caption for 50% of image
-			visibility: visible;
+						&:hover:before {
+							color: @blue;
+						}
+					}
+				}
+			}
 		}
-
-	&.flex-prev, &.mfp-arrow-left {
-		background-image: url('../img/arrow_sprite.png');
-		background-position: left top;
-		
-		@media @tablet {
-			left: -50px;
-		}
-		/*margin-left:50px;*/
-	}
-
-	&.flex-next, &.mfp-arrow-right  {
-		background-image: url('../img/arrow_sprite.png');
-		background-position: right top;
-		@media @tablet {
-			right: -50px;
-		}
-		/*margin-right:50px;*/
 	}
 }
+
+

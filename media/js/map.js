@@ -225,6 +225,8 @@ function mapInit() {
     $('a[data-toggle="tab"]').on('shown.bs.tab',function(e) {
         cleanOldSelected();
 
+console.log('e.target.id', e.target.id);
+
 		// e.relatedTarget == previous tab
 		// there is no previous tab on start
 		if (e.relatedTarget !== undefined) {
@@ -361,7 +363,6 @@ function getFriendLoci(frndlst) {
         });
         if (geojson_format.read(result) != null){
             map.friendLayer.addFeatures(geojson_format.read(result));
-			height: 400px;
         }
     });
 };

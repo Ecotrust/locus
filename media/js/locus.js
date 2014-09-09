@@ -1,11 +1,38 @@
 var app;
 var CPM = CPM || {};
-    
 var mapShown = false;
 
 function init() {
-    
+
+/*
+ *
+
+        var user = '{{userName}}';
+        var userID = '{{userId}}';
+        var userprovider = '{{userProvider}}';
+        var token = '{{token}}';
+        var avatar_url = '{{avatar}}'      //TODO: Replace with id and plug in to avatar address.
+        var geojson_format = new OpenLayers.Format.GeoJSON();
+        var userLocus = geojson_format.read('{{userLocus}}'.replace(/&quot;/ig, '"'));
+        if (userLocus && userLocus.length > 0) {
+            userLocus = userLocus[0].geometry;
+        }
+        var gen_id = {{genId}};
+        var locus_name = '{{locusName}}';
+        var news_sources = $.parseJSON('{{newsSources}}'.replace(/&quot;/ig, '"'));
+        var locusSizeClass = 'medium';
+        var appID = '{{appID}}'
+
+
+*/
+}
+
+$(document).ready(function () {
+	//init();
     mapInit();
+
+    // Activates knockout.js
+    ko.applyBindings(new AppViewModel());
 
 	//table of contents
 	CPM.tocHandler();
@@ -13,14 +40,20 @@ function init() {
 	// about overlay
 	CPM.aboutHandler();
 
-    // Activates knockout.js
-    ko.applyBindings(new AppViewModel());
+	/*
+        if (userLocus && userLocus.length > 0) {
+            userLocus = userLocus[0].geometry;
+        }
+*/
 
 	//set settings as the active tab
 	//TODO Dashboard should be first if the user has an existing loci
-	$('#settings-tab').tab('show');	
-
-}
+	if ( userID ) {
+		$('#dashboard-tab').tab('show');		
+	} else {
+		$('#home-tab').tab('show');		
+	};
+});
 
 function OptionDef(name, value){
     var self = this;
@@ -1093,6 +1126,8 @@ CPM.tocHandler = function () {
 };
 CPM.aboutHandler =  function() {
 	var $about = $('.cp-about'),
+		$home = $('#home-tab-content'),
+		$aboutContent = $home.find('.content').html(),
 		$mask = $('<div class="mask"></div>'),
 		$body = $('body');
 
@@ -1100,7 +1135,9 @@ CPM.aboutHandler =  function() {
 
 		if ( $about.is('.open') ) {
 			$('.mask').remove();
+			$home.find('.content').html($aboutContent);
 		} else {
+			$about.find('.content').html($aboutContent);
 			$body.append( $mask );
 		}
 

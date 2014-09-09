@@ -28,7 +28,7 @@ header .ProfileWidget .LoginWithFacebook{
     margin: 10px 0 5px 0;
 }
 
-.navbar-fixed-top .container{
+.navbar-fixed-top .container {
     max-width:940px;
     width:95%;
 }
@@ -482,50 +482,15 @@ Begin Details Page
     line-height: 14px !important;
     position: static !important;
 }
+.details sup div {
+	background-color: #f2f2f2;
+	padding: 10px;
+}
 
 /* -----------------------------------------------------------------------
 End Details Page
 ----------------------------------------------------------------------- */
 
-/* -----------------------------------------------------------------------
-Begin Settings Page
------------------------------------------------------------------------ */
-
-.draw-controls {
-	margin-top: 57px;
-}
-#map-panel legend {
-	font-size: 19px;
-	margin-bottom: 5px;
-}
-#map-panel .draw-controls .btn-link, #map-panel .radio, #map-panel .checkbox {
-    color: #969696;
-    display: block;
-	font-family: "AvenirLT-Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
-    font-weight: normal;
-	line-height: 21px;
-	margin-bottom: 40px;
-	padding-bottom: 0;
-	padding-top: 0;
-}
-	#map-panel .btn-link:hover {
-		color: #969696;
-	}
-#map-panel .btn.btn-link[disabled] {
-	opacity: 0.5;
-}
-#map-panel .cp-cancel {
-	background-color: transparent;
-	display: inline-block;
-	float: left;
-}
-.cp-button.cp-save {
-    float: right;
-}
-.news-select{
-    margin-top: 20px;
-}
 .lead.welcome {
     height: 400px;
     left: 50%;
@@ -557,29 +522,7 @@ Begin Settings Page
 	height: 100%;
 }
 
-.map-panel {
-    background-color: rgba(255, 255, 255, .92);
-    max-width: 100%;
-    padding: 30px;
-    position: absolute;
-    right: 0;
-    width: 430px;
-    z-index: 1000;
-}
-#draw-instructions {
-	padding: 0;
-	list-style-type: none;
-}
-	#draw-instructions > .row {
-		margin-top: 15px;
-	}
 
-
-img.demo {
-    width: 70%;
-    margin: 2% auto;
-    text-align: center;
-}
 
 .locus-review-btn {
     margin: 5% 15% auto auto !important;

@@ -5924,8 +5924,10 @@ button.close {
 .wrap.container:after,
 .credits > .inner > section:before,
 .credits > .inner > section:after,
-.cp-about > .overview > ul:before,
-.cp-about > .overview > ul:after {
+.home-page > .content > .overview > ul:before,
+.home-page > .content > .overview > ul:after,
+.cp-about > .content > .overview > ul:before,
+.cp-about > .content > .overview > ul:after {
   content: " ";
   display: table;
 }
@@ -5945,7 +5947,8 @@ button.close {
 .modal-footer:after,
 .wrap.container:after,
 .credits > .inner > section:after,
-.cp-about > .overview > ul:after {
+.home-page > .content > .overview > ul:after,
+.cp-about > .content > .overview > ul:after {
   clear: both;
 }
 .center-block {
@@ -7023,6 +7026,169 @@ p > .intro {
     margin-left: 8.333333333333332%;
   }
 }
+.home-page > .content > .overview > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-bottom: 56px;
+}
+.home-page > .content > .overview > ul > li {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .home-page > .content > .overview > ul > li {
+    float: left;
+    width: 25%;
+  }
+}
+.home-page > .content > .overview > ul > li > a {
+  color: #000000;
+  display: block;
+  font-family: "AvenirLT-Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  margin: 0 auto;
+  width: 80%;
+}
+.home-page > .content > .overview > ul > li > a > em {
+  color: #0099ff;
+  font-style: normal;
+}
+.home-page > .content > .overview > ul > li > a:before {
+  color: #e2e2e2;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  font-size: 52px;
+  display: block;
+  margin: 0 auto 40px auto;
+}
+.home-page > .content > .overview > ul > li > a.about-draw:before {
+  content: "\f040";
+}
+.home-page > .content > .overview > ul > li > a.about-read:before {
+  content: "\f0ea";
+}
+.home-page > .content > .overview > ul > li > a.about-network:before {
+  content: "\f0e5";
+}
+.home-page > .content > .overview > ul > li > a.about-stats:before {
+  content: "\f080";
+}
+.home-page > .content > .overview > ul > li > a:hover:before {
+  color: #0099ff;
+}
+#home-tab-content .intro {
+  font-size: 2.3em;
+  line-height: 1.3;
+  margin: 1em auto;
+  max-width: 90%;
+}
+#home-tab-content > .content a {
+  cursor: default;
+}
+#home-tab-content > .content a em {
+  color: #000000;
+}
+#home-tab-content > .content a:before {
+  color: #83827C;
+}
+#home-tab-content > .content a:hover:before {
+  color: #83827C;
+}
+#home-tab-content .social-login {
+  text-align: center;
+}
+#home-tab-content .btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.5625;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: "AvenirLT-Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 7px 10px 4px 10px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 2;
+  margin: 0 10px;
+  padding: 7px 30px 4px 17px;
+}
+#home-tab-content .btn:focus,
+#home-tab-content .btn:active:focus,
+#home-tab-content .btn.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+#home-tab-content .btn:hover,
+#home-tab-content .btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+#home-tab-content .btn:active,
+#home-tab-content .btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+#home-tab-content .btn.disabled,
+#home-tab-content .btn[disabled],
+fieldset[disabled] #home-tab-content .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: alpha(opacity=65);
+  -webkit-opacity: 0.65;
+  -moz-opacity: 0.65;
+  opacity: 0.65;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+#home-tab-content .btn:hover,
+#home-tab-content .btn:focus {
+  background-color: #4d4d4d;
+  color: #e6e6e6;
+  text-decoration: none;
+}
+#home-tab-content .btn:before {
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  color: #ffffff;
+  font-size: 18px;
+  padding: 5px 14px 5px 4px;
+}
+#home-tab-content .btn.btn-facebook:before {
+  content: "\f09a";
+}
+#home-tab-content .btn.btn-twitter:before {
+  content: "\f099";
+}
 /* loaded via ajax */
 .mfp-ajax-holder {
   /*margin-left: -15px;*/
@@ -7120,6 +7286,9 @@ input[type="email"] {
     padding: 14px 28px;
   }
 }
+.toc > ul > li.nav-home {
+  display: none;
+}
 .toc > ul > li:before {
   font-family: FontAwesome;
   font-style: normal;
@@ -7176,13 +7345,13 @@ input[type="email"] {
 .cp-about.open {
   left: 0;
 }
-.cp-about > .intro {
+.cp-about > .content > .intro {
   max-width: 650px;
   margin: 49px auto 100px auto;
   font-family: "CenturySchoolbookBT-Italic", Georgia, "Times New Roman", Times, serif;
   text-align: center;
 }
-.cp-about > .overview > ul {
+.cp-about > .content > .overview > ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -7190,7 +7359,7 @@ input[type="email"] {
   margin-right: -15px;
   margin-bottom: 56px;
 }
-.cp-about > .overview > ul > li {
+.cp-about > .content > .overview > ul > li {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
@@ -7198,12 +7367,12 @@ input[type="email"] {
   text-align: center;
 }
 @media (min-width: 768px) {
-  .cp-about > .overview > ul > li {
+  .cp-about > .content > .overview > ul > li {
     float: left;
     width: 25%;
   }
 }
-.cp-about > .overview > ul > li > a {
+.cp-about > .content > .overview > ul > li > a {
   color: #000000;
   display: block;
   font-family: "AvenirLT-Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -7213,11 +7382,11 @@ input[type="email"] {
   margin: 0 auto;
   width: 80%;
 }
-.cp-about > .overview > ul > li > a > em {
+.cp-about > .content > .overview > ul > li > a > em {
   color: #0099ff;
   font-style: normal;
 }
-.cp-about > .overview > ul > li > a:before {
+.cp-about > .content > .overview > ul > li > a:before {
   color: #e2e2e2;
   font-family: FontAwesome;
   font-style: normal;
@@ -7227,19 +7396,19 @@ input[type="email"] {
   display: block;
   margin: 0 auto 40px auto;
 }
-.cp-about > .overview > ul > li > a.about-draw:before {
+.cp-about > .content > .overview > ul > li > a.about-draw:before {
   content: "\f040";
 }
-.cp-about > .overview > ul > li > a.about-read:before {
+.cp-about > .content > .overview > ul > li > a.about-read:before {
   content: "\f0ea";
 }
-.cp-about > .overview > ul > li > a.about-network:before {
+.cp-about > .content > .overview > ul > li > a.about-network:before {
   content: "\f0e5";
 }
-.cp-about > .overview > ul > li > a.about-stats:before {
+.cp-about > .content > .overview > ul > li > a.about-stats:before {
   content: "\f080";
 }
-.cp-about > .overview > ul > li > a:hover:before {
+.cp-about > .content > .overview > ul > li > a:hover:before {
   color: #0099ff;
 }
 @media (min-width: 768px) {
@@ -7621,7 +7790,11 @@ fieldset[disabled] .listing.invite-listing button {
    MAP
    ========================================================================== */
 .map-holder .olControlAttribution {
-  bottom: 1.5em !important;
+  bottom: 1px !important;
+  line-height: 1;
+}
+.map-holder .olControlAttribution div {
+  display: inline;
 }
 .map-holder img.olTileImage {
   /*max-width: 256px !important;*/
@@ -7637,12 +7810,14 @@ fieldset[disabled] .listing.invite-listing button {
 .map-holder .olControlLayerSwitcher {
   background-color: #ffffff;
   color: #969696;
+  min-width: 14em;
   position: absolute;
   bottom: 40px;
+  bottom: 0;
   right: auto;
   left: 0;
   top: auto;
-  height: 400px;
+  /*height: 400px;*/
   min-width: 95px;
   width: 15% !important;
 }
@@ -7652,8 +7827,11 @@ fieldset[disabled] .listing.invite-listing button {
 }
 .map-holder .olControlLayerSwitcher .maximizeDiv,
 .map-holder .olControlLayerSwitcher .minimizeDiv {
-  width: auto;
   display: inline-block;
+  top: 7px;
+  width: auto;
+  -webkit-transition:  all .45s ease-in-out;
+  transition:  all .45s ease-in-out;
 }
 .map-holder .olControlLayerSwitcher .maximizeDiv > img,
 .map-holder .olControlLayerSwitcher .minimizeDiv > img {
@@ -7673,6 +7851,7 @@ fieldset[disabled] .listing.invite-listing button {
 .map-holder .olControlLayerSwitcher .maximizeDiv {
   right: auto;
   left: 0;
+  top: -30px;
 }
 .map-holder .olControlLayerSwitcher .maximizeDiv:before {
   content: "Toggle Map Layers";
@@ -7680,12 +7859,19 @@ fieldset[disabled] .listing.invite-listing button {
 .map-holder .olControlLayerSwitcher .minimizeDiv:before {
   content: "Close";
 }
+.map-holder .olControlLayerSwitcher .baseLbl,
+.map-holder .olControlLayerSwitcher .dataLbl {
+  color: #000000;
+  font-size: 13px;
+  font-size: 1.3rem;
+}
 .map-holder label.olButton {
   display: inline-table;
+  font-weight: normal;
 }
 .map-holder input.olButton {
   vertical-align: top;
-  margin-right: 1%;
+  margin-right: 7px;
 }
 .map-holder .olControlMousePosition {
   background: white;
@@ -7696,6 +7882,79 @@ fieldset[disabled] .listing.invite-listing button {
 /* -----------------------------------------------------------------------
 End Map
 ----------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------
+Begin Settings Page
+----------------------------------------------------------------------- */
+.map-panel {
+  background-color: rgba(255, 255, 255, 0.92);
+  max-width: 100%;
+  padding: 30px;
+  position: absolute;
+  right: 0;
+  width: 430px;
+  z-index: 1000;
+}
+.map-panel legend,
+.map-panel h3 {
+  border-bottom: 1px solid #e5e5e5;
+  color: #4d4d4d;
+  font-family: "AvenirLT-Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+.map-panel .draw-controls {
+  margin-top: 20px;
+}
+.map-panel .draw-controls .btn-link,
+.map-panel .radio,
+.map-panel .checkbox {
+  color: #969696;
+  display: block;
+  font-family: "AvenirLT-Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 21px;
+  margin-bottom: 40px;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.map-panel .draw-controls .btn-link {
+  margin-top: 14px;
+  padding-left: 0;
+  margin-bottom: 33px;
+}
+.map-panel .btn-link:hover {
+  color: #969696;
+}
+.map-panel .btn.btn-link[disabled] {
+  opacity: 0.5;
+}
+.map-panel .cp-cancel {
+  background-color: transparent;
+  display: inline-block;
+  float: left;
+}
+.map-panel .cp-button.cp-save {
+  float: right;
+}
+.map-panel .news-select {
+  margin-top: 20px;
+}
+.map-panel #draw-instructions {
+  padding: 0;
+  list-style-type: none;
+}
+.map-panel #draw-instructions > .row {
+  margin-top: 15px;
+}
+img.demo {
+  width: 70%;
+  margin: 2% auto;
+  text-align: center;
+}
 /* ==========================================================================
    Media Queries
    ========================================================================== */
