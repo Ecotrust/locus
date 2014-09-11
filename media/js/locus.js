@@ -147,6 +147,7 @@ function AppViewModel() {
     this.newsJSON = ko.observable([]);
     this.communityFeed = ko.observable();
     this.newsFeed = ko.observable();
+    this.newsItems = ko.observable();
     
     var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
     map.locusLayer.addFeatures([userLocusVector]);
