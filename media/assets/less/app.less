@@ -26,7 +26,7 @@ ISSUE SPECIFIC LESS IMPORTED AT THE BOTTOM FOR EASY OVERRIDING
 
 /* Invite bootstrap to the party. Pretty gutted - we don't need much. */
 @import "commonplace-bootstrap.less";
-@import "magnific-popup.less";
+/*@import "magnific-popup.less";*/
 
 
 /* ==========================================================================
@@ -145,6 +145,7 @@ a, a:hover {
 			position: relative;
 			top: auto;
 			left: auto;
+			padding-left: 90px;
 		}
 
 		&:hover {
@@ -519,6 +520,7 @@ p > .intro {
 #home-tab-content {
 	.intro {
 		font-size: 2.3em;
+		letter-spacing: -0.01em;
 		line-height: 1.3;
 		margin: 1em auto;
 		max-width: 90%;
@@ -925,10 +927,11 @@ input[type="text"], input[type="email"] {
 			display: inline-block;
 			top: 7px;
 			width: auto;
-			.transition( ~" all .45s ease-in-out");
+
 			> img {
 				display: none;
 			}
+
 			&:before {
 				background-color: @white;
 				color: @gray;
@@ -975,6 +978,25 @@ input[type="text"], input[type="email"] {
 		opacity: 0;
 	}
 		
+}
+
+#point-popup, #point-popup_GroupDiv, #point-popup_contentDiv {
+	/* shouldn't need these !importants but the OpenLayers.Size(x,y) isn't taking */ 
+	height: 185px !important;
+	width: 185px !important;
+
+	img {
+		.rounded(50%);
+		height: auto;
+		margin: 10px auto;
+		width: 57px;
+	}
+	.news-title {
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+		width: 95%;
+	}
 }
 
 /* -----------------------------------------------------------------------

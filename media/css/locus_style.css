@@ -256,18 +256,19 @@ Begin Dasboard Page
 }
 
 .news-bubble{
+	/*
     max-width: 400px;
     max-height: 300px;
     min-width: 250px;
     min-height: 70px;
+	*/
+	text-align: center;
 }
 
 .news-bubble-img{
-    max-width:100px;
-    float: left;
-    margin-right: 8px;
-    max-height: 75px;
+ 
 }
+
 
 .news-bubble p{
     font-size: 70%;
