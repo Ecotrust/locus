@@ -48,7 +48,7 @@ $(document).ready(function () {
 
 	//set settings as the active tab
 	//TODO Dashboard should be first if the user has an existing loci
-	if ( userID ) {
+	if ( userID !== 'None' ) {
 		$('#dashboard-tab').tab('show');		
 	} else {
 		$('#home-tab').tab('show');		
