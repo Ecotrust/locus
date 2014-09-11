@@ -71,10 +71,10 @@
 	{% endcomment %}
 
     {% block header %}
-		<!--[if lt IE 9]>
-	<div class="alert alert-warning">
-		You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.    
-	</div>
+	<!--[if lt IE 9]>
+		<div class="alert alert-warning">
+			You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.    
+		</div>
 	<![endif]-->
 
 	<header class="banner navbar navbar-default navbar-fixed-top" role="banner" id="banner">
@@ -134,7 +134,10 @@
 								</div>
 							{% endif %}
 						</li>
+						{% if user.is_authenticated %}						
+						{% comment This is all on the home page if they're not authenticated %} {% endcomment %}
 						<li class="menu-about"><a href="#about">About</a></li>
+						{% endif %}
 					</ul>			
 				</nav>
 
@@ -256,4 +259,3 @@
     <!-- <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script> -->
 </body>
 </html>
-
