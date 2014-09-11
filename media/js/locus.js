@@ -147,7 +147,6 @@ function AppViewModel() {
     this.newsJSON = ko.observable([]);
     this.communityFeed = ko.observable();
     this.newsFeed = ko.observable();
-    this.newsItems = ko.observable();
     
     var userLocusVector = new OpenLayers.Feature.Vector(userLocus, {});
     map.locusLayer.addFeatures([userLocusVector]);
@@ -167,19 +166,21 @@ function AppViewModel() {
 
     this.getStoryFeeds = function() {
         app.communityJSON([]);
-        app.newsJSON([]);
+        //app.newsJSON([]);
+        app.newsItems([]);
         app.storyPoints().sort(sortStoryFeed);
         for (var i = 0; i < app.storyPoints().length; i++) {
             spoint = app.storyPoints()[i];
             if (spoint.data.storyPoint.source_type == 'user') {
                 app.communityJSON(app.communityJSON().concat(spoint));
             } else {
-                app.newsJSON(app.newsJSON().concat(spoint));
+                //app.newsJSON(app.newsJSON().concat(spoint));
+                app.newsItems(app.newsItems().concat(spoint.data.storyPoint));
             }
         }
         app.users = [];
         this.communityFeed(JSON2ComFeedHTML(this.communityJSON()));
-        this.newsFeed(JSON2NewsFeedHTML(this.newsJSON()));
+        //this.newsFeed(JSON2NewsFeedHTML(this.newsJSON()));
         
     };
 
@@ -750,9 +751,9 @@ function newPopup() {
                 </div>\
             </div>";
             
-    var popup = new OpenLayers.Popup.FramedCloud("new-popup", 
+    var popup = new OpenLayers.Popup.Anchored("new-popup", 
                                      selectedFeature.geometry.getBounds().getCenterLonLat(),
-                                     new OpenLayers.Size(100,100),
+                                     new OpenLayers.Size(325,375),
                                      html,
                                      null, 
                                      true, 
@@ -804,21 +805,25 @@ function newUid(set){
     }
 }
 
+
 function makePopup(feature) {
+	var popup;
     if (feature.attributes.storyPoint.source_type != 'user') {
-        var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
+        popup = new OpenLayers.Popup.Anchored("point-popup", 
                                      feature.geometry.getBounds().getCenterLonLat(),
-                                     new OpenLayers.Size(100,100),
+                                     new OpenLayers.Size(185,185),
                                      newsBubble(feature.attributes.storyPoint),
-                                     null, 
+									 null,
                                      true, 
                                      onPopupClose);
     } else {
-        var popup = new OpenLayers.Popup.FramedCloud("point-popup", 
+        popup = new OpenLayers.Popup.Anchored("point-popup", 
                                      selectedFeature.geometry.getBounds().getCenterLonLat(),
-                                     new OpenLayers.Size(100,100),
+                                     new OpenLayers.Size(185,185),
                                      postBubble(feature.attributes.storyPoint),
-                                     null, true, onPopupClose);
+									 null,
+									 true, 
+									 onPopupClose);
     }
     popup.updateSize();
     return popup;

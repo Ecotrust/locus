@@ -82,7 +82,22 @@
 
 					<section class="listing news-listing">
 						<h2>News</h2>
-						<ul data-bind="html: newsFeed"></ul>
+						<ul data-bind="foreach: newsItems">
+							<li data-bind="attr: {'classs': 'source-type-' + source_type}">
+								<a href="#" data-bind="attr: { href: source_link + '/status/' + id }">
+									<img data-bind="attr: { src: image }">
+									<div class="content">
+										<h3 data-bind="text: title"></h3>
+										<p data-bind="text: content"></p>
+										<div class="meta">
+											<span class="source" data-bind="text: source_type"> </span> / 
+											<time data-bind="attr: { content: source_link, datetime: source_link }, text: date" 
+												class="published" itemprop="datePublished"></time>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
 					</section> <!-- /.news-listing -->
 
 				</div>
@@ -451,7 +466,10 @@ What about help? Only when drawing?
 		</div>
 	</a>
     <span data-bind="text: $data.dummyText"></span>
-</script>{% endblock %}		
+</script>
+
+
+{% endblock %}		
 
 {% block js %}
 
