@@ -225,7 +225,7 @@ function mapInit() {
     $('a[data-toggle="tab"]').on('shown.bs.tab',function(e) {
         cleanOldSelected();
 
-console.log('e.target.id', e.target.id);
+//console.log('shown.bs.tab: e.target.id', e.target.id);
 
 		// e.relatedTarget == previous tab
 		// there is no previous tab on start
