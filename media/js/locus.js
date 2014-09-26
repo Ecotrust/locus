@@ -49,7 +49,8 @@ $(document).ready(function () {
 	//set settings as the active tab
 	//TODO Dashboard should be first if the user has an existing loci
 	if ( userID !== 'None' ) {
-		$('#dashboard-tab').tab('show');		
+		//$('#dashboard-tab').tab('show');		
+		$('#friends-tab').tab('show');		
 	} else {
 		$('#home-tab').tab('show');		
 	};
@@ -145,6 +146,7 @@ function AppViewModel() {
     this.communityJSON = ko.observable([]);
     // this.communityUsersJSON = {};
     this.newsJSON = ko.observable([]);
+    this.newsItems = ko.observable([]);
     this.communityFeed = ko.observable();
     this.newsFeed = ko.observable();
     
@@ -512,8 +514,22 @@ function AppViewModel() {
   
 
     this.inviteList = ko.observable();
+	//this.inviteListRaw populated in get_friends below
+	this.inviteListRaw = ko.observableArray([]);
+    this.inviteFriendsFilter = ko.observable("");
 
-    
+	this.inviteListFiltered = ko.computed(function () {
+		var filter = app.inviteFriendsFilter().toLowerCase();
+
+		if (!filter) {
+			return app.inviteListRaw();
+		} else {
+		   return ko.utils.arrayFilter(app.inviteListRaw(), function (friend) {
+				return friend.name.toLowerCase().indexOf(filter) != -1;
+			});
+		}
+
+	}, this).extend({ throttle: 500 });    
     /*---------------------------------------------------------------------
             OTHER LOCI AppViewModel
     ---------------------------------------------------------------------*/
@@ -739,7 +755,7 @@ function newPopup() {
                         <textarea id=\"post-text\" rows=\"2\" class=\"new-storypoint\">What's happening?</textarea>\
                         <div class=\"row-fluid new-storypoint-controls\">\
                             <div class=\"span4\">\
-                                <button class=\"btn, new-storypoint\">Post</button>\
+                                <button class=\"btn new-storypoint\">Post</button>\
                             </div>\
                             <div class=\"span8\">\
                                 <label class=\"checkbox\">\
@@ -984,13 +1000,20 @@ function processFriendsList(fb_result) {
             }
             app.usersListHtml(strngrlst);
 
+			// Create the Facebook Friends array
+			ko.utils.arrayForEach(data.just_friends, function(item){
+				app.inviteListRaw.push(item);
+			});
+			/*
             invitelst = "";
             for(var i=0; i < data.just_friends.length; i++) {
                 if (data.just_friends[i].id) {
+					app.inviteListRaw.push( data.just_friends[i] );
                     invitelst = invitelst + '<input class="invite-chk" type="checkbox" name="' + data.just_friends[i].name + '" value="' + data.just_friends[i].id + '">' + data.just_friends[i].name + '</input><br/>';
                 }
             }
             app.inviteList(invitelst);
+			*/
 
             reqlst = "";
             for(var i=0; i<data.friend_requests.length; i++){

@@ -555,28 +555,33 @@ Begin Friends Page
     margin-left: 1% !important;
 }
 
-.friend-search{
-    width: 90% !important;
+.friend-search, .friend-select, .friend-textarea {
+    width: 100%;
+	border: 1px solid #969696; 
+	margin: 10px 0;
+	padding: 10px;
 }
-
-.friend-select{
-    border: medium groove; 
-    margin-left: 1%; 
-    width: 96% !important;
+.friend-search {
+	background-color: transparent;
 }
+.friend-search:active, .friend-search:focus {
+	background-color: #ffffff;
+}
+.friend-select {
 
-.friend-select .scrollable{
+}
+.friend-textarea {
+    margin: 10px 0;
+	width: 100%;
+}
+.friend-select .scrollable {
+    min-height:130px; 
+	max-height: 350px;
     overflow:auto; 
-    height:130px; 
-    padding:2%
+    padding:2%;
 }
 
-.friend-textarea{
-    margin:1%; 
-    width:94%
-}
-
-.invite{
+.invite {
     margin: 1% auto 8% 2%;
     min-width: 40px;
     width: 40%;

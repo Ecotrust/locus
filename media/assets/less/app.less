@@ -518,12 +518,21 @@ p > .intro {
 }
 
 #home-tab-content {
+	h1 {
+		/*font-family: @font-family-intro;*/
+		font-family: @font-family-sans-serif;
+		font-weight: normal;
+		.font-size(45);
+		margin: 49px 0 0 0;
+		text-align: center;
+	}
 	.intro {
 		font-size: 2.3em;
 		letter-spacing: -0.01em;
 		line-height: 1.3;
 		margin: 1em auto;
 		max-width: 90%;
+		text-align: justify;
 	}
 	
 	> .content  a {
@@ -730,7 +739,8 @@ input[type="text"], input[type="email"] {
 
 .listing {
 
-	& > h2, & > h3 {
+	& > h2, & > h3 ,
+	& > header > h2, & > header > h3 {
 		.font-size(12);
 		letter-spacing : 0.06em;
 		color : @gray;
@@ -809,12 +819,46 @@ input[type="text"], input[type="email"] {
 
 	}
 	&.invite-listing {
-		> h2:before, 	
-		> h3:before{
-			content: "\f067";
+		> header {
+			> h2:before, 	
+			> h3:before {
+				content: "\f067";
+			}
+			> form {
+				position: relative;
+
+				&:after {
+					content: "\f002";
+					display: block;
+					.font-awesome();
+					position: absolute;
+					right: 10px;
+					top: 20px;
+					height: 15px;
+					width: 15px;
+
+				}
+			}
+			
 		}
-		input {
-			width: 100%;
+		li {
+			.clearfix();
+		}
+		#invite-form {
+			input {
+				float: left;
+				margin-right: 5px;
+				width: 15px;
+			}
+			label {
+				color: @grey;
+				font-family: @font-family-sans-serif-medium;
+				letter-spacing: 0.05em;
+			}
+
+		}
+		label {
+			float: left;
 		}
 		button {
 			.cp-button();
@@ -842,6 +886,14 @@ input[type="text"], input[type="email"] {
     width: 100%;
     height: 100%;
     /*background: rgba(0, 0, 0, 0.8);*/
+}
+
+#invite-form {
+	ul {
+		.list-reset();
+	}
+	input { float: left; }
+	label { .clearfix(); }
 }
 
 /* ==========================================================================

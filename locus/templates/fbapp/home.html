@@ -28,6 +28,7 @@
 
 			
 			<div class="content">
+				<h1>Welcome to Commonplace / Maps</h1>
 				<p class="intro">The place we call home is influenced by factors far greater than the geopolitical boundaries we’ve drawn. Commonplace is a chance to literally redraw the map and see what really matters.</p>
 				<div class="overview container">
 					<ul class="row">
@@ -380,29 +381,30 @@ What about help? Only when drawing?
 
 
 			<section class="listing invite-listing">
-				<h2>Invite More</h2>
-				<form class="navbar-search">
-					<input type="search" class="search-query friend-search" placeholder="Search Friends">
-				</form>
-				<form id="invite-form" name="invite" data-bind="submit: inviteFriends">
-					<div class="row-fluid friend-select">
-						<div class="scrollable span12">
+				<header class="col-sm-12">
+					<h2>Invite More</h2>
+					<form>
+						<input type="search" class="search-query friend-search" data-bind="value: inviteFriendsFilter, valueUpdate:
+						'keyup'" placeholder="Search Friends" autocomplete="off">
+					</form>
+				</header>
+				<form id="invite-form" class="col-sm-12" name="invite" data-bind="submit: inviteFriends">
+					<div class="friend-select">
+						<div class="scrollable">
 							<fieldset>
-								<div data-bind="html: inviteList"></div>
+								<ul data-bind="foreach: inviteListFiltered">
+									<li>
+										<input class="invite-chk" type="checkbox" 
+											data-bind="attr: { name: name, value: id }">
+										<label data-bind="text: name"></label>
+									</li>
+								</ul>	
 							</fieldset>
+
 						</div>
 					</div>
-					<div class="row-fluid">         
-						<div class="col-sm-12">
-							<textarea rows="4" class="friend-textarea">Please share you Locus with me!</textarea>
-						</div>
-					</div>
-					<!--<button class="btn">Select all</btn>-->
-					<div class="row-fluid">         
-						<div class="col-sm-12">
-							<button class="btn invite" type="submit">Invite</button>
-						</div>
-					</div>
+					<textarea rows="4" class="friend-textarea">Please share you Locus with me!</textarea>
+					<button class="btn invite" type="submit">Invite</button>
 				</form>
 
 			</section> <!-- /.invite-listing -->
