@@ -1,0 +1,25 @@
+{
+  "name": "Locus_-_Commonplace-Maps",
+  "version": "0.8.0",
+  "author": "Ryan Hodges w/ Will Moore",
+  "homepage": "http://ecotrust.org",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Ecotrust/locus/"
+  },
+  "bugs": {
+    "url" : "https://github.com/Ecotrust/locus/issues"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-less": "~0.8.1",
+    "grunt-vagrant-ssh": "~0.1.0"
+  }
+}
