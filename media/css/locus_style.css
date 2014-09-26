@@ -8,7 +8,7 @@ body {
 Begin Map
 ----------------------------------------------------------------------- */
 
-	/* MAP CSS MOVED TO locus_style.css */
+	/* MAP CSS MOVED TO app.css */
 
 
 
@@ -247,70 +247,57 @@ Begin Dasboard Page
     max-width: none !important;
     min-width: 300px;
     max-height: none !important;
+	top: 50px !important; /* fixed heights everywhere, we don't want it going off the map. */
 }
+	#new-popup .olPopupContent {
+		padding: 0;
+	}
+	#new-popup h2 {
+		font-family: "AvenirLT-Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		letter-spacing: 0.05em;
+		margin: 0 0 20px 0;
+		padding: 0;
 
-#new-popup_contentDiv{
-    width: 100%;
-    margin-right: 20px;
-    height: 145px !important;
-}
+	}
+	#new-popup textarea, #new-popup input#url-field {
+		color: #000000;
+		font-family: "CenturySchoolbookBT-Roman", Georgia, "Times New Roman", Times, serif;
+		padding: 8px;
+		width: 100%;
+	}
+	#new-popup_contentDiv{
+		width: 100% !important;
+		/*width: 320px !important;*/
+		/*margin-right: 20px;*/
+		/*height: 145px !important;*/
+	}
 
-.news-bubble{
-	/*
-    max-width: 400px;
-    max-height: 300px;
-    min-width: 250px;
-    min-height: 70px;
-	*/
-	text-align: center;
-}
+	textarea.new-storypoint{
+		/*width: 100%;*/
+		/*min-width: 250px;*/
+	}
 
-.news-bubble-img{
- 
-}
+	.new-storypoint-submit {
+		float: right;
+		margin-top: -20px;
+	}
+
+	.new-storypoint-controls{
+		min-width: 250px;
+	}
+	#new-story-point-form-holder {
+		display: none; /* just holds our HTML template for the map popup, grabbed via JS */
+	}
 
 
-.news-bubble p{
-    font-size: 70%;
-}
 
-.post-bubble{
-    max-width: 400px;
-    max-height: 300px;
-    min-width: 250px;
-    min-height: 70px;
-}
-
-.post-bubble img{
-    max-width: 60px;
-    max-height: 70px;
-    float: left;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-div.new-storypoint{
+.new-storypoint-wrap{
+    height: 375px;
     min-width: 200px;
-    width: 100%;
-    min-height: 100px;
-}
-
-form.new-storypoint{
-    margin-bottom: 8px;
-}
-
-textarea.new-storypoint{
-    margin-left: 30px;
-    width: 100%;
-    min-width: 250px;
-}
-
-button.new-storypoint{
-    margin-left: 30px;
-}
-
-.new-storypoint-controls{
-    min-width: 250px;
+	padding: 23px;
+    /*width: 320px;*/
+	width: 340px;
 }
 
 .feed-date {

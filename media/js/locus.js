@@ -52,8 +52,7 @@ $(document).ready(function () {
 	//set settings as the active tab
 	//TODO Dashboard should be first if the user has an existing loci
 	if ( userID !== 'None' ) {
-		//$('#dashboard-tab').tab('show');		
-		$('#settings-tab').tab('show');		
+		$('#dashboard-tab').tab('show');		
 	} else {
 		$('#home-tab').tab('show');		
 	};
@@ -752,7 +751,7 @@ function onPointUnselect(event) {
 }
 
 function newPopup() {
-    html = "<div class=\"row-fluid, new-storypoint\">\
+    html_OG = "<div class=\"row-fluid, new-storypoint\">\
                 <div class=\"span8\">\
                     <form id=\"new-post-form\" class=\"new-storypoint\" onSubmit=\"JavaScript:postNew(event)\">\
                         <textarea id=\"post-text\" rows=\"2\" class=\"new-storypoint\">What's happening?</textarea>\
@@ -769,10 +768,12 @@ function newPopup() {
                     </form>\
                 </div>\
             </div>";
+
+	var html = $('#new-story-point-form-holder').html();
             
     var popup = new OpenLayers.Popup.Anchored("new-popup", 
                                      selectedFeature.geometry.getBounds().getCenterLonLat(),
-                                     new OpenLayers.Size(325,375),
+                                     new OpenLayers.Size(325,430),
                                      html,
                                      null, 
                                      true, 
@@ -792,10 +793,12 @@ function postNew(event){
         data: {
             'content': $('#post-text')[0].value,
             'image': avatar_url,
+            'url': $('url-field').val(),
             'isPerm': $('#post-permanent')[0].checked,
             'source_type': "user",
             'source_user_id': app.userID(),
-            'title': app.user.name + " Says:",
+            //'title': app.user.name + " Says:",
+            'title': user + " Says:",
             'geometry': this.geom
         },
         dataType: 'json',
@@ -850,14 +853,14 @@ function makePopup(feature) {
 
 function newsBubble(storyPoint) {
     if (storyPoint.source_type == 'twitter'){
-        var html = "<div class=\"news-bubble\">\
+        var html = "<div class=\"news-bubble story-bubble\">\
                     <div class=\"news-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
                     <a href=\"" + storyPoint.source_link + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
                     <p>" + storyPoint.content + "</p>\
                 </div>";
 
     } else {
-        var html = "<div class=\"news-bubble\">\
+        var html = "<div class=\"news-bubble story-bubble\">\
                     <div class=\"news-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
                     <a href=\"" + storyPoint.source_link + "\" target=\"_blank\" class=\"news-title\"><h4>" + storyPoint.title + "</h4></a>\
                 </div>";
@@ -866,12 +869,17 @@ function newsBubble(storyPoint) {
 }
 
 function postBubble(storyPoint) {
+	var actionContent = "", 
+		html;
+
     if (storyPoint.source_user_id == userID){
-        var actionContent = "<a href=\"/edit_storypoint/" + storyPoint.id + "/\"><i class=\"icon-pencil\"></i>edit</a><a class=\"pull-right\" href=\"/delete_storypoint/" + storyPoint.id + "/\"><i class=\"icon-remove\"></i>delete</a>";
-    } else {
-        var actionContent = "";
-    }
-    var html = "<div class=\"post-bubble\">\
+        actionContent = "<div class='btn-group btn-group-justified btn-group-sm'>";
+        actionContent += "<a class='btn btn-default' href='/edit_storypoint/" + storyPoint.id + "'>edit</a>";
+		actionContent += "<a class='btn btn-danger' href='/delete_storypoint/" + storyPoint.id + "'>delete</a>";
+		actionContent += "</div>";
+    } 
+	
+	html = "<div class=\"post-bubble story-bubble\">\
                         <div class=\"post-bubble-img\"><img src=\"" + storyPoint.image + "\"/></div>\
                         <h4>" + storyPoint.title + "</h4>\
                         <p>" + storyPoint.content + "</p>" +

@@ -7549,6 +7549,17 @@ fieldset[disabled] .icon-btn {
 .map-holder .olMap {
   /*max-width: 1024px;*/
 }
+.map-holder .olPopupCloseBox {
+  background-image: none;
+}
+.map-holder .olPopupCloseBox:before {
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  content: "\f00d";
+  color: #000000;
+}
 .map-holder .olControlLayerSwitcher {
   background-color: #ffffff;
   color: #969696;
@@ -7621,14 +7632,17 @@ fieldset[disabled] .icon-btn {
 }
 #point-popup,
 #point-popup_GroupDiv,
-#point-popup_contentDiv {
-  /* shouldn't need these !importants but the OpenLayers.Size(x,y) isn't taking */
+#point-popup_contentDiv,
+.story-bubble {
+  /* shouldn't need these !importants but the OpenLayers.Size(x,y) isn't taking over */
   height: 185px !important;
   width: 185px !important;
+  text-align: center;
 }
 #point-popup img,
 #point-popup_GroupDiv img,
-#point-popup_contentDiv img {
+#point-popup_contentDiv img,
+.story-bubble img {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -7638,11 +7652,22 @@ fieldset[disabled] .icon-btn {
 }
 #point-popup .news-title,
 #point-popup_GroupDiv .news-title,
-#point-popup_contentDiv .news-title {
+#point-popup_contentDiv .news-title,
+.story-bubble .news-title {
   display: block;
   margin: 0 auto;
   text-align: center;
   width: 95%;
+}
+#point-popup p,
+#point-popup_GroupDiv p,
+#point-popup_contentDiv p,
+.story-bubble p {
+  font-size: 70%;
+}
+.story-bubble {
+  height: 175px !important;
+  width: 175px !important;
 }
 /* -----------------------------------------------------------------------
 End Map

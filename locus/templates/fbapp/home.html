@@ -103,6 +103,31 @@
 
 				</div>
 			</div>
+			<footer id="new-story-point-form-holder">
+				<div class="new-storypoint-wrap">
+					<div class="">
+						<h2>What's Happening?</h2>
+						<form id="new-post-form" class="new-storypoint" onSubmit="JavaScript:postNew(event)">
+							<div class="form-group">
+								<textarea id="post-text" rows="10" class="new-storypoint" placeholder="Write your post here..."></textarea>
+							</div>
+
+							<div class="form-group">
+								<input id="url-field" name="url-field" type="text" placeholder="Place URL here (optional)">
+							</div>
+							
+							<div class="new-storypoint-controls">
+								<div class="checkbox">
+									<label>
+										<input id="post-permanent" type="checkbox" value="">Make permanent
+									</label>
+								</div>
+								<button class="cp-button new-storypoint-submit">Post</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</footer>
 		</div> <!-- /#dashboard -->
 
 
