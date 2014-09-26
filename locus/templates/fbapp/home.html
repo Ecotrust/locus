@@ -394,9 +394,11 @@ What about help? Only when drawing?
 							<fieldset>
 								<ul data-bind="foreach: inviteListFiltered">
 									<li>
-										<input class="invite-chk" type="checkbox" 
+										<label>
+											<input class="invite-chk" type="checkbox" 
 											data-bind="attr: { name: name, value: id }">
-										<label data-bind="text: name"></label>
+											<span data-bind="text: name"></span>
+										</label>
 									</li>
 								</ul>	
 							</fieldset>

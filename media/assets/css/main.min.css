@@ -7259,6 +7259,21 @@ input[type="email"] {
 .listing.my-network-listing > h3:before {
   content: "\f08a";
 }
+.listing.my-network-listing button {
+  display: none;
+}
+.listing.my-network-listing button:after {
+  content: "\f00d";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+}
+.listing.my-network-listing li:hover button {
+  display: inline-block;
+  float: right;
+  margin-top: 6px;
+}
 .listing.other-users-listing > h2:before,
 .listing.other-users-listing > h3:before {
   content: "\f183";
@@ -7299,18 +7314,42 @@ input[type="email"] {
 .listing.invite-listing li:after {
   clear: both;
 }
+.listing.invite-listing #invite-form ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 .listing.invite-listing #invite-form input {
-  float: left;
+  /*float: left;*/
   margin-right: 5px;
   width: 15px;
 }
 .listing.invite-listing #invite-form label {
   color: #969696;
   font-family: "AvenirLT-Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
   letter-spacing: 0.05em;
+  display: block;
 }
-.listing.invite-listing label {
-  float: left;
+.listing.invite-listing #invite-form label:before {
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  content: "\f10c";
+}
+.listing.invite-listing #invite-form label.is-checked {
+  color: #4d4d4d;
+}
+.listing.invite-listing #invite-form label.is-checked:before {
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  content: "\f05d";
+}
+.listing.invite-listing #invite-form.js .invite-chk {
+  display: none;
 }
 .listing.invite-listing button {
   display: inline-block;
@@ -7338,6 +7377,8 @@ input[type="email"] {
   border-radius: 0;
   text-align: center;
   text-transform: uppercase;
+  float: right;
+  margin-bottom: 40px;
 }
 .listing.invite-listing button:focus,
 .listing.invite-listing button:active:focus,
@@ -7397,29 +7438,56 @@ fieldset[disabled] .listing.invite-listing button {
   height: 100%;
   /*background: rgba(0, 0, 0, 0.8);*/
 }
-#invite-form ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.icon-btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.5625;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: transparent none;
 }
-#invite-form input {
-  float: left;
+.icon-btn:focus,
+.icon-btn:active:focus,
+.icon-btn.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
 }
-#invite-form label:before,
-#invite-form label:after {
-  content: " ";
-  display: table;
+.icon-btn:hover,
+.icon-btn:focus {
+  color: #333333;
+  text-decoration: none;
 }
-#invite-form label:after {
-  clear: both;
+.icon-btn:active,
+.icon-btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-#invite-form label:before,
-#invite-form label:after {
-  content: " ";
-  display: table;
-}
-#invite-form label:after {
-  clear: both;
+.icon-btn.disabled,
+.icon-btn[disabled],
+fieldset[disabled] .icon-btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: alpha(opacity=65);
+  -webkit-opacity: 0.65;
+  -moz-opacity: 0.65;
+  opacity: 0.65;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 /* ==========================================================================
    Footer

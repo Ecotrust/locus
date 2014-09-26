@@ -40,6 +40,9 @@ $(document).ready(function () {
 	// about overlay
 	CPM.aboutHandler();
 
+	// circles are pretty. 
+	CPM.prettyLabels();
+
 	/*
         if (userLocus && userLocus.length > 0) {
             userLocus = userLocus[0].geometry;
@@ -960,18 +963,20 @@ function processFriendsList(fb_result) {
                     facebook_index = data.user_friends[i].providers.indexOf('facebook')
                     if (facebook_index > -1) {
                         frndlst = frndlst + 
-                            "<p><img class=\"mug\" src=\"http://graph.facebook.com/" + 
+                            "<li><img class=\"mug\" src=\"http://graph.facebook.com/" + 
                             data.user_friends[i].uids[facebook_index] +
                             "/picture?type=large\">" +
                             data.user_friends[i].name +
-                            "<button class='btn' onclick='deleteFriendship(" + data.user_friends[i].id + ")'><i class='category-icon icon-minus'></i></button>" +
-                            "</p>";
+                            "<button class='icon-btn' title='Remove " + data.user_friends[i].name +
+							"' onclick='deleteFriendship(" + data.user_friends[i].id + ")'>" +
+                            "</li>";
                     } else {
                         frndlst = frndlst +
-                            "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
+                            "<li><img class=\"mug\" src=\"/media/img/blank.png\">" +
                             data.user_friends[i].name +
-                            "<button class='btn' onclick='deleteFriendship(" + data.user_friends[i].id + ")'><i class='category-icon icon-minus'></i></button>" +
-                            "</p>";
+                            "<button class='icon-btn' title='Remove " + data.user_friends[i].name +
+							"' onclick='deleteFriendship(" + data.user_friends[i].id + ")'>" +
+                            "</li>";
                     }
                 }
             }
@@ -983,18 +988,18 @@ function processFriendsList(fb_result) {
                     facebook_index = data.user_strangers[i].providers.indexOf('facebook');
                     if (facebook_index > -1) {
                         strngrlst = strngrlst + 
-                            "<p><img class=\"mug\" src=\"http://graph.facebook.com/" +
+                            "<li><img class=\"mug\" src=\"http://graph.facebook.com/" +
                             data.user_strangers[i].uids[facebook_index] +
                             "/picture?type=large\">" +
                             data.user_strangers[i].name +
-                            "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
-                            "</p>";
+                            "<button class='icon-btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
+                            "</li>";
                     } else {
                         strngrlst = strngrlst +
-                            "<p><img class=\"mug\" src=\"/media/img/blank.png\">" +
+                            "<li><img class=\"mug\" src=\"/media/img/blank.png\">" +
                             data.user_strangers[i].name +
-                            "<button class='btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
-                            "</p>";
+                            "<button class='icon-btn' onclick='requestFriendship(" + data.user_strangers[i].id + ")'><i class='category-icon icon-plus'></i></button>" +
+                            "</li>";
                     }
                 }
             }
@@ -1004,6 +1009,7 @@ function processFriendsList(fb_result) {
 			ko.utils.arrayForEach(data.just_friends, function(item){
 				app.inviteListRaw.push(item);
 			});
+			$('body').trigger('facebookLoaded');
 			/*
             invitelst = "";
             for(var i=0; i < data.just_friends.length; i++) {
@@ -1176,6 +1182,24 @@ CPM.aboutHandler =  function() {
 
 	//$body.on('click ','.menu-about a, .about-open .mask, .cp-about a', aboutToc);
 	$body.on('click ','.menu-about a, .cp-about a', aboutToc);
+};
+
+CPM.prettyLabels = function () {
+	var $label, $input;
+
+	$('#invite-form')
+		.addClass('js')
+		.on('click',  function(evt){
+			// double triggering weirdness.
+			if ( $(evt.target).is('.invite-chk') ) {
+				return;
+			}
+			$label = $(evt.target).parents('li').find('label'),
+			$input = $label.find('.invite-chk');
+
+			$label.toggleClass('is-checked');
+
+		});
 };
 
 CPM.resizeMap = function (){

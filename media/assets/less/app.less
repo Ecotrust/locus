@@ -809,6 +809,19 @@ input[type="text"], input[type="email"] {
 		> h3:before{
 			content: "\f08a";
 		}
+		button {
+			display: none;
+			&:after {
+				content: "\f00d";
+				.font-awesome();
+			}
+		}
+
+		li:hover button {
+			display: inline-block;
+			float: right;
+			margin-top: 6px;
+		}
 
 	}
 	&.other-users-listing {
@@ -845,23 +858,43 @@ input[type="text"], input[type="email"] {
 			.clearfix();
 		}
 		#invite-form {
+			ul {
+				.list-reset();
+			}
 			input {
-				float: left;
+				/*float: left;*/
 				margin-right: 5px;
 				width: 15px;
 			}
 			label {
 				color: @grey;
 				font-family: @font-family-sans-serif-medium;
+				font-weight: 400;
 				letter-spacing: 0.05em;
+				display: block;
+				&:before  {
+					.font-awesome();
+					content: "\f10c";
+				}
+				&.is-checked  { 
+					color: @gray-dark;
+				}
+				&.is-checked:before  {
+					.font-awesome();
+					content: "\f05d";
+				}
+
+			}
+			//replaced with icons above
+			&.js .invite-chk {
+				display: none;
 			}
 
 		}
-		label {
-			float: left;
-		}
 		button {
 			.cp-button();
+			float: right;
+			margin-bottom: 40px;
 		}
 
 	}
@@ -887,14 +920,11 @@ input[type="text"], input[type="email"] {
     height: 100%;
     /*background: rgba(0, 0, 0, 0.8);*/
 }
-
-#invite-form {
-	ul {
-		.list-reset();
-	}
-	input { float: left; }
-	label { .clearfix(); }
+.icon-btn {
+	.btn();
+	background: transparent none;
 }
+
 
 /* ==========================================================================
    Footer
