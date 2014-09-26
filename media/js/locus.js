@@ -53,7 +53,7 @@ $(document).ready(function () {
 	//TODO Dashboard should be first if the user has an existing loci
 	if ( userID !== 'None' ) {
 		//$('#dashboard-tab').tab('show');		
-		$('#friends-tab').tab('show');		
+		$('#settings-tab').tab('show');		
 	} else {
 		$('#home-tab').tab('show');		
 	};
